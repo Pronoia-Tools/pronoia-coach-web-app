@@ -3,83 +3,80 @@
     <div class=" w-10/12 md:w-6/12 lg:w-4/12 py-10">
       <img src="img/Sammy_Logo.png" alt="logo">
 
-      <form class="text-gray-500 px-10 flex flex-col items-center gap-2">
+      <Form class="text-gray-500 px-10 flex flex-col items-center gap-2" @submit="submitSignUp">
         <div class=" grid grid-cols-2 gap-4 w-full">
           <div class="field">
-            <label class="block" for="fistName">First Name</label>
-            <input class="w-full px-2 py-1 border rounded border-gray-400" type="text" name="fistName"  v-model="firstName">
+            <label  class="block" for="fistName">First Name</label>
+            <Field  class="w-full px-2 py-1 border rounded border-gray-400" type="text" name="firstName"  rules="required"/>
+            <ErrorMessage class="text-red-400" name="firstName"></ErrorMessage>
           </div>
           
           <div class="field">
             <label class="block" for="LastName">Last Name</label>
-            <input class="w-full px-2 py-1 border rounded border-gray-400" type="text" name="LastName"  v-model="LastName">
+            <Field class="w-full px-2 py-1 border rounded border-gray-400" type="text" name="LastName" rules="required" />
+            <ErrorMessage class="text-red-400" name="LastName"></ErrorMessage>
           </div>
         </div>
         
         <div class="field w-full">
           <label class="block" for="email">Email</label>
-          <input class="w-full px-2 py-1 border rounded border-gray-400" type="email" name="email"  v-model="email">
+          <Field class="w-full px-2 py-1 border rounded border-gray-400" type="email" name="email" rules="required|email" />
+          <ErrorMessage class="text-red-400" name="email"></ErrorMessage>
         </div>
 
         <div class="field w-full">
           <label class="block" for="password">Password</label>
-          <input class="w-full px-2 py-1 border rounded border-gray-400" type="password" name="password"  v-model="password">
+          <Field class="w-full px-2 py-1 border rounded border-gray-400" type="password" name="password" rules="required" />
+          <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
         </div>
         
         <div class="field w-full">
           <label class="block" for="passwordConfirm">Password Confirmation</label>
-          <input class="w-full px-2 py-1 border rounded border-gray-400" type="password" name="passwordConfirm"  v-model="passwordConfirmation">
+          <Field class="w-full px-2 py-1 border rounded border-gray-400" type="password" name="passwordConfirm" rules="required|confirmed:password" />
+          <ErrorMessage class="text-red-400" name="passwordConfirm"></ErrorMessage>
         </div>
 
         <div class="field w-full">
           <label class="block" for="country">Country</label>
-          <select class="w-full px-2 py-1 border rounded border-gray-400" name="country"  v-model="country">
-            <option selected>Select</option>
+          <Field class="w-full px-2 py-1 border rounded border-gray-400" name="country" rules="required" as="select" >
+            <option value="" disabled>Select</option>
             <option value="Mx">México</option>
             <option value="USA">Estados unidos</option>
-          </select>
+          </Field>
+          <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
         <div class="flex justify-center items-center gap-3 my-4">
-          <input type="checkbox" id="cbox" value="signDashboard" class="block" v-model="signDashboard"> <label class="block text-blue-500" for="cbox2">Sign me up as a coach and give me access to the Coach's Dashboard</label>
+          <Field type="checkbox" name="signDashboard" class="block" :value="true"/> 
+          <label class="block text-blue-500" for="cbox2">Sign me up as a coach and give me access to the Coach's Dashboard</label>
         </div>
         <div>
-          <input class="p-2 bg-purple-900 text-white" type="submit" value="Register" @click="submitSignUp">
+          <button class="p-2 bg-purple-900 text-white" >Sybmit</button>
         </div>
 
         <a href="#" class="underline text-purple-900">I already have an account</a>
 
-      </form>
+      </Form>
     </div>
   </div>
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from "vee-validate"
 export default {
-  data(){
-    return{
-      firstName:"",
-      LastName:"",
-      email:"",
-      password:"",
-      passwordConfirmation:"",
-      country:"",
-      signDashboard:false
-    }
+  components:{
+    Form,
+    Field,
+    ErrorMessage
   },
   methods:{
-    submitSignUp(e){
-      e.preventDefault();
-      alert(`
-        firstName:${this.firstName}
-        LastName:${this.LastName}
-        email:${this.email}
-        password:${this.password}
-        passwordConfirmation:${this.passwordConfirmation}
-        country:${this.country}
-        signDashboard:${this.signDashboard}
-`
-      )
+    submitSignUp(e,values){
+      console.log(e,values)
+      // e.preventDefault();
+      if(!e.signDashboard){
+        e.signDashboard = false
+      }
+      alert(JSON.stringify(e))
     }
   }
 
