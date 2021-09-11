@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <router-view class=" flex-grow bg-red-500"/>
+    <router-view class=" flex-grow"/>
   </div>
 </template>
 
@@ -77,6 +77,9 @@ export default {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
+}
+.router-link-active{
+  color:deepskyblue;
 }
 
 </style>

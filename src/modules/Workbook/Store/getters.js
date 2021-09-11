@@ -1,7 +1,10 @@
-// export const myGetter = async (state) => {
-//  return
-// }
+export const getWorkBookByTitle = (state) => (search="",language="",status="") => {
+  console.log(state,search,language,status)
+  if(search.length === 0 && language.length === 0 && status.length === 0) return state.workbooks
 
-// export const myGetter = async (state) => (extValue) => {
-//  return
-// }
+  return state.workbooks.filter(workbook => {
+    if ((workbook.title.toLowerCase().includes(search.toLowerCase()) && search!=="") || workbook.language===language || workbook.status===status ) {
+      return workbook
+    }
+  })
+}
