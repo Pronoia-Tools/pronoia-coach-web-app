@@ -1,5 +1,8 @@
 <template>
-  <div class="w-full p-10">
+  <div v-if="!workBook">
+    <SpinerVue/>
+  </div>
+  <div class="w-full p-10" v-else>
     <!-- Header -->
     <div class="w-full flex justify-between items-center">
       <FontAwesomeIcon :icon="Backward" class="text-3xl"/>
@@ -26,21 +29,21 @@
         <div class=" text-right col-span-8 row-span-6 h-96 flex flex-col gap-4">
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="title">Title: </label>
-              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full">
+              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.title">
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">By:</label>
-              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full">
+              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.author">
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">Edition:</label>
               <div class="flex gap-2 w-full">
-                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full">
+                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.edition">
                   <option value="1" selected>1st</option>
                   <option value="2">2nd</option>
                   <option value="3">3ed</option>
                 </select>
-                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full">
+                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.language">
                   <option >Select language</option>
                   <option value="Spanish">Español</option>
                   <option selected value="English">Ingles</option>
@@ -49,14 +52,14 @@
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">Published:</label>
-              <label class=" w-full text-left" for="author">Published:</label>
+              <label class=" w-full text-left" for="author">{{workBook.status}}</label>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">Price:</label>
               <div class="flex gap-2 w-full">
-                <input type="number" placeholder="19.99" class="border border-gray-500 rounded px-2 py-2 w-full">
+                <input type="number" placeholder="19.99" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.price">
           
-                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full">
+                <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.currency">
                   <option selected>Select currenci</option>
                   <option value="Spanish">USD</option>
                   <option value="English">PESOS</option>
@@ -65,7 +68,7 @@
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">Tags:</label>
-              <input v-model="tags" type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full">
+              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.tags">
           </div>
         </div>
                 
@@ -118,12 +121,16 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+import { mapGetters } from 'vuex';
+import SpinerVue from '../../../components/Spiner.vue';
+
+
 export default {
   components:{
-    ButoomCustomVue,FontAwesomeIcon
+    ButoomCustomVue,FontAwesomeIcon,SpinerVue
   },
   props: {
-    id: {
+    idWorkBook: {
       type: String,
       requird: true,
     },
@@ -132,9 +139,48 @@ export default {
     return{
       Backward:faArrowLeft,
       InfoCircle:faInfoCircle,
-      tags:['1','2']
+      workBook:null,
     }
   },
+  computed:{
+    ...mapGetters("workBook",["getWorkBookById"]),
+  },
+  methods:{
+    loadWorkBook(){
+      let workBookSelected
+
+      if (this.idWorkBook==="new") {
+        workBookSelected = {
+          title:"",
+          published:new Date(),
+          edition:1,
+          language:"",
+          price:"",
+          currency:"",
+          status:"Editable",
+          author:"",
+          tags:""
+        }
+      }else{
+        console.log("getWorkBookById",this.idWorkBook)
+        workBookSelected = this.getWorkBookById(this.idWorkBook) 
+        console.log(workBookSelected)
+        if (!workBookSelected){
+          console.log("fsdafsad")
+          this.$router.push({name:"no-workbook"})
+        }
+      }
+      this.workBook = workBookSelected
+    }
+  },
+  created(){
+    this.loadWorkBook()
+  },
+  watch:{
+    idWorkBook(){
+        this.loadWorkBook()
+    }
+  }
 };
 </script>
 

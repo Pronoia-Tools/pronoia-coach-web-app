@@ -10,18 +10,23 @@
         <font-awesome-icon :icon="sortDown" v-if="!dropdownWorkbooks"/>
         <font-awesome-icon :icon="sortUp" v-else/>
       </div>
-      <Spiner v-if="loading"/>
+      <Spiner v-if="getLoading"/>
         <!-- WORKBOOK LIST -->
 
-        <div v-for="workbook in workbooks" 
+        <div v-for="workbook in workBooksList" 
             v-show="dropdownWorkbooks" 
             :key="workbook.id" 
             class="flex justify-center items-center p-2 border border-transparent hover:border-gray-500 transition-all"
-            @click="$router.push({name:'woorkbook',params:{id:workbook.id}})"
+            @click="$router.push({name:'workbook',params:{idWorkBook:workbook.id}})"
         >
           {{workbook.title}}
         </div>
-        <div v-show="dropdownWorkbooks" class="flex justify-between items-center p-2 px-4 border border-transparent hover:border-gray-500 transition-all">
+        <div 
+          v-show="dropdownWorkbooks" 
+          class="flex justify-between items-center p-2 px-4 border border-transparent hover:border-gray-500 transition-all"
+          @click="$router.push({name:'workbook',params:{idWorkBook:'new'}})"
+        >
+          
           Create New Workbook <font-awesome-icon :icon="plus" />
         </div>
       
@@ -38,7 +43,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSortDown, faSortUp, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { mapActions,mapState } from 'vuex'
+import { mapActions,mapGetters } from 'vuex'
 import Spiner from '../../../components/Spiner.vue'
 
 export default {
@@ -64,8 +69,11 @@ export default {
     }
   },
   computed:{
-    ...mapActions("woordBook",["loadWorkbooks"]),
-    ...mapState("woordBook",["loading","workbooks"])
+    ...mapActions("workBook",["loadWorkbooks"]),
+    ...mapGetters("workBook",["getWorkBooks","getLoading"]),
+    workBooksList(){
+      return this.getWorkBooks
+    }
   },
   created(){
     this.loadData() 

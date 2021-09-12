@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto" v-if="loading">
+  <div class="container mx-auto" v-if="getLoading">
     <Spiner/>
   </div>
   <div class="" v-else>
@@ -33,7 +33,7 @@
         <span class="col-span-2">Options</span>
       </div>
       
-      <WorkBookRow v-for="(workbook) in getWorkBooks" :key="workbook" :workbookDetails="workbook"/>
+      <WorkBookRow v-for="(workbook) in getWorkBooks" :key="workbook.id" :workbookDetails="workbook"/>
       
 
     </div>
@@ -66,8 +66,8 @@ export default {
     }
   },
   computed:{
-    ...mapState("woordBook",["loading","workbooks"]),
-    ...mapGetters("woordBook",["getWorkBookByTitle"]),
+    ...mapState("workBook",["loading","workbooks"]),
+    ...mapGetters("workBook",["getWorkBookByTitle","getLoading"]),
     getWorkBooks(){
       return this.getWorkBookByTitle(this.searchTitle,this.searchlanguage,this.searchStatus)
     }

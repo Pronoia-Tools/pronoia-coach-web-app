@@ -15,7 +15,10 @@ export const loadWorkbooks = async ({commit}) => {
       edition:1,
       language:"Spanish",
       price:30,
+      currency:"USD",
       status:"Published",
+      author:"Victor Manuel",
+      tags:["1","11","sasad"]
     },
     {
       id:"2",
@@ -24,16 +27,22 @@ export const loadWorkbooks = async ({commit}) => {
       edition:2,
       language:"English",
       price:50,
+      currency:"USD",
       status:"Editable",
+      author:"Victor Manuel",
+      tags:["1","2","sasad"]
     },
-    {
+    { 
       id:"3",
       title:"The world of busines",
       published:new Date(),
       edition:1,
       language:"English",
       price:200,
+      currency:"USD",
       status:"Uneditable",
+      author:"Victor Manuel",
+      tags:["1","3","sasad"]
     },
   ]
   setTimeout(() => {

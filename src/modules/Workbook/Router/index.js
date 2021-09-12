@@ -4,16 +4,16 @@ export default {
   children: [
     {
       path:"",
-      name:"no-woorkbook",
+      name:"no-workbook",
       component:()=>import(/* webpackChunkName: "NoEntryS" */ "../Views/NoWorkBookSelected.vue")
     },
     {
-      path: ":id",
-      name: "woorkbook",
+      path: ":idWorkBook",
+      name: "workbook",
       component: () => import(/* webpackChunkName: "WoorkBook" */ "../Views/WorkBook.vue"),
       props: (route) => {
         return {
-          id: route.params.id
+          idWorkBook: route.params.idWorkBook
         }
 
       }
