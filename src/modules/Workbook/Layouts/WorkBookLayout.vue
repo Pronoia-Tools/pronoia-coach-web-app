@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class=" w-2/12 border-r border-black">
+    <div class=" w-64 border-r border-black">
       <div class="border-b border-black flex justify-between items-center p-2">
         Sales <font-awesome-icon :icon="sortDown" />
       </div>
@@ -13,7 +13,12 @@
       <Spiner v-if="loading"/>
         <!-- WORKBOOK LIST -->
 
-        <div v-for="workbook in workbooks" v-show="dropdownWorkbooks" :key="workbook.id" class="flex justify-center items-center p-2 border border-transparent hover:border-gray-500 transition-all">
+        <div v-for="workbook in workbooks" 
+            v-show="dropdownWorkbooks" 
+            :key="workbook.id" 
+            class="flex justify-center items-center p-2 border border-transparent hover:border-gray-500 transition-all"
+            @click="$router.push({name:'woorkbook',params:{id:workbook.id}})"
+        >
           {{workbook.title}}
         </div>
         <div v-show="dropdownWorkbooks" class="flex justify-between items-center p-2 px-4 border border-transparent hover:border-gray-500 transition-all">
@@ -24,7 +29,7 @@
         Customers <font-awesome-icon :icon="sortUp" />
       </div>
     </div>
-    <div class="flex-grow">    
+    <div class="flex-grow bg-red-400">    
       <router-view></router-view>
     </div>
   </div>

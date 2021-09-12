@@ -8,3 +8,11 @@ export const getWorkBookByTitle = (state) => (search="",language="",status="") =
     }
   })
 }
+
+export const getWorkBookById = (state) => (id) =>{
+  const workbook = state.workbooks.find(workbook => workbook.id === id)
+
+  if(!workbook) return 
+
+  return{...workbook}
+}

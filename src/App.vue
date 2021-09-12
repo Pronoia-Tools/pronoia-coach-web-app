@@ -82,4 +82,16 @@ export default {
   color:deepskyblue;
 }
 
+h1{
+  font-size: 3rem;
+  font-weight: bold !important;
+}
+h2{
+  font-size: 2rem !important;
+  font-weight: bold !important;
+}
+h3{
+  font-size: 1rem;
+}
+
 </style>
