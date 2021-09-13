@@ -3,7 +3,7 @@
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="flex justify-center">
+    <div class="flex justify-center mx-10 my-10">
       <img src="@/assets/logoWF.png" id="icon" alt="User Icon" />
     </div>
 
@@ -32,7 +32,7 @@
       <div className="flex justify-center my-10">
         <input
           type="submit"
-          class="bg-blue-800 p-3 text-white"
+          class="bg-blue-800 p-3 text-white cursor-pointer"
           value="Log In"
         />
       </div>
