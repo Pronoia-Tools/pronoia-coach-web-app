@@ -51,10 +51,13 @@ export const loadWorkbooks = async ({commit}) => {
 }
 
 export const saveWorkbook = async ({commit},workbook) =>{
-  console.log(commit,workbook)
+  // console.log(commit,workbook)
 
-  // if(!data) return
-  commit("saveWorkbook",workbook)
+  
+  const data = await new Promise(resolve => setTimeout(() => resolve(workbook), 1000));
+  if(!data) return
+  console.log(data)
+  commit("saveWorkbook",{id:"4" ,...data})
 
   return true
 }
@@ -62,8 +65,10 @@ export const saveWorkbook = async ({commit},workbook) =>{
 export const updateWorkbook = async ({commit},workbook) =>{
   console.log(commit,workbook)
 
-  // if(!data) return
-  commit("updateWorkbook",workbook)
+  const data = await new Promise(resolve => setTimeout(() => resolve(workbook), 1000));
+  if(!data) return
+
+  commit("updateWorkbook",data)
 
   return true
 }
@@ -72,6 +77,9 @@ export const deleteWorkbook = async ({commit},id) =>{
   console.log(commit,id)
 
   // if(!data) return
+  const data = await new Promise(resolve => setTimeout(() => resolve(id), 1000));
+  if(!data) return
+
   commit("deleteWorkbook",id)
 
   return true

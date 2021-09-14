@@ -135,7 +135,7 @@ import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 import { mapGetters, mapActions } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
-
+import Swal from 'sweetalert2'
 
 export default {
   components:{
@@ -186,14 +186,50 @@ export default {
       this.workBook = workBookSelected
     },
 
-    saveNewWorkbook(){
-      this.saveWorkbook(this.workBook)
+    async saveNewWorkbook(){
+      new Swal({
+        title: 'Espere por favor!',
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+
+
+      await this.saveWorkbook(this.workBook)
+
+      Swal.fire("Guardado", "entrada guardada",'success')
     },
-    updateCurrentWorkbook(){
-      this.updateWorkbook(this.workBook)
+    async updateCurrentWorkbook(){
+      new Swal({
+        title: 'Espere por favor!',
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+
+      await this.updateWorkbook(this.workBook)
+
+      Swal.fire("Actualizado", "entrada actualizada",'success')
     },
     deleteCurrentWorkbook(){
-      this.deleteWorkbook(this.workBook.id)
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "you will see this in the trashcan!!",
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: `Delete`,
+        denyButtonText: `Cancel`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          new Swal({
+            title: 'Espere por favor!',
+            allowOutsideClick:false
+          })
+          Swal.showLoading()
+          await this.deleteWorkbook(this.workBook.id)
+          Swal.fire("Deleted", "entrada deleted",'success')
+          this.$router.push({name:"no-workbook"})
+        } 
+      })
+      
     }
   },
   created(){
