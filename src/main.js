@@ -10,4 +10,8 @@ import * as rules from "./formRules"
 //calls every rule to apply inside forms
 rules
 
-createApp(App).use(i18n).use(store).use(router).mount('#app')
+createApp(App)
+  .use(i18n)
+  .use(store)
+  .use(router)
+  .mount("#app");
