@@ -1,5 +1,5 @@
 <template>
-  <button class="px-4 py-2 text-gray-100 rounded" :class="isSolid">
+  <button class="px-4 py-2 rounded" :class="isSolid">
     <slot></slot>
   </button>
 </template>
@@ -14,7 +14,7 @@ export default {
   },
   computed:{
     isSolid(){
-      return this.transparent ? "bg-transparent border border-purple-800":"bg-purple-800"
+      return this.transparent ? "bg-transparent border border-purple-800 text-black":"bg-purple-800 text-white"
     }
   }
 }
