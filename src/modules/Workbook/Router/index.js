@@ -1,6 +1,10 @@
 export default {
+  
   name: "WorkBookLayout",
-  component: () => import(/* webpackChunkName: "WorkBookLayout" */ "../Layouts/WorkBookLayout.vue"),
+  component: () =>
+    import(
+      /* webpackChunkName: "WorkBookLayout" */ "../Layouts/WorkBookLayout.vue"
+    ),
   children: [
     {
       path:"",
