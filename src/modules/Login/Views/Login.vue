@@ -8,8 +8,6 @@
     </div>
 
     <!-- Login Form -->
-    <h1 className="text-title">hello</h1>
-    <p className="text-subtitle">subtitle</p>
     <Form @submit="submitLogin" class=" text-center  container mx-auto">
       <div class="my-4">
         <p class="text-gray-600">Email</p>
