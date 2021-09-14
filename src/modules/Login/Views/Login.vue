@@ -8,26 +8,30 @@
     </div>
 
     <!-- Login Form -->
-    <form class=" text-center  container mx-auto" v-on:submit.prevent="login">
+    <Form @submit="submitLogin" class=" text-center  container mx-auto">
       <div class="my-4">
         <p class="text-gray-600">Email</p>
-        <input
-          type="text"
+        <Field
+          type="email"
           id="login"
           class=" border border-gray-300 py-2"
-          name="login"
           v-model="usuario"
+          name="email"
+          rules="required"
         />
+        <br />
+        <ErrorMessage class="text-red-400" name="email"></ErrorMessage>
       </div>
       <div class="my-4">
         <p class="text-gray-600">Password</p>
-        <input
-          type="text"
-          id="password"
+        <Field
+          type="password"
           class=" border border-gray-300 py-2"
-          name="login"
-          v-model="password"
+          name="password"
+          rules="required"
         />
+        <br />
+        <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
       </div>
       <div className="flex justify-center my-10">
         <input
@@ -36,7 +40,7 @@
           value="Log In"
         />
       </div>
-    </form>
+    </Form>
 
     <!-- Remind Passowrd -->
     <div class="flex flex-col text-center">
@@ -53,15 +57,20 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-
+import { Form, Field, ErrorMessage } from "vee-validate";
 export default {
   name: "Login",
-  components: {},
+  components: { Form, Field, ErrorMessage },
   data() {
     return { usuario: "", password: "" };
   },
   methods: {
-    login() {
+    submitLogin(e, values) {
+      console.log(e, values);
+      // e.preventDefault();
+      if (!e.signDashboard) {
+        e.signDashboard = false;
+      }
       let json = { usuario: this.usuario, password: this.password };
       console.log(this.usuario);
       axios.post("http://solodata.es/auth", json).then((data) => {
