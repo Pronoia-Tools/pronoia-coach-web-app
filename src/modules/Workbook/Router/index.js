@@ -7,25 +7,20 @@ export default {
     ),
   children: [
     {
-      path: ":id",
-      name: "woorkbook",
-      component: () =>
-        import(/* webpackChunkName: "WoorkBook" */ "../Views/WorkBook.vue"),
-      props: (route) => {
-        return {
-          id: route.params.id,
-        };
-      },
+      path:"",
+      name:"no-workbook",
+      component:()=>import(/* webpackChunkName: "NoEntryS" */ "../Views/NoWorkBookSelected.vue")
     },
     {
-      path: "/login",
-      name: "login",
-      component: () => import("../../Login/Views/Login.vue"),
+      path: ":idWorkBook",
+      name: "workbook",
+      component: () => import(/* webpackChunkName: "WoorkBook" */ "../Views/WorkBook.vue"),
       props: (route) => {
         return {
-          id: route.params.id,
-        };
-      },
-    },
-  ],
-};
+          idWorkBook: route.params.idWorkBook
+        }
+
+      }
+    }
+  ]
+}
