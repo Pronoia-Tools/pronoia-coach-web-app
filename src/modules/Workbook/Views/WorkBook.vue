@@ -76,6 +76,14 @@
         </div>
                 
         <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" placeholder="Describe yourself here..."></textarea>
+        
+        <div class="text-right col-span-12">
+          <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">Save Workbook</ButoomCustomVue>
+          <div v-else>
+            <ButoomCustomVue class="mr-4" @click="updateCurrentWorkbook">Edit Workbook</ButoomCustomVue>
+            <ButoomCustomVue @click="deleteCurrentWorkbook" color="red">Delete Workbook</ButoomCustomVue>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -125,7 +133,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 
 
@@ -150,6 +158,7 @@ export default {
     ...mapGetters("workBook",["getWorkBookById"]),
   },
   methods:{
+    ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
     loadWorkBook(){
       let workBookSelected
 
@@ -175,6 +184,16 @@ export default {
         }
       }
       this.workBook = workBookSelected
+    },
+
+    saveNewWorkbook(){
+      this.saveWorkbook(this.workBook)
+    },
+    updateCurrentWorkbook(){
+      this.updateWorkbook(this.workBook)
+    },
+    deleteCurrentWorkbook(){
+      this.deleteWorkbook(this.workBook.id)
     }
   },
   created(){

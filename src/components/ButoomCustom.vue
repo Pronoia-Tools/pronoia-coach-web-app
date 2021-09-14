@@ -10,11 +10,15 @@ export default {
     transparent:{
       type:Boolean,
       default:false
+    },
+    color:{
+      type:String,
+      default:"purple"
     }
   },
   computed:{
     isSolid(){
-      return this.transparent ? "bg-transparent border border-purple-800 text-black":"bg-purple-800 text-white"
+      return this.transparent ? `bg-transparent border border-${this.color}-800 text-black`:`bg-${this.color}-800 text-white`
     }
   }
 }

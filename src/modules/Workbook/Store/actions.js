@@ -49,3 +49,30 @@ export const loadWorkbooks = async ({commit}) => {
     commit("setWorkbooks",data)
   }, 1000);
 }
+
+export const saveWorkbook = async ({commit},workbook) =>{
+  console.log(commit,workbook)
+
+  // if(!data) return
+  commit("saveWorkbook",workbook)
+
+  return true
+}
+
+export const updateWorkbook = async ({commit},workbook) =>{
+  console.log(commit,workbook)
+
+  // if(!data) return
+  commit("updateWorkbook",workbook)
+
+  return true
+}
+
+export const deleteWorkbook = async ({commit},id) =>{
+  console.log(commit,id)
+
+  // if(!data) return
+  commit("deleteWorkbook",id)
+
+  return true
+}

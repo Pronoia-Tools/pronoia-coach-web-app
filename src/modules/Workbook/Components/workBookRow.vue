@@ -8,9 +8,9 @@
     <span class="col-span-1 hidden md:block">{{workbookDetails.price}}$</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.status}}</span>
     <div class="col-span-2 flex gap-4 justify-center flex-wrap">
-      <font-awesome-icon :icon="myEdit" />
-      <font-awesome-icon :icon="myEye" />
-      <font-awesome-icon :icon="myTrash" />
+      <font-awesome-icon class="cursor-pointer" :icon="myEdit" />
+      <font-awesome-icon class="cursor-pointer" :icon="myEye"  @click="$router.push({name:'workbook',params:{idWorkBook:workbookDetails.id}})"/>
+      <font-awesome-icon class="cursor-pointer" :icon="myTrash" />
     </div>
   </div>
 </template>
