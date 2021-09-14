@@ -5,6 +5,7 @@ export const required = defineRule('required', value => {
     return 'This field is required';
   }
 
+  
   return true;
 });
 
