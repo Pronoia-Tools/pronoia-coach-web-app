@@ -79,9 +79,9 @@
         
         <div class="text-right col-span-12">
           <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">Save Workbook</ButoomCustomVue>
-          <div v-else>
-            <ButoomCustomVue class="mr-4" @click="updateCurrentWorkbook">Edit Workbook</ButoomCustomVue>
-            <ButoomCustomVue @click="deleteCurrentWorkbook" color="red">Delete Workbook</ButoomCustomVue>
+          <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
+            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">Edit Workbook</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="red">Delete Workbook</ButoomCustomVue>
           </div>
         </div>
       </div>

@@ -63,7 +63,7 @@ export default {
 
 
       openUserMenu:false,
-      openMovilMenu:true
+      openMovilMenu:false
     }
   },
 
