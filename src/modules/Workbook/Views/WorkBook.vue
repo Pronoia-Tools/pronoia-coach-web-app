@@ -22,7 +22,7 @@
 
     <!-- WORKBOOK DETAILS v2 -->
     <div>
-      <h2>Workbook Information</h2>
+      <h2 class=" text-subtitle font-semibold">Workbook Information</h2>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center">
