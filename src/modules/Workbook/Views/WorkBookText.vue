@@ -12,7 +12,7 @@
         Menu
       </ButoomCustomVue>
     </div>
-    <div >
+    <div class="">
       <div v-if="editor" class=" flex gap-2 flex-wrap border border-border">
         <button @click="editor.chain().focus().undo().run()">
           <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
@@ -103,7 +103,7 @@
           bullet list
         </button>
       </floating-menu>
-      <editor-content :editor="editor" class="px-10"/>
+      <editor-content :editor="editor" class="px-10 h-screen"/>
     </div>
 
     <!-- SIDEBAREXTRA -->
@@ -308,6 +308,7 @@ h3 {
 
 /* Basic editor styles */
 .ProseMirror {
+  min-height: 100%;
   padding: 1rem;
   > * + * {
     margin-top: 0.75em;
