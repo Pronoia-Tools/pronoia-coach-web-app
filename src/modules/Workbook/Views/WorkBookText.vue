@@ -2,6 +2,7 @@
   <!-- HEADER --> 
   <div class="relative">
     <div class=" p-5 pl-20 flex justify-between items-center">
+<<<<<<< HEAD
       <h1>Book detail</h1>
       
     </div>
@@ -79,6 +80,80 @@
               Menu
             </ButoomCustomVue>
         </div>
+=======
+      <span>Book detail</span>
+      <ButoomCustomVue @click="saveWoorkbook">
+        Save
+      </ButoomCustomVue>
+      <ButoomCustomVue @click="toogleSidebarOpen">
+        <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
+        <FontAwesomeIcon v-else :icon="myChevronLeft"/>
+        Menu
+      </ButoomCustomVue>
+    </div>
+    <div class="">
+      <div v-if="editor" class=" flex gap-2 flex-wrap border border-border">
+        <button @click="editor.chain().focus().undo().run()">
+          <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
+        </button>
+        <button class="mr-5" @click="editor.chain().focus().redo().run()">
+          <FontAwesomeIcon :icon="myRedo"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+          <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+          <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
+          <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+          <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
+          <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
+          <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
+        </button>
+
+        <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
+          paragraph
+        </button>
+
+        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+          H1
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+          H2
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+          H3
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
+          H4
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
+          H5
+        </button>
+        <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
+          H6
+        </button>
+
+        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+          <FontAwesomeIcon :icon="myListOl"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+          <FontAwesomeIcon :icon="myList"></FontAwesomeIcon>
+        </button>
+        <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
+          <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
+        </button>
+        <button @click="addImage">
+          <FontAwesomeIcon :icon="myImage"></FontAwesomeIcon>
+        </button>
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
         
       </div>
 
@@ -108,13 +183,22 @@
           bullet list
         </button>
       </floating-menu>
+<<<<<<< HEAD
       <editor-content :editor="editor" class="h-screen" spellcheck="false"/>
+=======
+      <editor-content :editor="editor" class="px-10 h-screen"/>
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
     </div>
 
     <!-- SIDEBAREXTRA -->
 
+<<<<<<< HEAD
     <div class="fixed h-screen transition-all duration-500 bg-gray-100 border border-gray-600" :class="isSidebarOpen">
       <div class="w-64 h-1/3  flex flex-wrap justify-around border border-black">
+=======
+    <div class="absolute h-screen top-20 right-0 transition-all duration-500" :class="isSidebarOpen">
+      <div class="w-80 h-1/3 bg-red-500 flex flex-wrap justify-around">
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
         <img 
           v-for="(image, index) in imagesArray" 
           :key="index" 
@@ -140,7 +224,10 @@ import Typography from '@tiptap/extension-typography'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import Image from '@tiptap/extension-image'
 import {Toast} from '@/components/Toast.js'
+<<<<<<< HEAD
 import Underline from '@tiptap/extension-underline'
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
 
 export default {
   components: {
@@ -177,12 +264,20 @@ export default {
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico",
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355578/qrgrpfyaybctx2zhvldk.png"
       ],
+<<<<<<< HEAD
       windowTop:0
     }
   },
   computed:{
     isSidebarOpen(){      
       return `${this.windowTop < 180?"right-0 top-44":"left-0 top-14"} ${this.openTableContent?`text-white invisible w-1 `:` w-64 visible `}` 
+=======
+    }
+  },
+  computed:{
+    isSidebarOpen(){
+      return this.openTableContent?"text-white invisible w-1 bg-blue-300":" w-80 visible bg-red-300"
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
     },
     getContentTable(){
       var titles = [];
@@ -212,12 +307,15 @@ export default {
         }
       }
       return titles;
+<<<<<<< HEAD
     },
     fixed(){
       if(this.windowTop > 180 ){
         return "fixed top-0 left-0 bg-blue-400 w-full"
       }
       return "" 
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
     }
   },
   methods:{
@@ -232,7 +330,11 @@ export default {
       navigator.clipboard.writeText(image)
     },
     saveWoorkbook(){
+<<<<<<< HEAD
       console.log(this.editor.getHTML())
+=======
+      console.log(this.editor.getJSON())
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
     },
     addImage() {
       const url = window.prompt('URL')
@@ -244,11 +346,14 @@ export default {
     toogleSidebarOpen(){
       this.openTableContent = !this.openTableContent
     },
+<<<<<<< HEAD
     onScroll() {
       console.log(window.top.scrollY)
       this.windowTop = window.top.scrollY /* or: e.target.documentElement.scrollTop */
     }
 
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   },
 
   mounted() {
@@ -256,6 +361,7 @@ export default {
       extensions: [
         StarterKit,
         Typography,
+<<<<<<< HEAD
         Image,
         Underline 
       ],
@@ -269,6 +375,52 @@ export default {
   beforeUnmount() {
     this.editor.destroy(),
     window.removeEventListener("scroll", this.onScroll)
+=======
+        Image
+      ],
+      content: `
+        <h1>
+          Hi there,
+        </h1>
+        <h2>
+          Hi there,
+        </h2>
+        <h3>
+          Hi there,
+        </h3>
+        <p>
+          this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
+        </p>
+        <ul>
+          <li>
+            That’s a bullet list with one …
+          </li>
+          <li>
+            … or two list items.
+          </li>
+        </ul>
+        <p>
+          Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
+        </p>
+        <pre><code class="language-css">body {
+  display: none;
+}</code></pre>
+        <p>
+          I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
+        </p>
+        <blockquote>
+          Wow, that’s amazing. Good work, boy! 👏
+          <br />
+          — Mom
+        </blockquote>
+      `,
+      
+    })
+  },
+
+  beforeUnmount() {
+    this.editor.destroy()
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   },
 }
 </script>
@@ -280,6 +432,7 @@ button{
   padding: 0.5em;
 }
 
+<<<<<<< HEAD
 
 
 /* Basic editor styles */
@@ -290,20 +443,43 @@ button{
   &:focus{
     border: none;
   }
+=======
+h1 {
+  font-size: 3rem;
+  font-weight: bold !important;
+}
+h2 {
+  font-size: 2rem !important;
+  font-weight: bold !important;
+}
+h3 {
+  font-size: 1rem;
+  font-weight: bold !important;
+}
+
+/* Basic editor styles */
+.ProseMirror {
+  min-height: 100%;
+  padding: 1rem;
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   > * + * {
     margin-top: 0.75em;
   }
 
+<<<<<<< HEAD
   ol{
     list-style: circle;
   }
   ul{
     list-style: decimal;
   }
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   ul,
   ol {
     padding: 0 1rem;
   }
+<<<<<<< HEAD
   h1 {
     font-size: 3rem;
     font-weight: bold !important;
@@ -316,6 +492,9 @@ button{
     font-size: 1rem;
     font-weight: bold !important;
   }
+=======
+
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   h1,
   h2,
   h3,
@@ -323,7 +502,10 @@ button{
   h5,
   h6 {
     line-height: 1.1;
+<<<<<<< HEAD
     text-align: center;
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
   }
 
   code {

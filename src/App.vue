@@ -2,16 +2,19 @@
   <div class="flex flex-col min-h-screen">
     <NavbarVue />
     <router-view class=" flex-grow" />
+    <FeedbackButton />
   </div>
 </template>
 
 <script>
 import NavbarVue from "./components/Navbar.vue";
+import FeedbackButton from "./modules/FeedbackButton/Views/FeedbackButton.vue";
 
 export default {
   name: "MyComponent",
   components: {
     NavbarVue,
+    FeedbackButton,
   },
 };
 </script>

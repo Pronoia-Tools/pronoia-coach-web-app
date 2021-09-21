@@ -9,6 +9,7 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
@@ -16,7 +17,10 @@
     "@tiptap/extension-floating-menu": "^2.0.0-beta.28",
     "@tiptap/extension-image": "^2.0.0-beta.15",
     "@tiptap/extension-typography": "^2.0.0-beta.14",
+<<<<<<< HEAD
     "@tiptap/extension-underline": "^2.0.0-beta.16",
+=======
+>>>>>>> 83a7ae05f436229c89baf9004ad5b82cdacdf806
     "@tiptap/starter-kit": "^2.0.0-beta.105",
     "@tiptap/vue-3": "^2.0.0-beta.59",
     "autoprefixer": "^9",
@@ -28,7 +32,7 @@
     "vee-validate": "^4.4.10",
     "vue": "^3.0.0",
     "vue-i18n": "^9.1.0",
-    "vue-router": "^4.0.0-0",
+    "vue-router": "^4.0.11",
     "vue-sweetalert2": "^5.0.2",
     "vuex": "^4.0.0-0"
   },
