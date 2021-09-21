@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center border border-black py-2 px-4 relative z-50">
-    <div>
-      <img src="logo.png" alt="logo">
+    <div class=" w-28">
+      <img src="@/assets/logoWF.png" class="w-full " alt="logo navbar">
     </div>
 
     <!-- LINKS -->
@@ -33,7 +33,7 @@
         <font-awesome-icon :icon="myArrowDown"/>
 
         <transition name="slide-fade">
-          <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black">
+          <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
             <router-link to="/">Settings</router-link>
             <router-link to="/">Log out</router-link>
           </div>
