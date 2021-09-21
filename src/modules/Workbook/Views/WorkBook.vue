@@ -8,7 +8,7 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <FontAwesomeIcon :icon="Backward" class="text-3xl"/>
-        <ButoomCustomVue transparent="true">Edit Workbook</ButoomCustomVue>
+        <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">Edit Workbook</ButoomCustomVue>
       </div>
       <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">Create a Copy</ButoomCustomVue>
@@ -22,7 +22,7 @@
 
     <!-- WORKBOOK DETAILS v2 -->
     <div>
-      <h2>Workbook Information</h2>
+      <h2 class=" text-subtitle font-semibold">Workbook Information</h2>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center">

@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <!-- SIDEBAR -->
-    <div class="border-r border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
+    <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
       <div class="border-b border-black flex justify-between items-center p-2">
         Sales <font-awesome-icon :icon="sortDown" />
       </div>
@@ -36,8 +36,8 @@
 
     </div>
     <div class="flex-grow relative">    
-      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700 rounded-r" @click="toogleSidebarOpen"/>
-      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700 rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700 z-50" @click="toogleSidebarOpen"/>
       <router-view></router-view>
     </div>
   </div>
