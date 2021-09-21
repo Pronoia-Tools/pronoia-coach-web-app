@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <!-- SIDEBAR -->
-    <div class="border-r border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
+    <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
       <div class="border-b border-black flex justify-between items-center p-2">
         Sales <font-awesome-icon :icon="sortDown" />
       </div>
