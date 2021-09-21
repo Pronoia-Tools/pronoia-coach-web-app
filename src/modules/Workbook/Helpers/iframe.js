@@ -61,9 +61,9 @@ export default Node.create({
     return {
       setIframe: (options) => ({ tr, dispatch }) => {
         const { selection } = tr
-        console.log("options", options.src)
+        
         const newURL = {src:options.src.replace("watch?v=","embed/")}
-        console.log("newURL", newURL)
+        
         const node = this.type.create(newURL)
         if (dispatch) {
           tr.replaceRangeWith(selection.from, selection.to, node)
