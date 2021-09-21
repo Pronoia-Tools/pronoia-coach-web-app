@@ -34,6 +34,11 @@ const routes = [
       ),
   },
   {
+    path: "/list",
+    name: "list",
+    component: () => import("../modules/List/Views/List.vue"),
+  },
+  {
     path: "/workbook",
     ...workBookRouter,
   },
