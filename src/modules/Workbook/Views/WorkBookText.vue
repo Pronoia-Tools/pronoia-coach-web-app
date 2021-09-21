@@ -68,6 +68,9 @@
           <button @click="addImage">
             <FontAwesomeIcon :icon="myImage"></FontAwesomeIcon>
           </button>
+          <button @click="addVideo">
+            <FontAwesomeIcon :icon="myImage"></FontAwesomeIcon>
+          </button>
         </div>
         <div class="">
           <ButoomCustomVue @click="saveWoorkbook" class="mr-3">
@@ -134,13 +137,16 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight } from '@fortawesome/free-solid-svg-icons'
+
 import { Editor, EditorContent, FloatingMenu  } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Typography from '@tiptap/extension-typography'
-import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import Image from '@tiptap/extension-image'
-import {Toast} from '@/components/Toast.js'
 import Underline from '@tiptap/extension-underline'
+import Iframe from "../Helpers/iframe"
+
+import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+import {Toast} from '@/components/Toast.js'
 
 export default {
   components: {
@@ -241,6 +247,13 @@ export default {
         this.editor.chain().focus().setImage({ src: url }).run()
       }
     },
+    addVideo() {
+      const url = window.prompt('URL')
+
+      if (url) {
+        this.editor.chain().focus().setIframe({ src: url }).run()
+      }
+    },
     toogleSidebarOpen(){
       this.openTableContent = !this.openTableContent
     },
@@ -257,10 +270,13 @@ export default {
         StarterKit,
         Typography,
         Image,
-        Underline 
+        Underline,
+        Iframe
       ],
       content: `
         <p><strong>Every flight begins with a fall.</strong></p><p><em>A ruler who hides behind paid executioners soon forgets what death is.</em></p><p><u>Hear my words, and bear witness to my vow. </u></p><p><s>Night gathers, and now my watch begins. It shall not end until my death I </s></p><p><code>shall take no wife, hold no lands, father no children. </code></p><pre><code>I shall wear no crowns and win no glory. I shall live and die at my post. </code></pre><ul><li><p>I am the sword in the darkness.</p></li><li><p>I am the watcher </p></li><li><p>on the walls. </p></li></ul><ol><li><p>I am the fire that burns </p></li></ol><ol><li><p>against the cold, </p></li></ol><ol><li><p>the light that brings the dawn</p></li></ol><p>The horn that wakes the sleepers, the shield that guards the realms of men. I pledge my life and honor to the Night’s Watch, for this night and all the nights to come.</p><img src="https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico" alt="image workbook"><h1>LOREM 1</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sodales, nibh ac ullamcorper egestas, augue justo interdum erat, id placerat nisl urna in felis. Vestibulum commodo imperdiet dui. Nunc at lacinia purus. Sed dictum turpis ultricies ex convallis, eget scelerisque ex auctor. Nullam pretium urna in est condimentum facilisis. Aenean euismod est quam, vitae fermentum sapien lobortis a. Mauris vitae leo quis nisl volutpat egestas. Nullam dictum, leo vel convallis ultrices, urna nunc laoreet mi, ut ultricies lacus nisi in ligula. Pellentesque eleifend viverra nisi, non gravida neque sodales sed. Aliquam et tortor fringilla, dapibus massa quis, porttitor mauris. Pellentesque placerat varius mi, quis suscipit lectus convallis quis.</p><p>Integer sodales mauris justo, nec accumsan quam lacinia ut. Pellentesque sit amet metus aliquet nisl cursus ultricies quis ut libero. Nullam feugiat elit pulvinar volutpat facilisis. Ut interdum quam libero, quis maximus est imperdiet auctor. Aliquam suscipit, nunc nec gravida auctor, turpis sem eleifend nunc, ut tincidunt sapien odio in libero. Pellentesque nec posuere nisi. Sed auctor est a diam elementum bibendum. Sed luctus sodales mi sit amet malesuada. Mauris egestas ex mauris, vel congue urna commodo a. Sed scelerisque nisi malesuada, gravida felis vel, porta nisi.</p><p>Nullam eu orci accumsan, laoreet turpis vel, vestibulum neque. Proin et nulla vel ligula blandit convallis vel a lacus. Cras nisl tellus, cursus at blandit vitae, egestas vel odio. Pellentesque fermentum urna est, eget dapibus urna lacinia et. Vestibulum id leo quis nulla convallis tempus. Sed cursus, ex sed luctus mattis, augue enim aliquam purus, eget ornare dui ex sed dui. Sed luctus hendrerit porttitor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;</p><p>Nulla varius id augue sed tempor. Fusce interdum, nisi quis pellentesque scelerisque, mi sem porttitor urna, lobortis suscipit turpis urna id est. In rhoncus lacus vel felis congue tristique. Mauris tincidunt, tellus eget auctor feugiat, ante metus posuere justo, ac volutpat justo urna id urna. Cras ut urna vel turpis porta placerat. Sed ac facilisis arcu, id ornare est. Duis tincidunt tortor finibus lectus sollicitudin, quis mollis arcu malesuada. Praesent fringilla porta massa a hendrerit. Pellentesque maximus tincidunt augue, eget egestas enim consectetur nec. Etiam ac luctus massa. Cras ac libero egestas, ultricies diam in, luctus nulla. Proin at venenatis diam. Nulla commodo at nibh id posuere. Sed lobortis eleifend tortor, eget tincidunt quam aliquet in.</p><h2>LOREM 2</h2><p>Ut interdum auctor tristique. Ut eget erat et erat porttitor auctor. Nullam non congue nunc, iaculis aliquet quam. Sed ex odio, lacinia sed risus eget, cursus dapibus ipsum. Sed eleifend ante quis sagittis vulputate. Etiam consequat, turpis vel eleifend pulvinar, erat sem tristique orci, in viverra tellus libero et tortor. Etiam mollis ex nisl, quis congue metus efficitur in. Aliquam eget dignissim nunc. Phasellus sed enim at risus malesuada hendrerit. Sed ultricies luctus ante nec maximus. Pellentesque finibus ipsum quis tellus aliquet dignissim. Fusce a elit quis quam elementum sodales. Ut non orci vitae libero vestibulum mattis.</p><h2>LOREM 2.1</h2><p>Morbi sed lacus id erat blandit eleifend. Aliquam feugiat, risus vitae scelerisque sodales, massa diam lobortis tellus, at convallis odio nibh in est. Vestibulum quis commodo libero, vitae egestas massa. Aenean auctor mauris ut leo auctor hendrerit. Suspendisse imperdiet quam eu tortor fermentum, vel rhoncus ligula mollis. Pellentesque et lorem et quam tincidunt hendrerit in vitae augue. Vivamus purus nulla, convallis a leo vel, tincidunt tincidunt ligula. Ut a mattis eros. Curabitur semper, erat et lobortis egestas, tortor diam efficitur augue, quis tincidunt justo est quis risus.</p><p>Pellentesque malesuada condimentum interdum. Morbi malesuada, ligula non porta tempor, massa mi suscipit ante, a facilisis mi arcu at ipsum. Cras ultricies, leo vel aliquet semper, sem est porttitor est, et egestas nisi lacus eget metus. Maecenas non risus at purus ultricies fringilla. Integer faucibus ut arcu id condimentum. Pellentesque sagittis ultricies orci, et laoreet nisl mattis sed. Quisque elementum fringilla justo, id dictum nulla. Fusce urna leo, sollicitudin vel nulla ut, hendrerit molestie enim. Donec sodales euismod odio, et molestie erat vulputate et. Nullam imperdiet sapien a lorem finibus, vitae cursus arcu viverra. Mauris velit augue, ultrices congue tristique eget, faucibus vel massa.</p><p>Aenean eget tellus tristique, tempus ante at, malesuada magna. Fusce molestie tempus augue sit amet lobortis. Curabitur sed mauris sed nulla molestie iaculis et in sem. Sed libero libero, interdum at nunc a, eleifend porta dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in massa eleifend, eleifend magna et, scelerisque eros. Vivamus volutpat enim magna, aliquet interdum nisl gravida non.</p><h3>LOREM 2.1.1</h3><p>Phasellus eget augue vitae ipsum sodales facilisis. Donec imperdiet commodo venenatis. Donec eget lacus sed tortor laoreet finibus. Ut cursus lectus neque, at pellentesque arcu feugiat id. Etiam pellentesque neque vel neque venenatis placerat. Suspendisse porta at magna vitae pharetra. Ut porta volutpat est, a ullamcorper elit venenatis ut. Curabitur ut consequat est. Mauris non nisi rutrum, sollicitudin tellus id, pretium felis.</p><p>Suspendisse vitae massa convallis, scelerisque lectus nec, ultrices urna. Praesent ut sagittis erat. Nulla consequat imperdiet nibh, vel imperdiet justo pharetra id. Aliquam interdum vitae odio vel pretium. Sed sit amet augue eget metus aliquet ultrices. Mauris efficitur tristique lectus et fringilla. Maecenas a risus et leo ornare ultrices id in magna. In lacinia leo in nisi imperdiet ullamcorper. Ut ut leo a ante efficitur ultrices id non augue. Donec pretium lacus urna.</p><h1>IPSUM</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sodales, nibh ac ullamcorper egestas, augue justo interdum erat, id placerat nisl urna in felis. Vestibulum commodo imperdiet dui. Nunc at lacinia purus. Sed dictum turpis ultricies ex convallis, eget scelerisque ex auctor. Nullam pretium urna in est condimentum facilisis. Aenean euismod est quam, vitae fermentum sapien lobortis a. Mauris vitae leo quis nisl volutpat egestas. Nullam dictum, leo vel convallis ultrices, urna nunc laoreet mi, ut ultricies lacus nisi in ligula. Pellentesque eleifend viverra nisi, non gravida neque sodales sed. Aliquam et tortor fringilla, dapibus massa quis, porttitor mauris. Pellentesque placerat varius mi, quis suscipit lectus convallis quis.</p><p><br></p>
+      <iframe src="https://www.youtube.com/embed/XIMLoLxmTDw" frameborder="0" allowfullscreen></iframe>
+      
       `,
     }),
     window.addEventListener("scroll", this.onScroll)
@@ -274,6 +290,7 @@ export default {
 </script>
 
 <style lang="scss">
+@use "sass:math";
 button{
   // background: blue;
   // width: 2.5rem;
@@ -284,6 +301,7 @@ button{
 
 /* Basic editor styles */
 .ProseMirror {
+  
   padding: 0 1rem;
   min-height: 100%;
   border: none;
@@ -371,6 +389,26 @@ button{
     }
   }
 
-  
+  .iframe-wrapper {
+  position: relative;
+  padding-bottom: math.div(50,16)*9%;
+  height: 0;
+  overflow: hidden;
+  width: 50%;
+  height: auto;
+  margin: 0 auto;
+
+  &.ProseMirror-selectednode {
+    outline: 3px solid #68CEF8;
+  }
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
 }
 </style>
