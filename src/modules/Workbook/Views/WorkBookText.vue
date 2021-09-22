@@ -140,8 +140,7 @@
         >
       </div>
       <div v-if="editor">
-        <p v-for="(content,index) in getContentTable" :key="index" :class="content.classes">{{content.content}}<span></span></p>
-        <butoom-custom-vue @click="editor.commands.updateAttributes('heading', { level: 2 })">set</butoom-custom-vue>
+        <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
       </div>
     </div>
   </div>
@@ -159,6 +158,8 @@ import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Iframe from "../Helpers/iframe"
+import Heading from "../Helpers/heading"
+
 
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
@@ -274,6 +275,7 @@ export default {
         this.editor.chain().focus().setIframe({ src: url }).run()
       }
     },
+    
     toogleSidebarOpen(){
       this.openTableContent = !this.openTableContent
     },
@@ -295,6 +297,7 @@ export default {
         TextAlign.configure({
           types: ['heading', 'paragraph'],
         }),
+        Heading
 
       ],
       content: `
