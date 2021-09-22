@@ -22,7 +22,7 @@ const routes = [
     name: "sign-up",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../modules/SignUp/Views/SignUp.vue"
+        /* webpackChunkName: "about" */ "../modules/Auth/Views/SignUp.vue"
       ),
   },
   {
@@ -30,7 +30,7 @@ const routes = [
     name: "login",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../modules/Login/Views/Login.vue"
+        /* webpackChunkName: "about" */ "../modules/Auth/Views/Login.vue"
       ),
   },
   {

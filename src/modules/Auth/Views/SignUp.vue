@@ -63,6 +63,8 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate"
+import { mapActions } from 'vuex';
+
 export default {
   components:{
     Form,
@@ -70,13 +72,17 @@ export default {
     ErrorMessage
   },
   methods:{
-    submitSignUp(e,values){
-      console.log(e,values)
-      // e.preventDefault();
-      if(!e.signDashboard){
-        e.signDashboard = false
+    ...mapActions("auth",["signUp"]),
+    
+    async submitSignUp(data){
+      let revisedData = {
+        firstname: data.firstName,
+        lastname: data.LastName,
+        email: data.email,
+        password: data.password,
+        country: data.country 
       }
-      alert(JSON.stringify(e))
+      await this.signUp(revisedData)
     }
   }
 
