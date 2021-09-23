@@ -175,11 +175,9 @@ export default {
           tags:""
         }
       }else{
-        console.log("getWorkBookById",this.idWorkBook)
+        // console.log("getWorkBookById",this.idWorkBook)
         workBookSelected = this.getWorkBookById(this.idWorkBook) 
-        console.log(workBookSelected)
         if (!workBookSelected){
-          console.log("fsdafsad")
           this.$router.push({name:"no-workbook"})
         }
       }

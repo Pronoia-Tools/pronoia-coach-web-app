@@ -42,7 +42,6 @@ export const updateWorkbookSection = (state,{idWorkBook,sectionSelected,json}) =
 export const updateWorkbookAddSection = (state,{idWorkBook}) => {
   const newWorkbookList = state.workbooks.map(eWorkbook => {
     if (eWorkbook.id === idWorkBook) {
-      console.log({"updateWorkbookAddSection {{mutation}}":idWorkBook})
       const newWorkbook = {...eWorkbook}
       newWorkbook.sections[eWorkbook.sections.length] = { 
         content:[],

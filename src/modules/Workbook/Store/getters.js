@@ -4,7 +4,7 @@ export const getWorkBooks = (state) =>{
   // console.log(workbooks)
   if(!workbooks) return 
 
-  return [...workbooks]
+  return workbooks
 }
 export const getLoading = (state) =>{
   // console.log(id)
@@ -17,11 +17,13 @@ export const getWorkBookByTitle = (state) => (search="",language="",status="") =
   // console.log(state,search,language,status)
   if(search.length === 0 && language.length === 0 && status.length === 0) return state.workbooks
 
-  return state.workbooks.filter(workbook => {
+  const newWorkbookList = state.workbooks.filter((workbook) => {
+    // console.log("filter",index)
     if ((workbook.title.toLowerCase().includes(search.toLowerCase()) && search!=="") || workbook.language===language || workbook.status===status ) {
       return workbook
     }
   })
+  return newWorkbookList
 }
 export const getWorkBookById = (state) => (id) =>{
   // console.log(id)

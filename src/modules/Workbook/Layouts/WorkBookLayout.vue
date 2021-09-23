@@ -67,6 +67,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions("workBook",["loadWorkbooks"]),
     toogleDropdownWorkBooks(){
       this.dropdownWorkbooks = !this.dropdownWorkbooks
     },
@@ -74,11 +75,13 @@ export default {
       this.sidebarOpen = !this.sidebarOpen
     },
     loadData(){
-      this.loadWorkbooks
+      // prevent duplicate values showing everytime navigating workbook
+      if (this.getWorkBooks.length < 1) {
+        this.loadWorkbooks()
+      }
     }
   },
   computed:{
-    ...mapActions("workBook",["loadWorkbooks"]),
     ...mapGetters("workBook",["getWorkBooks","getLoading"]),
     workBooksList(){
       return this.getWorkBooks
