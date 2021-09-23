@@ -13,7 +13,7 @@
             </div>
             <div class="flex justify-end">
               <label class="mr-4">Author</label>
-              <input class="border-2 border-border rounded-md " />
+              <input name="author" class="border-2 border-border rounded-md " />
             </div>
           </div>
           <div class="flex flex-col">
@@ -92,7 +92,7 @@
         <div
           v-for="workbook in workBooksList"
           :key="workbook.id"
-          class="flex justify-center items-center m-10 w-32 border border-transparent hover:border-gray-500 transition-all"
+          class="flex justify-center items-center m-10 w-32 border border-transparent hover:border-gray-500 transition-all cursor-pointer"
           @click="
             $router.push({
               name: 'workbook',
@@ -115,12 +115,15 @@ import Spiner from "../../../components/Spiner.vue";
 export default {
   name: "WorkbookList",
   components: { Spiner },
-  data() {},
+  data() {
+    return { author: "" };
+  },
   computed: {
     ...mapActions("workBook", ["loadWorkbooks"]),
     ...mapGetters("workBook", ["getWorkBooks", "getLoading"]),
     workBooksList() {
       console.log(this.getWorkBooks);
+
       return this.getWorkBooks;
     },
   },
