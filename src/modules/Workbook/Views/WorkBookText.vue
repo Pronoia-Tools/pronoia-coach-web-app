@@ -83,10 +83,16 @@
           <button @click="editor.chain().focus().setTextAlign('justify').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }">
             <FontAwesomeIcon :icon="myAlignJustify"></FontAwesomeIcon>
           </button>
+          <button @click="editor.chain().focus().setHorizontalRule().run()">
+            ___
+          </button>
         </div>
         
         <div class="">
-          <ButoomCustomVue @click="saveWoorkbook" class="mr-1">
+          <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
+            Add section
+          </ButoomCustomVue>
+          <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
             Save
           </ButoomCustomVue>
           <ButoomCustomVue @click="toogleSidebarOpen">
@@ -98,51 +104,59 @@
         
       </div>
 
-      <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10">
-        <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-          H1
-        </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-          H2
-        </button>
-        <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-          H3
-        </button>
-        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-          <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
-        </button>
-        <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-          <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
-        </button>
-        <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
-          <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
-        </button>
-        <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-          <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
-        </button>
-        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
-          bullet list
-        </button>
-      </floating-menu>
-      <editor-content :editor="editor" class="h-screen" spellcheck="false"/>
+      <div class="relative">
+        <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10">
+          <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+            H1
+          </button>
+          <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+            H2
+          </button>
+          <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+            H3
+          </button>
+          <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+            <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
+          </button>
+          <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+            <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
+          </button>
+          <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
+            <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
+          </button>
+          <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+            <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
+          </button>
+          <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
+            <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
+          </button>
+          <button @click="editor.chain().focus().setHorizontalRule().run()">
+            ___
+          </button>
+        </floating-menu>
+        <editor-content :editor="editor" class="min-h-screen" spellcheck="false"/>
+
+        <!-- SIDEBAREXTRA -->
+        <div class="index transition-all duration-500 delay-200 bg-gray-100 border border-gray-600" :class="isSidebarOpen">
+          <div class="h-2/6 w-64  flex flex-wrap justify-around border border-black">
+            <img 
+              v-for="(image, index) in imagesArray" 
+              :key="index" 
+              :src="image" alt="image workbook" 
+              class="w-20 h-20 border border-myLightBlue"
+              @click="clipboard(image)"
+            >
+          </div>
+          <div v-if="workBook" class="overflow-y-auto overflow-scroll text-black text-left">
+            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
+          </div>
+        </div>
+
+
+      </div>
     </div>
 
-    <!-- SIDEBAREXTRA -->
 
-    <div class="fixed h-screen transition-all duration-500 bg-gray-100 border border-gray-600" :class="isSidebarOpen">
-      <div class="w-64 h-1/3  flex flex-wrap justify-around border border-black">
-        <img 
-          v-for="(image, index) in imagesArray" 
-          :key="index" 
-          :src="image" alt="image workbook" 
-          class="w-20 h-20 border border-myLightBlue"
-          @click="clipboard(image)"
-        >
-      </div>
-      <div v-if="editor">
-        <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
-      </div>
-    </div>
   </div>
   
 </template>
@@ -163,6 +177,7 @@ import Heading from "../Helpers/heading"
 import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
+import { mapGetters,mapActions } from 'vuex'
 
 export default {
   components: {
@@ -204,39 +219,54 @@ export default {
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico",
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355578/qrgrpfyaybctx2zhvldk.png"
       ],
-      windowTop:0
+      windowTop:0,
+      workBook:null,
+      sectionSelected:0
     }
   },
   computed:{
+    ...mapGetters("workBook",["getWorkBookById"]),
     isSidebarOpen(){      
-      return `${this.windowTop < 180?"right-0 top-44":"left-0 top-14"} ${this.openTableContent?`text-white invisible w-1 `:` w-64 visible `}` 
+      return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
     },
     getContentTable(){
       var titles = [];
-      // console.log(this.editor.getJSON().content)
-      for(var i = 0; i < this.editor.getJSON().content.length; i++){
-        if(this.editor.getJSON().content[i].type === "heading"){
-          let content = {          }
-          switch (this.editor.getJSON().content[i].attrs.level) {
-            case 1:
-                content.classes = "pl-2 font-extrabold"
-              break;
-            case 2:
-                content.classes = "pl-6 font-bold"
-              break;
-            case 3:
-                content.classes = "pl-10 font-semibold"
-              break;
-          
-            default:
-                content.classes = "pl-14 font-medium"
-              break;
-          }
-          content.content=this.editor.getJSON().content[i].content[0].text,
+      
+      console.log({"sections":this.workBook.sections})
+      for(var i = 0; i < this.workBook.sections.length; i++){
+          let content ={}
             
+          content.classes = "bg-red-300 text-center font-bold"
+          content.type = "horizontalRule"
+          content.content = `section ${i+1}`
+          content.sectionNumber = i
           titles.push(content);
-          
-        }
+          for(var j = 0; j < this.workBook.sections[i].content.length; j++){
+
+            if(this.workBook.sections[i].content[j].type === "heading"){
+              let content = {          }
+              switch (this.workBook.sections[i].content[j].attrs.level) {
+                case 1:
+                    content.classes = "pl-2 font-extrabold"
+                  break;
+                case 2:
+                    content.classes = "pl-6 font-bold"
+                  break;
+                case 3:
+                    content.classes = "pl-10 font-semibold"
+                  break;
+              
+                default:
+                    content.classes = "pl-14 font-medium"
+                  break;
+              }
+              content.content=this.workBook.sections[i].content[j].content[0].text,
+              content.type = "heading"
+              titles.push(content);
+            }
+          }
+         
+       
       }
       return titles;
     },
@@ -248,18 +278,23 @@ export default {
     }
   },
   methods:{
+    ...mapActions("workBook",["updateWorkbookSection","updateWorkbookAddSection"]),
+    gotoSection(section){
+      if (section.type === "horizontalRule") {
+        console.log(section)
+        this.sectionSelected = section.sectionNumber
+      }
+    },
     clipboard(image){
-      
-
       Toast.fire({
         icon: 'success',
         text: 'Copied into the clipboard '
       })
-
       navigator.clipboard.writeText(image)
     },
     saveWoorkbook(){
       console.log(this.editor.getHTML())
+      console.log(this.editor.getJSON())
     },
     async addImage() {
       const { value: url } = await Swal.fire({
@@ -268,8 +303,6 @@ export default {
         inputLabel: 'Your image IRL',
         inputPlaceholder: 'Enter your image IRL'
       })
-
-     
       if (url) {
          const { value: color } = await Swal.fire({
           title: 'Select width',
@@ -291,10 +324,6 @@ export default {
           this.editor.chain().focus().setImage({ src: url,class:`w-${color}` }).run()
         }
       }
-
-      // if (url) {
-      //   
-      // }
     },
     async addVideo() {
       const { value: url } = await Swal.fire({
@@ -303,23 +332,73 @@ export default {
         inputLabel: 'Your video IRL',
         inputPlaceholder: 'Enter your video IRL'
       })
-
       if (url) {
         this.editor.chain().focus().setIframe({ src: url }).run()
       }
     },
-    
     toogleSidebarOpen(){
       this.openTableContent = !this.openTableContent
     },
     onScroll() {
       // console.log(window.top.scrollY)
       this.windowTop = window.top.scrollY /* or: e.target.documentElement.scrollTop */
-    }
+    },
+    async loadWorkBook(){
+      let workBookSelected
 
+      if (this.idWorkBook==="new") {
+        workBookSelected = {
+          title:"",
+          published:new Date(),
+          edition:1,
+          language:"",
+          price:"",
+          currency:"",
+          status:"Editable",
+          author:"",
+          tags:""
+        }
+      }else{
+        console.log(this.idWorkBook)
+        workBookSelected =await this.getWorkBookById(this.idWorkBook) 
+        if (!workBookSelected){
+          this.$router.push({name:"no-workbook"})
+        }
+      }
+      this.editor.commands.clearContent()
+
+      this.workBook = workBookSelected
+      if (this.editor && this.workBook) {
+        this.editor.commands.insertContent(this.workBook.sections[this.sectionSelected])
+      }
+    },
+    async updateCurrentWorkbook(){
+      new Swal({
+        title: 'Espere por favor!',
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+
+      await this.updateWorkbookSection({json:this.editor.getJSON(),sectionSelected:this.sectionSelected,idWorkBook:this.idWorkBook})
+
+      Swal.fire("Actualizado", "entrada actualizada",'success')
+    },
+    async updateCurrentWorkbookAddSection(){
+      new Swal({
+        title: 'Espere por favor!!',
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+
+      await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
+
+      Swal.fire("Actualizado", "entrada actualizada",'success')
+    },
+    
   },
 
   mounted() {
+    console.log("mounted")
     this.editor = new Editor({
       extensions: [
         StarterKit,
@@ -333,22 +412,54 @@ export default {
         Heading
 
       ],
-      content: `
-        <p><strong>Every flight begins with a fall.</strong></p><p><em>A ruler who hides behind paid executioners soon forgets what death is.</em></p><p><u>Hear my words, and bear witness to my vow.</u></p><p><s>Night gathers, and now my watch begins. It shall not end until my death I</s></p><p><code>shall take no wife, hold no lands, father no children.</code></p><pre><code>I shall wear no crowns and win no glory. I shall live and die at my post. </code></pre><ul><li><p>I am the sword in the darkness.</p></li><li><p>I am the watcher</p></li><li><p>on the walls.</p></li></ul><ol><li><p>I am the fire that burns</p></li></ol><ol><li><p>against the cold,</p></li></ol><ol><li><p>the light that brings the dawn</p></li></ol><p>The horn that wakes the sleepers, the shield that guards the realms of men. I pledge my life and honor to the Night’s Watch, for this night and all the nights to come.</p><a id="LOREM 1"><h1>LOREM 1</h1></a><p></p><img src="https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico" class="w-1/4"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sodales, nibh ac ullamcorper egestas, augue justo interdum erat, id placerat nisl urna in felis. Vestibulum commodo imperdiet dui. Nunc at lacinia purus. Sed dictum turpis ultricies ex convallis, eget scelerisque ex auctor. Nullam pretium urna in est condimentum facilisis. Aenean euismod est quam, vitae fermentum sapien lobortis a. Mauris vitae leo quis nisl volutpat egestas. Nullam dictum, leo vel convallis ultrices, urna nunc laoreet mi, ut ultricies lacus nisi in ligula. Pellentesque eleifend viverra nisi, non gravida neque sodales sed. Aliquam et tortor fringilla, dapibus massa quis, porttitor mauris. Pellentesque placerat varius mi, quis suscipit lectus convallis quis.</p><p></p><img src="https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico" class="w-1/3"><p>Integer sodales mauris justo, nec accumsan quam lacinia ut. Pellentesque sit amet metus aliquet nisl cursus ultricies quis ut libero. Nullam feugiat elit pulvinar volutpat facilisis. Ut interdum quam libero, quis maximus est imperdiet auctor. Aliquam suscipit, nunc nec gravida auctor, turpis sem eleifend nunc, ut tincidunt sapien odio in libero. Pellentesque nec posuere nisi. Sed auctor est a diam elementum bibendum. Sed luctus sodales mi sit amet malesuada. Mauris egestas ex mauris, vel congue urna commodo a. Sed scelerisque nisi malesuada, gravida felis vel, porta nisi.</p><p>Nullam eu orci accumsan, laoreet turpis vel, vestibulum neque. Proin et nulla vel ligula blandit convallis vel a lacus. Cras nisl tellus, cursus at blandit vitae, egestas vel odio. Pellentesque fermentum urna est, eget dapibus urna lacinia et. Vestibulum id leo quis nulla convallis tempus. Sed cursus, ex sed luctus mattis, augue enim aliquam purus, eget ornare dui ex sed dui. Sed luctus hendrerit porttitor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;</p><p></p><img src="https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico" class="w-1/2"><p>Nulla varius id augue sed tempor. Fusce interdum, nisi quis pellentesque scelerisque, mi sem porttitor urna, lobortis suscipit turpis urna id est. In rhoncus lacus vel felis congue tristique. Mauris tincidunt, tellus eget auctor feugiat, ante metus posuere justo, ac volutpat justo urna id urna. Cras ut urna vel turpis porta placerat. Sed ac facilisis arcu, id ornare est. Duis tincidunt tortor finibus lectus sollicitudin, quis mollis arcu malesuada. Praesent fringilla porta massa a hendrerit. Pellentesque maximus tincidunt augue, eget egestas enim consectetur nec. Etiam ac luctus massa. Cras ac libero egestas, ultricies diam in, luctus nulla. Proin at venenatis diam. Nulla commodo at nibh id posuere. Sed lobortis eleifend tortor, eget tincidunt quam aliquet in.</p><p></p><img src="https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico" class="w-full"><a id="LOREM 2"><h2>LOREM 2</h2></a><p>Ut interdum auctor tristique. Ut eget erat et erat porttitor auctor. Nullam non congue nunc, iaculis aliquet quam. Sed ex odio, lacinia sed risus eget, cursus dapibus ipsum. Sed eleifend ante quis sagittis vulputate. Etiam consequat, turpis vel eleifend pulvinar, erat sem tristique orci, in viverra tellus libero et tortor. Etiam mollis ex nisl, quis congue metus efficitur in. Aliquam eget dignissim nunc. Phasellus sed enim at risus malesuada hendrerit. Sed ultricies luctus ante nec maximus. Pellentesque finibus ipsum quis tellus aliquet dignissim. Fusce a elit quis quam elementum sodales. Ut non orci vitae libero vestibulum mattis.</p><a id="LOREM 2.1"><h2>LOREM 2.1</h2></a><p>Morbi sed lacus id erat blandit eleifend. Aliquam feugiat, risus vitae scelerisque sodales, massa diam lobortis tellus, at convallis odio nibh in est. Vestibulum quis commodo libero, vitae egestas massa. Aenean auctor mauris ut leo auctor hendrerit. Suspendisse imperdiet quam eu tortor fermentum, vel rhoncus ligula mollis. Pellentesque et lorem et quam tincidunt hendrerit in vitae augue. Vivamus purus nulla, convallis a leo vel, tincidunt tincidunt ligula. Ut a mattis eros. Curabitur semper, erat et lobortis egestas, tortor diam efficitur augue, quis tincidunt justo est quis risus.</p><p>Pellentesque malesuada condimentum interdum. Morbi malesuada, ligula non porta tempor, massa mi suscipit ante, a facilisis mi arcu at ipsum. Cras ultricies, leo vel aliquet semper, sem est porttitor est, et egestas nisi lacus eget metus. Maecenas non risus at purus ultricies fringilla. Integer faucibus ut arcu id condimentum. Pellentesque sagittis ultricies orci, et laoreet nisl mattis sed. Quisque elementum fringilla justo, id dictum nulla. Fusce urna leo, sollicitudin vel nulla ut, hendrerit molestie enim. Donec sodales euismod odio, et molestie erat vulputate et. Nullam imperdiet sapien a lorem finibus, vitae cursus arcu viverra. Mauris velit augue, ultrices congue tristique eget, faucibus vel massa.</p><p>Aenean eget tellus tristique, tempus ante at, malesuada magna. Fusce molestie tempus augue sit amet lobortis. Curabitur sed mauris sed nulla molestie iaculis et in sem. Sed libero libero, interdum at nunc a, eleifend porta dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed in massa eleifend, eleifend magna et, scelerisque eros. Vivamus volutpat enim magna, aliquet interdum nisl gravida non.</p><a id="LOREM 2.1.1"><h3>LOREM 2.1.1</h3></a><p>Phasellus eget augue vitae ipsum sodales facilisis. Donec imperdiet commodo venenatis. Donec eget lacus sed tortor laoreet finibus. Ut cursus lectus neque, at pellentesque arcu feugiat id. Etiam pellentesque neque vel neque venenatis placerat. Suspendisse porta at magna vitae pharetra. Ut porta volutpat est, a ullamcorper elit venenatis ut. Curabitur ut consequat est. Mauris non nisi rutrum, sollicitudin tellus id, pretium felis.</p><p>Suspendisse vitae massa convallis, scelerisque lectus nec, ultrices urna. Praesent ut sagittis erat. Nulla consequat imperdiet nibh, vel imperdiet justo pharetra id. Aliquam interdum vitae odio vel pretium. Sed sit amet augue eget metus aliquet ultrices. Mauris efficitur tristique lectus et fringilla. Maecenas a risus et leo ornare ultrices id in magna. In lacinia leo in nisi imperdiet ullamcorper. Ut ut leo a ante efficitur ultrices id non augue. Donec pretium lacus urna.</p><a id="IPSUM"><h1>IPSUM</h1></a><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sodales, nibh ac ullamcorper egestas, augue justo interdum erat, id placerat nisl urna in felis. Vestibulum commodo imperdiet dui. Nunc at lacinia purus. Sed dictum turpis ultricies ex convallis, eget scelerisque ex auctor. Nullam pretium urna in est condimentum facilisis. Aenean euismod est quam, vitae fermentum sapien lobortis a. Mauris vitae leo quis nisl volutpat egestas. Nullam dictum, leo vel convallis ultrices, urna nunc laoreet mi, ut ultricies lacus nisi in ligula. Pellentesque eleifend viverra nisi, non gravida neque sodales sed. Aliquam et tortor fringilla, dapibus massa quis, porttitor mauris. Pellentesque placerat varius mi, quis suscipit lectus convallis quis.</p><p><br></p><div class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/XIMLoLxmTDw" frameborder="0" allowfullscreen="true"></iframe></div>
-      `,
+      content: ``,
     }),
+    this.loadWorkBook()
     window.addEventListener("scroll", this.onScroll)
   },
-
   beforeUnmount() {
     this.editor.destroy(),
     window.removeEventListener("scroll", this.onScroll)
   },
+  created(){
+    
+    console.log("created")
+  },
+  watch:{
+    idWorkBook(){
+        this.loadWorkBook()
+    },
+    sectionSelected(){
+        this.loadWorkBook()
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 @use "sass:math";
+.index{
+  direction: rtl;
+
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2D9BF0; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1e679e; 
+}
 button{
   // background: blue;
   // width: 2.5rem;
@@ -361,7 +472,8 @@ button{
 .ProseMirror {
   
   padding: 0 1rem;
-  min-height: 100%;
+  min-height: 100vh !important;
+  // background: red;
   border: none;
   &:focus{
     border: none;

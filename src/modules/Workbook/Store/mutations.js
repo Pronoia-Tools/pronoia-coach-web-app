@@ -24,6 +24,39 @@ export const updateWorkbook = (state,workbook) => {
   state.workbooks = newWorkbookList
 }
 
+export const updateWorkbookSection = (state,{idWorkBook,sectionSelected,json}) => {
+  const newWorkbookList = state.workbooks.map(eWorkbook => {
+    if (eWorkbook.id === idWorkBook) {
+      console.log({"updateWorkbookSection {{mutation}}":json ,"sectionSelected":sectionSelected})
+      const newWorkbook = {...eWorkbook}
+      newWorkbook.sections[sectionSelected] = json
+      return newWorkbook
+    }else{
+      return eWorkbook
+    }
+  })
+  console.log({newWorkbookList})
+  state.workbooks = newWorkbookList
+}
+
+export const updateWorkbookAddSection = (state,{idWorkBook}) => {
+  const newWorkbookList = state.workbooks.map(eWorkbook => {
+    if (eWorkbook.id === idWorkBook) {
+      console.log({"updateWorkbookAddSection {{mutation}}":idWorkBook})
+      const newWorkbook = {...eWorkbook}
+      newWorkbook.sections[eWorkbook.sections.length] = { 
+        content:[],
+        type:"doc"
+       }
+
+      return newWorkbook
+    }else{
+      return eWorkbook
+    }
+  })
+  state.workbooks = newWorkbookList
+}
+
 export const deleteWorkbook = (state,id) => {
   const newWorkbookList = state.workbooks.filter(eWorkbook => eWorkbook.id !== id)
   state.workbooks = newWorkbookList
