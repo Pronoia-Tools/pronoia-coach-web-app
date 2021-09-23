@@ -8,21 +8,21 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <FontAwesomeIcon :icon="Backward" class="text-3xl"/>
-        <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">Edit Workbook</ButoomCustomVue>
+        <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
       </div>
       <div class="flex items-center gap-1">
-        <ButoomCustomVue transparent="true">Create a Copy</ButoomCustomVue>
+        <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
       </div>
       <div class="flex items-center gap-1">
-        <ButoomCustomVue transparent="true">Submit for MarketPlace Review</ButoomCustomVue>
+        <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.submit') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
       </div>  
     </div>
 
     <!-- WORKBOOK DETAILS v2 -->
     <div>
-      <h2 class=" text-subtitle font-semibold">Workbook Information</h2>
+      <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center">
@@ -31,15 +31,15 @@
                 
         <div class=" text-right col-span-12 md:col-span-8 row-span-6 h-96 flex flex-col gap-4">
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="title">Title: </label>
+              <label class=" w-32" for="title">{{ $t('workbook.workbook.title') }}: </label>
               <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.title">
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">By:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.by') }}:</label>
               <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.author">
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">Edition:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.edition') }}:</label>
               <div class="flex gap-2 w-full">
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.edition">
                   <option value="1" selected>1st</option>
@@ -47,75 +47,75 @@
                   <option value="3">3ed</option>
                 </select>
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.language">
-                  <option >Select language</option>
+                  <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
                   <option value="Spanish">Español</option>
-                  <option selected value="English">Ingles</option>
+                  <option value="English">Ingles</option>
                 </select>
               </div>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">Published:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.published') }}:</label>
               <label class=" w-full text-left" for="author">{{workBook.status}}</label>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">Price:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>
               <div class="flex gap-2 w-full">
                 <input type="number" placeholder="19.99" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.price">
           
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.currency">
-                  <option selected>Select currenci</option>
+                  <option value="" selected>{{ $t('workbook.workbook.currency') }}</option>
                   <option value="Spanish">USD</option>
                   <option value="English">PESOS</option>
                 </select>
               </div>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">Tags:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.tags') }}:</label>
               <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.tags">
           </div>
         </div>
                 
-        <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" placeholder="Describe yourself here..."></textarea>
+        <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" :placeholder=" $t('workbook.workbook.describePlaceHolder') "></textarea>
         
         <div class="text-right col-span-12">
-          <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">Save Workbook</ButoomCustomVue>
+          <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
-            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">Edit Workbook</ButoomCustomVue>
-            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="red">Delete Workbook</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="red">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
           </div>
         </div>
       </div>
     </div>
 
     <div class="px-4">
-      <h2>For Coaches</h2>
-      <h3>Send Copy to a client</h3>
+      <h2 class="text-subtitle">{{ $t('workbook.workbook.for') }}</h2>
+      <h3>{{ $t('workbook.workbook.send') }}</h3>
       <div class="flex gap-5 flex-col md:flex-row">
         <div class="w-full md:w-1/2">
           <div class="flex items-center gap-3 my-4">
             <input type="checkbox" name="signDashboard" class="block"/> 
-            <label class="block" for="cbox2">Create custom clientWorkbook</label>
+            <label class="block" for="cbox2">{{ $t('workbook.workbook.create') }}</label>
           </div>
           <div class="flex items-center gap-3 my-4">
             <input type="checkbox" name="signDashboard" class="block"/> 
-            <label class="block" for="cbox2">Clients Pays for Workbook</label>
+            <label class="block" for="cbox2">{{ $t('workbook.workbook.clients') }}</label>
           </div>
           <input type="email"  class="border border-gray-500 rounded px-2 py-2 w-full">
-          <ButoomCustomVue class="w-full mt-4">Send invitation</ButoomCustomVue>
+          <ButoomCustomVue class="w-full mt-4">{{ $t('workbook.workbook.sendInvitation') }}</ButoomCustomVue>
         </div>
 
         <div class="">
           <div class="flex items-center gap-3 my-4">
             <input type="checkbox" name="signDashboard" class="block"/> 
-            <label class="block" for="cbox2">eWorkbook is avalible for pusheas by clientsleavin the practice</label>
+            <label class="block" for="cbox2">{{ $t('workbook.workbook.eWorkbook') }}</label>
           </div>
 
           <div>
-            <span>Active clients using this workbook</span>
+            <span>{{ $t('workbook.workbook.active') }}</span>
             <div class="grid grid-cols-3 w-full gap-2 border border-gray-500 bg-gray-400  rounded p-2 ">
-              <span>NAME</span>
-              <span>EMAIL</span>
-              <span class="text-center">ANSWERS</span>
+              <span>{{ $t('workbook.workbook.table.name') }}</span>
+              <span>{{ $t('workbook.workbook.table.email') }}</span>
+              <span class="text-center">{{ $t('workbook.workbook.table.answers') }}</span>
             </div>
             <div class="grid grid-cols-3 w-full gap-2  p-2">
               <span>Victor</span>

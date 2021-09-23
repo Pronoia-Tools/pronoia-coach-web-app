@@ -1,0 +1,63 @@
+{
+  "workbook":{
+    "workbookLayout":{
+      "sales":"ventas",
+      "eWorkbooks":"eWorkbooks",
+      "customers":"clientes"
+    },
+    "NoWorkBookSelected":{
+      "headerTable":{  
+        "Title":"Title",
+        "Published":"Published at",
+        "Edition":"Edition",
+        "Language":"Language",
+        "Price":"Price",
+        "Status":"Status",
+        "Options":"Options"
+      },
+      "filter":{  
+        "filter":"filter"
+      }
+    },
+    "workbook":{
+      "edit":"Editar WorkBook",
+      "createCopy":"Crear copia",
+      "submit":"Enviar para revisión de MarketPlace",
+
+      "information":"Información del Workbook",
+      "title":"Titulo",
+      "by":"Por",
+      "edition":"Edición",
+      "published":"Estado",
+      "language":"Lenguaje",
+      "price":"Precio",
+      "currency":"divisa",
+      "tags":"etiquetas",
+      "describePlaceHolder":"Descríbete aquí...",
+      
+      "save":"Guardar Workbook",
+      "saveChanges":"Guardar cambios",
+      "delete":"Eliminar Workbook",
+      
+
+      "for":"Para Coaches",
+      "send":"Enviar copia a un cliente",
+      "create":"Crear workbook personalizado para un cliente",
+      "clients":"Los clientes pagan por el Workbook",
+      "sendInvitation":"Enviar invitacion",
+      "eWorkbook":"eWorkbook está disponible para los clientes que abandonan la práctica.",
+      "active":"Clientes activos usando este libro",
+      "table":{
+        "name":"NOMBRE",
+        "email":"EMAIL",
+        "answers":"RESPUESTAS"
+      }
+    },
+    "workbookText":{
+      "bookDetails":"Detalles del libro",
+      "addSection":"Añadir sección",
+      "save":"Guardar",
+      "section":"Sección"
+    }
+  }
+}

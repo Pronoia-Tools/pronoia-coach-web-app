@@ -2,7 +2,7 @@
   <!-- HEADER --> 
   <div class="relative">
     <div class=" p-5 pl-20 flex justify-between items-center">
-      <h1>Book detail</h1>
+      <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
       
     </div>
     <div class="">
@@ -90,10 +90,10 @@
         
         <div class="">
           <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
-            Add section
+            {{ $t('workbook.workbookText.addSection') }}
           </ButoomCustomVue>
           <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
-            Save
+            {{ $t('workbook.workbookText.save') }}
           </ButoomCustomVue>
           <ButoomCustomVue @click="toogleSidebarOpen">
             <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
@@ -238,7 +238,7 @@ export default {
             
           content.classes = "bg-red-300 text-center font-bold"
           content.type = "horizontalRule"
-          content.content = `section ${i+1}`
+          content.content = `${ this.$t('workbook.workbookText.section') } ${i+1}`
           content.sectionNumber = i
           titles.push(content);
           for(var j = 0; j < this.workBook.sections[i].content.length; j++){
