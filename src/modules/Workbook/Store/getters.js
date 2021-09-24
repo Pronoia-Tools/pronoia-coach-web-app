@@ -1,10 +1,10 @@
 export const getWorkBooks = (state) => {
   // console.log(id)
   const workbooks = state.workbooks;
-  console.log(workbooks);
+  // console.log(workbooks)
   if (!workbooks) return;
 
-  return [...workbooks];
+  return workbooks;
 };
 export const getLoading = (state) => {
   // console.log(id)

@@ -42,6 +42,16 @@ const routes = [
     path: "/workbook",
     ...workBookRouter,
   },
+  {
+    path: "/workbook/:idWorkBook/edit",
+    name: "workbook-rich-text",
+    component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkBookText.vue"),
+    props: (route) => {
+      return {
+        idWorkBook: route.params.idWorkBook
+      }
+    }
+  }
 ];
 
 const router = createRouter({

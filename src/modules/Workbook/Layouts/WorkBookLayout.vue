@@ -3,10 +3,10 @@
     <!-- SIDEBAR -->
     <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
       <div class="border-b border-black flex justify-between items-center p-2">
-        Sales <font-awesome-icon :icon="sortDown" />
+        {{ $t('workbook.workbookLayout.sales') }} <font-awesome-icon :icon="sortDown" />
       </div>
       <div class="border-b border-black flex justify-between items-center p-2" @click="toogleDropdownWorkBooks">
-        eWorkbooks 
+        {{ $t('workbook.workbookLayout.eWorkbooks') }} 
         <font-awesome-icon :icon="sortDown" v-if="!dropdownWorkbooks"/>
         <font-awesome-icon :icon="sortUp" v-else/>
       </div>
@@ -30,7 +30,7 @@
         </div>
       
       <div class="border-b border-black flex justify-between items-center p-2">
-        Customers <font-awesome-icon :icon="sortUp" />
+        {{ $t('workbook.workbookLayout.customers') }} <font-awesome-icon :icon="sortUp" />
       </div>
 
 
@@ -67,6 +67,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions("workBook",["loadWorkbooks"]),
     toogleDropdownWorkBooks(){
       this.dropdownWorkbooks = !this.dropdownWorkbooks
     },
@@ -74,11 +75,13 @@ export default {
       this.sidebarOpen = !this.sidebarOpen
     },
     loadData(){
-      this.loadWorkbooks
+      // prevent duplicate values showing everytime navigating workbook
+      if (this.getWorkBooks.length < 1) {
+        this.loadWorkbooks()
+      }
     }
   },
   computed:{
-    ...mapActions("workBook",["loadWorkbooks"]),
     ...mapGetters("workBook",["getWorkBooks","getLoading"]),
     workBooksList(){
       return this.getWorkBooks
