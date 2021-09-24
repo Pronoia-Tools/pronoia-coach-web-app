@@ -26,13 +26,13 @@
 
       "information":"Workbook Information",
       "title":"Title",
-      "by":"by",
+      "by":"By",
       "edition":"Edition",
-      "published":"state",
-      "language":"language",
+      "published":"State",
+      "language":"Language",
       "price":"Price",
-      "currency":"currency",
-      "tags":"tags",
+      "currency":"Currency",
+      "tags":"Tags",
       "describePlaceHolder":"Describe yourself here...",
       
       "save":"Save Workbook",

@@ -26,7 +26,7 @@
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center">
-          <img class="h-full" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc_screen.jpg?ts=1588152105" alt="cover book">
+          <img class="h-full" src="https://cdn.discordapp.com/attachments/817229566779064340/891000630779473950/unknown.png" alt="cover book">
         </div>
                 
         <div class=" text-right col-span-12 md:col-span-8 row-span-6 h-96 flex flex-col gap-4">
@@ -75,7 +75,7 @@
           </div>
         </div>
                 
-        <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" :placeholder=" $t('workbook.workbook.describePlaceHolder') "></textarea>
+        <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" :placeholder=" $t('workbook.workbook.describePlaceHolder') " v-model="workBook.description"></textarea>
         
         <div class="text-right col-span-12">
           <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>

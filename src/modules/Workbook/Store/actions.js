@@ -10,15 +10,16 @@ export const loadWorkbooks = async ({commit}) => {
   const data = [
     {
       id:"1",
-      title:"Build Your nest",
+      title:"Build Your Nest",
       published:new Date(),
       edition:1,
-      language:"Spanish",
+      language:"English",
       price:30,
       currency:"USD",
       status:"Published",
-      author:"Victor Manuel",
-      tags:["1","11","sasad"],
+      author:"Kestrel Gates",
+      tags:["maternal health", "midwifery", "doula", "midwife"],
+      description:"Kestrel is the author of the globally celebrated book, Build Your Nest, A Post-Partum Planning Workbook. Build Your Nest is available in 7 languages, with more on the way. Kestrel is deeply focused on the health and well-being of birthing parents, as well as families and communities. This focus  guides her work as a coach and educator.",
       sections:[
         {
           "type": "doc",
@@ -281,6 +282,7 @@ export const loadWorkbooks = async ({commit}) => {
       status:"Editable",
       author:"Victor Manuel",
       tags:["1","2","sasad"],
+      description: "",
       sections:[]
     },
     { 
@@ -294,6 +296,7 @@ export const loadWorkbooks = async ({commit}) => {
       status:"Uneditable",
       author:"Victor Manuel",
       tags:["1","3","sasad"],
+      description: "",
       sections:[
         {
             "type": "doc",
