@@ -81,7 +81,7 @@
           <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
             <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
-            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="red">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
           </div>
         </div>
       </div>
