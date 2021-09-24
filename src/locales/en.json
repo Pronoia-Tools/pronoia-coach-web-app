@@ -1,3 +1,63 @@
 {
-  "message": "hello i18n !!"
+  "workbook":{
+    "workbookLayout":{
+      "sales":"sales",
+      "eWorkbooks":"eWorkbooks",
+      "customers":"Customers"
+    },
+    "NoWorkBookSelected":{
+      "headerTable":{  
+        "Title":"Title",
+        "Published":"Published at",
+        "Edition":"Edition",
+        "Language":"Language",
+        "Price":"Price",
+        "Status":"Status",
+        "Options":"Options"
+      },
+      "filter":{  
+        "filter":"filter"
+      }
+    },
+    "workbook":{
+      "edit":"Edit WorkBook",
+      "createCopy":"Create a Copy",
+      "submit":"Submit for MarketPlace Review",
+
+      "information":"Workbook Information",
+      "title":"Title",
+      "by":"by",
+      "edition":"Edition",
+      "published":"state",
+      "language":"language",
+      "price":"Price",
+      "currency":"currency",
+      "tags":"tags",
+      "describePlaceHolder":"Describe yourself here...",
+      
+      "save":"Save Workbook",
+      "saveChanges":"Save changes",
+      "delete":"Delete WorkBook",
+      
+
+      "for":"For Coaches",
+      "send":"Send Copy to a client",
+      "create":"Create custom clientWorkbook",
+      "clients":"Clients Pays for Workbook",
+      "sendInvitation":"Send invitation",
+      "eWorkbook":"eWorkbook is avalible for pusheas by clientsleavin the practice",
+      "active":"Active clients using this workbook",
+      "table":{
+        "name":"NAME",
+        "email":"EMAIL",
+        "answers":"ANSWERS"
+      }
+    },
+    "workbookText":{
+      "bookDetails":"Book detail",
+      "addSection":"Add section",
+      "save":"Save",
+      "section":"Section"
+    }
+  }
 }

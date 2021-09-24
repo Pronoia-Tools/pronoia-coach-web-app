@@ -34,6 +34,9 @@
 
         <transition name="slide-fade">
           <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
+            <li v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+              {{locale}}
+            </li>
             <router-link to="/">Settings</router-link>
             <router-link to="/">Log out</router-link>
           </div>
@@ -63,7 +66,8 @@ export default {
 
 
       openUserMenu:false,
-      openMovilMenu:false
+      openMovilMenu:false,
+      locales:process.env.VUE_APP_I18N_SUPPORTED_LOCALE.split(",")
     }
   },
 
@@ -76,6 +80,11 @@ export default {
     },
     toggleOpenMovileMenu(){
       this.openMovilMenu = !this.openMovilMenu
+    },
+    switchLocale(locale){
+      if (this.$i18n.locale !== locale) {
+        this.$i18n.locale = locale
+      }
     }
   },
   computed:{

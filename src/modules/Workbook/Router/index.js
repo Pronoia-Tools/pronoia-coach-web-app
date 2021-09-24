@@ -1,10 +1,7 @@
 export default {
   
   name: "WorkBookLayout",
-  component: () =>
-    import(
-      /* webpackChunkName: "WorkBookLayout" */ "../Layouts/WorkBookLayout.vue"
-    ),
+  component: () =>import(/* webpackChunkName: "WorkBookLayout" */ "../Layouts/WorkBookLayout.vue"),
   children: [
     {
       path:"",
@@ -22,16 +19,16 @@ export default {
 
       }
     },
-    {
-      path: ":idWorkBook/edit",
-      name: "workbook-rich-text",
-      component: () => import(/* webpackChunkName: "WoorkBookText" */ "../Views/WorkBookText.vue"),
-      props: (route) => {
-        return {
-          idWorkBook: route.params.idWorkBook
-        }
-      }
-    }
+    // {
+    //   path: ":idWorkBook/edit",
+    //   name: "workbook-rich-text",
+    //   component: () => import(/* webpackChunkName: "WoorkBookText" */ "../Views/WorkBookText.vue"),
+    //   props: (route) => {
+    //     return {
+    //       idWorkBook: route.params.idWorkBook
+    //     }
+    //   }
+    // }
     
   ]
 }

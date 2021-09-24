@@ -53,7 +53,7 @@
 
 <script>
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
-import { mapState,mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import Spiner from '../../../components/Spiner.vue'
 import WorkBookRow from '../Components/workBookRow.vue'
 
@@ -76,7 +76,7 @@ export default {
     }
   },
   computed:{
-    ...mapState("workBook",["loading","workbooks"]),
+    // ...mapState("workBook",["loading","workbooks"]),
     ...mapGetters("workBook",["getWorkBookByTitle","getLoading"]),
     getWorkBooks(){
       return this.getWorkBookByTitle(this.searchTitle,this.searchlanguage,this.searchStatus)
