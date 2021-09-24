@@ -1,21 +1,27 @@
 <template class="container mx-auto">
   <div class="container mx-auto my-5">
-    <h1 class="text-lgText">All workbooks</h1>
+    <h1 class="text-lgText">{{ $t(`workbook.workbookList.title`) }}</h1>
 
     <div class="border border-black h-full">
       <div class="border border-gray-800 px-5">
-        <h2 class="text-lgText my-5">Filter</h2>
+        <h2 class="text-lgText my-5">
+          {{ $t(`workbook.workbookList.filter.subtitle`) }}
+        </h2>
         <div class="flex md:flex-row flex-col justify-around ">
           <div class="flex flex-col">
             <div class="flex justify-end my-5">
-              <label class="mr-4">Title</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label1`) }}</label
+              >
               <input
                 class="border-2 border-border rounded-md "
                 v-model="searchTitle"
               />
             </div>
             <div class="flex justify-end">
-              <label class="mr-4">Author</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label2`) }}</label
+              >
               <input
                 name="author"
                 v-model="searchAuthor"
@@ -25,7 +31,9 @@
           </div>
           <div class="flex flex-col">
             <div class="flex justify-end my-5 items-center">
-              <label class="mr-4">Language</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label3`) }}</label
+              >
 
               <select
                 v-model="searchlanguage"
@@ -41,7 +49,9 @@
               </select>
             </div>
             <div class="flex justify-end items-center">
-              <label class="mr-4">Category</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label4`) }}</label
+              >
               <select
                 class="border-2 border-border rounded-md px-7 py-1"
                 name="category"
@@ -56,7 +66,9 @@
           </div>
           <div class="flex flex-col">
             <div class="flex justify-end my-5">
-              <label class="mr-4">Price</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label5`) }}</label
+              >
               <input
                 v-model="searchPrice1"
                 type="number"
@@ -74,7 +86,9 @@
               />
             </div>
             <div class="flex justify-end items-center">
-              <label class="mr-4">Arrange by</label>
+              <label class="mr-4">
+                {{ $t(`workbook.workbookList.filter.label6`) }}</label
+              >
               <select
                 v-model="arrangeBy"
                 class="border-2 border-border rounded-md px-7 py-1"
@@ -92,13 +106,13 @@
             @click="print = false"
             class="text-darkLogo border border-darkLogo py-3 px-8 mx-5"
           >
-            Cancel
+            {{ $t(`workbook.workbookList.filter.button1`) }}
           </button>
           <button
             @click="print = true"
             class="bg-darkLogo text-white py-3 px-8"
           >
-            Apply filter
+            {{ $t(`workbook.workbookList.filter.button2`) }}
           </button>
         </div>
       </div>

@@ -1,63 +1,66 @@
 {
-  "workbook":{
-    "workbookLayout":{
-      "sales":"sales",
-      "eWorkbooks":"eWorkbooks",
-      "customers":"Customers"
+  "workbook": {
+    "workbookLayout": {
+      "sales": "sales",
+      "eWorkbooks": "eWorkbooks",
+      "customers": "Customers"
     },
-    "NoWorkBookSelected":{
-      "headerTable":{  
-        "Title":"Title",
-        "Published":"Published at",
-        "Edition":"Edition",
-        "Language":"Language",
-        "Price":"Price",
-        "Status":"Status",
-        "Options":"Options"
+    "workbookList": {
+      "title": "All workbooks",
+      "filter": {"subtitle": "Filter", "label1": "Title", "label2": "Author", "label3": "Language", "label4": "Category", "label5": "Price", "label6": "Arrange by", "button1": "Cancel", "button2": "Apply filter"}
+    },
+    "NoWorkBookSelected": {
+      "headerTable": {
+        "Title": "Title",
+        "Published": "Published at",
+        "Edition": "Edition",
+        "Language": "Language",
+        "Price": "Price",
+        "Status": "Status",
+        "Options": "Options"
       },
-      "filter":{  
-        "filter":"filter"
+      "filter": {
+        "filter": "filter"
       }
     },
-    "workbook":{
-      "edit":"Edit WorkBook",
-      "createCopy":"Create a Copy",
-      "submit":"Submit for MarketPlace Review",
+    "workbook": {
+      "edit": "Edit WorkBook",
+      "createCopy": "Create a Copy",
+      "submit": "Submit for MarketPlace Review",
 
-      "information":"Workbook Information",
-      "title":"Title",
-      "by":"By",
-      "edition":"Edition",
-      "published":"State",
-      "language":"Language",
-      "price":"Price",
-      "currency":"Currency",
-      "tags":"Tags",
-      "describePlaceHolder":"Describe yourself here...",
-      
-      "save":"Save Workbook",
-      "saveChanges":"Save changes",
-      "delete":"Delete WorkBook",
-      
+      "information": "Workbook Information",
+      "title": "Title",
+      "by": "By",
+      "edition": "Edition",
+      "published": "State",
+      "language": "Language",
+      "price": "Price",
+      "currency": "Currency",
+      "tags": "Tags",
+      "describePlaceHolder": "Describe yourself here...",
 
-      "for":"For Coaches",
-      "send":"Send Copy to a client",
-      "create":"Create custom clientWorkbook",
-      "clients":"Clients Pays for Workbook",
-      "sendInvitation":"Send invitation",
-      "eWorkbook":"eWorkbook is avalible for pusheas by clientsleavin the practice",
-      "active":"Active clients using this workbook",
-      "table":{
-        "name":"NAME",
-        "email":"EMAIL",
-        "answers":"ANSWERS"
+      "save": "Save Workbook",
+      "saveChanges": "Save changes",
+      "delete": "Delete WorkBook",
+
+      "for": "For Coaches",
+      "send": "Send Copy to a client",
+      "create": "Create custom clientWorkbook",
+      "clients": "Clients Pays for Workbook",
+      "sendInvitation": "Send invitation",
+      "eWorkbook": "eWorkbook is avalible for pusheas by clientsleavin the practice",
+      "active": "Active clients using this workbook",
+      "table": {
+        "name": "NAME",
+        "email": "EMAIL",
+        "answers": "ANSWERS"
       }
     },
-    "workbookText":{
-      "bookDetails":"Book detail",
-      "addSection":"Add section",
-      "save":"Save",
-      "section":"Section"
+    "workbookText": {
+      "bookDetails": "Book detail",
+      "addSection": "Add section",
+      "save": "Save",
+      "section": "Section"
     }
   }
 }
