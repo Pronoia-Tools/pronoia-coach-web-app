@@ -9,11 +9,18 @@
           <div class="flex flex-col">
             <div class="flex justify-end my-5">
               <label class="mr-4">Title</label>
-              <input class="border-2 border-border rounded-md " />
+              <input
+                class="border-2 border-border rounded-md "
+                v-model="searchTitle"
+              />
             </div>
             <div class="flex justify-end">
               <label class="mr-4">Author</label>
-              <input name="author" class="border-2 border-border rounded-md " />
+              <input
+                name="author"
+                v-model="searchAuthor"
+                class="border-2 border-border rounded-md "
+              />
             </div>
           </div>
           <div class="flex flex-col">
@@ -21,28 +28,29 @@
               <label class="mr-4">Language</label>
 
               <select
+                v-model="searchlanguage"
                 class="border-2 border-border rounded-md  px-7 py-1"
                 name="language"
                 form="filterForm"
               >
-                <option value="language1">language1</option>
-                <option value="language2">language2</option>
+                <option value="" selected>-</option>
+                <option value="Spanish">Spanish</option>
+                <option value="English">English</option>
                 <option value="language3">language3</option>
                 <option value="language4">language4</option>
               </select>
             </div>
             <div class="flex justify-end items-center">
               <label class="mr-4">Category</label>
-
               <select
                 class="border-2 border-border rounded-md px-7 py-1"
                 name="category"
                 form="filterForm"
+                v-model="searchCategory"
               >
-                <option value="category1">category1</option>
-                <option value="category2">category2</option>
-                <option value="cateogry3">category3</option>
-                <option value="category4">category4</option>
+                <option value="" selected>-</option>
+                <option value="Biography">Novel</option>
+                <option value="Novel">Biography</option>
               </select>
             </div>
           </div>
@@ -50,6 +58,7 @@
             <div class="flex justify-end my-5">
               <label class="mr-4">Price</label>
               <input
+                v-model="searchPrice1"
                 type="number"
                 min="1"
                 max="1000"
@@ -57,6 +66,7 @@
               />
               -
               <input
+                v-model="searchPrice2"
                 type="number"
                 min="1"
                 max="1000"
@@ -66,28 +76,35 @@
             <div class="flex justify-end items-center">
               <label class="mr-4">Arrange by</label>
               <select
+                v-model="arrangeBy"
                 class="border-2 border-border rounded-md px-7 py-1"
                 name="arrangeBy"
                 form="filterForm"
               >
-                <option value="arrangeBy1">arrangeBy1</option>
-                <option value="arrangeBy2">arrangeBy2"</option>
-                <option value="arrangeBy3">arrangeBy3"</option>
-                <option value="arrangeBy4">arrangeBy4"</option>
+                <option value="Newest">Newest</option>
+                <option value="Cheapest">Cheapest</option>
               </select>
             </div>
           </div>
         </div>
         <div class="flex justify-end my-10 mx-5">
-          <button class="text-darkLogo border border-darkLogo py-3 px-8 mx-5">
+          <button
+            @click="print = false"
+            class="text-darkLogo border border-darkLogo py-3 px-8 mx-5"
+          >
             Cancel
           </button>
-          <button class="bg-darkLogo text-white py-3 px-8">
+          <button
+            @click="print = true"
+            class="bg-darkLogo text-white py-3 px-8"
+          >
             Apply filter
           </button>
         </div>
       </div>
-      <div class="grid grid-cols-4 container mx-auto flex justify-center">
+      <div
+        class="grid md:grid-cols-4 grid-cols-2 container mx-auto flex justify-center"
+      >
         <Spiner v-if="getLoading" />
         <div
           v-for="workbook in workBooksList"
@@ -116,15 +133,38 @@ export default {
   name: "WorkbookList",
   components: { Spiner },
   data() {
-    return { author: "" };
+    return {
+      searchAuthor: "",
+      searchTitle: "",
+      searchCategory: "",
+      searchPrice1: "",
+      searchPrice2: "",
+      searchlanguage: "",
+      arrangeBy: "",
+      print: false,
+    };
   },
   computed: {
     ...mapActions("workBook", ["loadWorkbooks"]),
-    ...mapGetters("workBook", ["getWorkBooks", "getLoading"]),
+    ...mapGetters("workBook", [
+      "getWorkBookFilter",
+      "getWorkBooks",
+      "getLoading",
+    ]),
     workBooksList() {
-      console.log(this.getWorkBooks);
-
-      return this.getWorkBooks;
+      if (this.print) {
+        return this.getWorkBookFilter(
+          this.searchTitle,
+          this.searchAuthor,
+          this.searchlanguage,
+          this.searchCategory,
+          this.searchPrice1,
+          this.searchPrice2,
+          this.arrangeBy
+        );
+      } else {
+        return this.getWorkBooks;
+      }
     },
   },
   methods: {

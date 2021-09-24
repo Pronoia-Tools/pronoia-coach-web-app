@@ -20,6 +20,7 @@ export const loadWorkbooks = async ({ commit }) => {
       currency: "USD",
       status: "Published",
       author: "Victor Manuel",
+      category: "Novel",
       tags: ["1", "11", "sasad"],
     },
     {
@@ -35,6 +36,7 @@ export const loadWorkbooks = async ({ commit }) => {
       status: "Editable",
       author: "Victor Manuel",
       tags: ["1", "2", "sasad"],
+      category: "Novel",
     },
     {
       image:
@@ -44,10 +46,11 @@ export const loadWorkbooks = async ({ commit }) => {
       published: new Date(),
       edition: 1,
       language: "English",
-      price: 200,
+      price: 20,
       currency: "USD",
       status: "Uneditable",
       author: "Victor Manuel",
+      category: "Biography",
       tags: ["1", "3", "sasad"],
     },
   ];
