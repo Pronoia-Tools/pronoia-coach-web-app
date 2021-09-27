@@ -143,6 +143,28 @@ export const loadWorkbooks = async ({commit}) => {
                       }
                   ]
               }
+          ],
+          questions:[
+            {
+                "id":"1",
+                "question":"what color is the sky?",
+                "answer":"Answer #",
+            },
+            {
+                "id":"2",
+                "question":"what color is the sky2?",
+                "answer":"Answer #1",
+            },
+            {
+                "id":"3",
+                "question":"what color is the sky3?",
+                "answer":"Answer #2",
+            },
+            {
+                "id":"4",
+                "question":"what color is the sky4?",
+                "answer":"Answer #3",
+            }
           ]
         },
         {
@@ -267,7 +289,8 @@ export const loadWorkbooks = async ({commit}) => {
                       }
                   ]
               }
-          ]
+          ],
+          questions:[]
         }
       ]
     },
@@ -420,7 +443,8 @@ export const loadWorkbooks = async ({commit}) => {
                         }
                     ]
                 }
-            ]
+            ],
+            questions:[]
           },
       ]
     },
@@ -474,8 +498,19 @@ export const updateWorkbookAddSection = async ({commit},idWorkBook) =>{
     return true
 }
 
+export const updateWorkbookAddQuestion = async ({commit},{idWorkbook, sectionSelected, newQuestion}) =>{
+  
+    const data = await new Promise(resolve => setTimeout(() => resolve({idWorkbook,sectionSelected,newQuestion:{"id":"5",question:newQuestion}}), 1000));
+    if(!data) return 
+    // console.log({"updateWorkbookAddQuestion {{action}}":data})
+  
+    commit("updateWorkbookAddQuestion",{idWorkbook:data.idWorkbook, sectionSelected:data.sectionSelected, newQuestion:data.newQuestion})
+
+    return true
+}
+
 export const deleteWorkbook = async ({commit},id) =>{
-  console.log(commit,id)
+//   console.log(commit,id)
 
   // if(!data) return
   const data = await new Promise(resolve => setTimeout(() => resolve(id), 1000));
