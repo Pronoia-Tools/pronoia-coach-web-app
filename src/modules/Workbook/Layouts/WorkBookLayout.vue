@@ -36,8 +36,8 @@
 
     </div>
     <div class="flex-grow relative">    
-      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700 rounded-r z-50" @click="toogleSidebarOpen"/>
-      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-purple-700 z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
       <router-view></router-view>
     </div>
   </div>
