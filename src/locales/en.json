@@ -1,4 +1,12 @@
 {
+  "swallAlertGeneral":{
+    "succces":"Completed",
+    "saved":"Saved",
+    "updated":"Updated",
+    "deleted":"Deleted",
+    "error":"Ups... Something went wrong",
+    "wait":"We are working on it!"
+  },
   "workbook":{
     "workbookLayout":{
       "sales":"sales",
@@ -57,7 +65,33 @@
       "bookDetails":"Book detail",
       "addSection":"Add section",
       "save":"Save",
-      "section":"Section"
+      "section":"Section",
+      "questions":"Questions",
+      "noQuestions":"There's no questions for this section",
+      "add":"Add",
+
+      "alerts":{
+        "addQuestion":{
+          "title":"Your new question",
+          "inputLabel":"Your new question",
+          "validatorMessage":"You need to write something!"
+        },
+        "addImage":{
+          "title":"Image URL",
+          "inputLabel":"Your image URL",
+          "inputPlaceholder":"Enter your image URL",
+          "widthImage":{
+            "title":"Select width",
+            "validatorMessage":"You need to choose something!"
+          }
+        },
+        "addVideo":{
+          "title":"Video URL",
+          "inputLabel":"Your video URL",
+          "inputPlaceholder":"Enter your video URL"
+        }
+        
+      }
     }
   }
 }

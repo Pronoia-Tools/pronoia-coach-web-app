@@ -1,6 +1,6 @@
 <template>
   <div class="p-3 border border-border mb-20">
-    <h1 id="Questions" class="text-subtitle">QUESTIONS</h1>
+    <h1 id="Questions" class="text-subtitle">{{ $t('workbook.workbookText.questions') }}</h1>
     <div class="">
       <div class="w-full">
         <div class="w-full mb-4" v-for="question in questionsArray" :key="question.id">
@@ -11,10 +11,10 @@
     </div>
 
     <div v-if="questionsArray.length===0" class="py-10">
-      <h2 class=" text-lgText text-gray-400">There's no questions for this section</h2>
+      <h2 class=" text-lgText text-gray-400">{{ $t('workbook.workbookText.noQuestions') }}</h2>
     </div>
     <div class="w-full flex justify-end">
-      <ButoomCustom @click="addQuestion">add</ButoomCustom>
+      <ButoomCustom @click="addQuestion">{{ $t('workbook.workbookText.add') }}</ButoomCustom>
     </div>
   </div>
 </template>
@@ -51,14 +51,14 @@ export default {
     },
     async addQuestion(){
       const { value: newQuestion } = await Swal.fire({
-        title: 'Enter your question',
+        title: this.$t('workbook.workbookText.alerts.addQuestion.title') ,
         input: 'text',
-        inputLabel: 'Your new question',
+        inputLabel: this.$t('workbook.workbookText.alerts.addQuestion.inputLabel') ,
         inputValue: "",
         showCancelButton: true,
         inputValidator: (value) => {
           if (!value) {
-            return 'You need to write something!'
+            return this.$t('workbook.workbookText.alerts.addQuestion.validatorMessage') 
           }
         }
       })
@@ -77,12 +77,12 @@ export default {
         if (res) {
           Toast.fire({
             icon: 'success',
-            text: 'Question saved '
+            text: this.$t('swallAlertGeneral.succces') 
           })
         }else{
         Toast.fire({
           icon: 'error',
-          text: 'Upps... something went wrong '
+          text: this.$t('swallAlertGeneral.error') 
         })
         }
 

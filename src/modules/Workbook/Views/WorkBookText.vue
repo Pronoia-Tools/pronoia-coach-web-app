@@ -303,14 +303,14 @@ export default {
     },
     async addImage() {
       const { value: url } = await Swal.fire({
-        title: 'Image URL',
+        title: this.$t('workbook.workbookText.alerts.addImage.title') ,
         input: 'text',
-        inputLabel: 'Your image IRL',
-        inputPlaceholder: 'Enter your image IRL'
+        inputLabel: this.$t('workbook.workbookText.alerts.addImage.inputLabel'),
+        inputPlaceholder: this.$t('workbook.workbookText.alerts.addImage.inputPlaceholder')
       })
       if (url) {
          const { value: color } = await Swal.fire({
-          title: 'Select width',
+          title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
           input: 'radio',
           inputOptions: {
             "full":"full",
@@ -320,7 +320,7 @@ export default {
           },
           inputValidator: (value) => {
             if (!value) {
-              return 'You need to choose something!'
+              return this.$t('workbook.workbookText.alerts.addImage.widthImage.validatorMessage')
             }
           }
         })
@@ -332,10 +332,10 @@ export default {
     },
     async addVideo() {
       const { value: url } = await Swal.fire({
-        title: 'Video URL',
+        title: this.$t('workbook.workbookText.alerts.addVideo.title'),
         input: 'text',
-        inputLabel: 'Your video IRL',
-        inputPlaceholder: 'Enter your video IRL'
+        inputLabel: this.$t('workbook.workbookText.alerts.addVideo.inputLabel'),
+        inputPlaceholder: this.$t('workbook.workbookText.alerts.addVideo.inputPlaceholder')
       })
       if (url) {
         this.editor.chain().focus().setIframe({ src: url }).run()
@@ -352,17 +352,17 @@ export default {
       let workBookSelected
 
       if (this.idWorkBook==="new") {
-        workBookSelected = {
-          title:"",
-          published:new Date(),
-          edition:1,
-          language:"",
-          price:"",
-          currency:"",
-          status:"Editable",
-          author:"",
-          tags:""
-        }
+        // workBookSelected = {
+        //   title:"",
+        //   published:new Date(),
+        //   edition:1,
+        //   language:"",
+        //   price:"",
+        //   currency:"",
+        //   status:"Editable",
+        //   author:"",
+        //   tags:""
+        // }
       }else{
         // console.log(this.idWorkBook)
         workBookSelected =await this.getWorkBookById(this.idWorkBook) 
@@ -379,25 +379,34 @@ export default {
     },
     async updateCurrentWorkbook(){
       new Swal({
-        title: 'Espere por favor!',
+        title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
       })
       Swal.showLoading()
 
       await this.updateWorkbookSection({json:this.editor.getJSON(),sectionSelected:this.sectionSelected,idWorkBook:this.idWorkBook})
 
-      Swal.fire("Actualizado", "entrada actualizada",'success')
+
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated')
+      })
+      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
     },
     async updateCurrentWorkbookAddSection(){
       new Swal({
-        title: 'Espere por favor!!',
+        title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
       })
       Swal.showLoading()
 
       await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
 
-      Swal.fire("Actualizado", "entrada actualizada",'success')
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated')
+      })
+      // Swal.fire("Actualizado", "entrada actualizada",'success')
     },
     
   },
