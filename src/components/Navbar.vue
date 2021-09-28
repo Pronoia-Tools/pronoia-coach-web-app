@@ -12,10 +12,10 @@
       <font-awesome-icon :icon="myTimes" class=" self-end m-5 text-xl md:hidden" @click="toggleOpenMovileMenu"/>
       <nav class="flex gap-4 flex-col text-center m-4
                    md:flex-row md:m-1">
-        <router-link to="/">Your Library</router-link>
-        <router-link to="/workbook">Workbook Factory</router-link>
-        <router-link to="/">Coach's Dashboard</router-link>
-        <router-link to="/">Marketplace</router-link>
+        <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link>
+        <router-link to="/workbook">{{ $t(`navbar.workBookFactory`) }}</router-link>
+        <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
+        <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link>
       </nav>
       <div class="flex gap-5 flex-col
                    md:flex-row">
@@ -29,22 +29,26 @@
       <font-awesome-icon :icon="myBars" @click="toggleOpenMovileMenu" class="cursor-pointer md:hidden"/>
       
       <div class="flex gap-2" v-if="getUserAuth.isAuthenticated">
-        <span>Victor Manuel</span>
+        <span>{{`${getUserAuth.user.firstname} ${getUserAuth.user.lastname}`}}</span>
         <div class="cursor-pointer" @click="toggleOpenUserMenu">
           <font-awesome-icon :icon="myUser" />
           <font-awesome-icon :icon="myArrowDown"/>
           <transition name="slide-fade">
             <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-              <li v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+              <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
               </li>
-              <router-link to="/">Settings</router-link>
-              <span @click="logoutHandler">Log out</span>
+              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link>
+              <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>
         </div>
       </div>
-      <ButoomCustomVue v-else @click="$router.push({name:'login'})">Login</ButoomCustomVue>
+
+      <div v-else class="flex gap-2">
+        <ButoomCustomVue @click="$router.push({name:'login'})">{{ $t(`navbar.login`) }}</ButoomCustomVue>
+        <ButoomCustomVue @click="$router.push({name:'sign-up'})">{{ $t(`navbar.register`) }}</ButoomCustomVue>
+      </div>
 
 
     </div>

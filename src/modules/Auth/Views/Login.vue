@@ -58,6 +58,7 @@
 // @ is an alias to /src
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { mapActions } from 'vuex';
+import Swall from "sweetalert2"
 
 export default {
   name: "Login",
@@ -84,6 +85,12 @@ export default {
         // localStorage.setItem("user", JSON.stringify(loged));
         localStorage.setItem("user",JSON.stringify(loged))
         this.$router.push({name:"WorkBookLayout"})
+      }else{
+        Swall.fire({
+          title:"Ups... Something went wrong!!",
+          text:"Try again",
+          icon:"error"
+        })
       }
     },
   },
