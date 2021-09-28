@@ -20,6 +20,19 @@ export const signUp = (state, data) => {
   }
 }
 
+export const login = (state,{user,token}) => {
+  console.log({"[[Mutations {{login}}]]":user})
+  state.user = user
+  state.token = token
+  state.isAuthenticated = true
+}
+export const logout = (state) => {
+  console.log("[[Mutations {{logout}}]]")
+  state.user = {}
+  state.token = ""
+  state.isAuthenticated = false
+}
+
 // export const updateWorkbook = (state,workbook) => {
 //   const newWorkbookList = state.workbooks.map(eWorkbook => {
 //     if (eWorkbook.id === workbook.id) {

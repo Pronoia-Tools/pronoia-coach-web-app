@@ -27,22 +27,26 @@
     <!-- USER -->
     <div class="flex gap-2 items-center">
       <font-awesome-icon :icon="myBars" @click="toggleOpenMovileMenu" class="cursor-pointer md:hidden"/>
-      <span>Victor Manuel</span>
-      <div class="cursor-pointer" @click="toggleOpenUserMenu">
-        <font-awesome-icon :icon="myUser" />
-        <font-awesome-icon :icon="myArrowDown"/>
-
-        <transition name="slide-fade">
-          <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-            <li v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
-              {{locale}}
-            </li>
-            <router-link to="/">Settings</router-link>
-            <router-link to="/">Log out</router-link>
-          </div>
-        </transition>
-
+      
+      <div class="flex gap-2" v-if="getUserAuth.isAuthenticated">
+        <span>Victor Manuel</span>
+        <div class="cursor-pointer" @click="toggleOpenUserMenu">
+          <font-awesome-icon :icon="myUser" />
+          <font-awesome-icon :icon="myArrowDown"/>
+          <transition name="slide-fade">
+            <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
+              <li v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+                {{locale}}
+              </li>
+              <router-link to="/">Settings</router-link>
+              <span @click="logoutHandler">Log out</span>
+            </div>
+          </transition>
+        </div>
       </div>
+      <ButoomCustomVue v-else @click="$router.push({name:'login'})">Login</ButoomCustomVue>
+
+
     </div>
   </div>
 </template>
@@ -50,9 +54,14 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBookOpen,faQuestionCircle,faBell,faUser,faAngleDown,faBars,faTimes } from '@fortawesome/free-solid-svg-icons'
+import { mapGetters,mapMutations } from 'vuex'
+import ButoomCustomVue from './ButoomCustom.vue'
 
 export default {
   name: 'Navbar',
+  components: {
+    FontAwesomeIcon,ButoomCustomVue,
+  },
 
   data () {
     return {
@@ -70,11 +79,8 @@ export default {
       locales:process.env.VUE_APP_I18N_SUPPORTED_LOCALE.split(",")
     }
   },
-
-  components: {
-    FontAwesomeIcon,
-  },
   methods:{
+    ...mapMutations("auth",["login","logout"]),
     toggleOpenUserMenu(){
       this.openUserMenu = !this.openUserMenu
     },
@@ -85,13 +91,26 @@ export default {
       if (this.$i18n.locale !== locale) {
         this.$i18n.locale = locale
       }
+    },
+    logoutHandler(){
+      localStorage.removeItem('user');
+      this.logout()
     }
   },
   computed:{
+    ...mapGetters("auth",["getUserAuth"]),
     isOpen(){
       return this.openMovilMenu?"left-0":"-left-full"
     }
-  }
+  },
+  mounted() {
+    console.log("mounted")
+    if (localStorage.user) {
+      const userData = JSON.parse(localStorage.getItem("user"))
+      console.log("mounted",userData)
+      this.login(userData);
+    }
+  },
 
 }
 </script>

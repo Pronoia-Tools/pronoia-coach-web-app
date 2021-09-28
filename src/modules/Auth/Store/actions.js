@@ -1,11 +1,21 @@
-import axios from "axios";
-
-const api_base = process.env.VUE_APP_API_BASE
+import PronoiaAPI from "../../../api/PronoiaAPI";
 
 export const signUp = async ({commit}, data) => {
-  let response = await axios.post(api_base+'/auth/register', data)
+  let response = await PronoiaAPI.post('/auth/register', data)
   commit("signUp", response)
   return true
+}
+
+export const login = async ({commit}, data) => {
+  try {
+    let response = await PronoiaAPI.post('/auth/login', data)
+    console.log({"[[ACTIONS {{login}} ]]":response})
+    commit("login", response.data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
 }
 // export const saveWorkbook = async ({commit},workbook) =>{
 //   // console.log(commit,workbook)

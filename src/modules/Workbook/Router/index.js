@@ -1,3 +1,4 @@
+import store from "../../../store"
 export default {
   
   name: "WorkBookLayout",
@@ -12,11 +13,18 @@ export default {
       path: ":idWorkBook",
       name: "workbook",
       component: () => import(/* webpackChunkName: "WoorkBook" */ "../Views/WorkBook.vue"),
+      beforeEnter:(to,from,next)=>{
+        console.log(store.state.auth.isAuthenticated)
+        if(store.state.auth.isAuthenticated){
+          next()
+        }else{
+          next({name:"login"})
+        }
+      },
       props: (route) => {
         return {
           idWorkBook: route.params.idWorkBook
         }
-
       }
     },
     // {
