@@ -1,16 +1,15 @@
 import axios from "axios";
 
-const api_base = process.env.VUE_APP_API_BASE
+const api_base = process.env.VUE_APP_API_BASE;
 
-export const signUp = async ({commit}, data) => {
-  let response = await axios.post(api_base+'/auth/register', data)
-  commit("signUp", response)
-  return true
-}
+export const signUp = async ({ commit }, data) => {
+  let response = await axios.post(api_base + "/auth/register", data);
+  commit("signUp", response);
+  return response;
+};
 // export const saveWorkbook = async ({commit},workbook) =>{
 //   // console.log(commit,workbook)
 
-  
 //   const data = await new Promise(resolve => setTimeout(() => resolve(workbook), 1000));
 //   if(!data) return
 //   console.log(data)
