@@ -1,17 +1,13 @@
-// export const getWorkBooks = (state) =>{
-//   // console.log(id)
-//   const workbooks = state.workbooks
-//   console.log(workbooks)
-//   if(!workbooks) return 
+export const getUserAuth = (state) =>{
+  // console.log(id)
+  const userData = {
+    user:state.user,
+    token:state.token,
+    isAuthenticated:state.isAuthenticated
+  }
 
-//   return [...workbooks]
-// }
-// export const getLoading = (state) =>{
-//   // console.log(id)
-//   const loading = state.loading
-
-//   return loading
-// }
+  return {...userData}
+}
 
 // export const getWorkBookByTitle = (state) => (search="",language="",status="") => {
 //   // console.log(state,search,language,status)

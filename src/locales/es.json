@@ -72,5 +72,16 @@
       "save": "Guardar",
       "section": "Sección"
     }
+  },
+  "navbar":{
+    "yourLibrary":"Tu libreria",
+    "workBookFactory":"Fábrica de Workbooks",
+    "coachDashboard":"Tablero de Coach",
+    "marketplace":"Marketplace",
+
+    "settings":"Ajustes",
+    "logout":"Cerrar sesión",
+    "login":"Iniciar sesión",
+    "register":"Registrate"
   }
 }

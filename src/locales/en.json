@@ -62,5 +62,16 @@
       "save": "Save",
       "section": "Section"
     }
+  },
+  "navbar":{
+    "yourLibrary":"Your Library",
+    "workBookFactory":"Workbook Factory",
+    "coachDashboard":"Coach's Dashboard",
+    "marketplace":"Marketplace",
+
+    "settings":"Settings",
+    "logout":"Log out",
+    "login":"Log in",
+    "register":"Register"
   }
 }
