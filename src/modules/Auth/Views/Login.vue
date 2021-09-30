@@ -56,8 +56,10 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import { mapActions } from 'vuex';
+import Swall from "sweetalert2"
+
 export default {
   name: "Login",
   components: { Form, Field, ErrorMessage },
@@ -65,17 +67,31 @@ export default {
     return { usuario: "", password: "" };
   },
   methods: {
-    submitLogin(e, values) {
-      console.log(e, values);
+    ...mapActions("auth",["login"]),
+    async submitLogin(values) {
+      console.log(values);
       // e.preventDefault();
-      if (!e.signDashboard) {
-        e.signDashboard = false;
+      // if (!e.signDashboard) {
+      //   e.signDashboard = false;
+      // }
+      let jsonUserData = { email: values.email, password: values.password };
+      // console.log(this.usuario);
+      // axios.post("http://solodata.es/auth", json).then((data) => {
+      //   console.log(data);
+      // });
+      const loged = await this.login(jsonUserData)
+      console.log({loged})
+      if (loged) {
+        // localStorage.setItem("user", JSON.stringify(loged));
+        localStorage.setItem("user",JSON.stringify(loged))
+        this.$router.push({name:"WorkBookLayout"})
+      }else{
+        Swall.fire({
+          title:"Ups... Something went wrong!!",
+          text:"Try again",
+          icon:"error"
+        })
       }
-      let json = { usuario: this.usuario, password: this.password };
-      console.log(this.usuario);
-      axios.post("http://solodata.es/auth", json).then((data) => {
-        console.log(data);
-      });
     },
   },
 };

@@ -12,10 +12,10 @@
       <font-awesome-icon :icon="myTimes" class=" self-end m-5 text-xl md:hidden" @click="toggleOpenMovileMenu"/>
       <nav class="flex gap-4 flex-col text-center m-4
                    md:flex-row md:m-1">
-        <router-link to="/">Your Library</router-link>
-        <router-link to="/workbook">Workbook Factory</router-link>
-        <router-link to="/">Coach's Dashboard</router-link>
-        <router-link to="/">Marketplace</router-link>
+        <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link>
+        <router-link to="/workbook">{{ $t(`navbar.workBookFactory`) }}</router-link>
+        <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
+        <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link>
       </nav>
       <div class="flex gap-5 flex-col
                    md:flex-row">
@@ -27,22 +27,30 @@
     <!-- USER -->
     <div class="flex gap-2 items-center">
       <font-awesome-icon :icon="myBars" @click="toggleOpenMovileMenu" class="cursor-pointer md:hidden"/>
-      <span>Victor Manuel</span>
-      <div class="cursor-pointer" @click="toggleOpenUserMenu">
-        <font-awesome-icon :icon="myUser" />
-        <font-awesome-icon :icon="myArrowDown"/>
-
-        <transition name="slide-fade">
-          <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-            <li v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
-              {{locale}}
-            </li>
-            <router-link to="/">Settings</router-link>
-            <router-link to="/">Log out</router-link>
-          </div>
-        </transition>
-
+      
+      <div class="flex gap-2" v-if="getUserAuth.isAuthenticated">
+        <span>{{`${getUserAuth.user.firstname} ${getUserAuth.user.lastname}`}}</span>
+        <div class="cursor-pointer" @click="toggleOpenUserMenu">
+          <font-awesome-icon :icon="myUser" />
+          <font-awesome-icon :icon="myArrowDown"/>
+          <transition name="slide-fade">
+            <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
+              <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+                {{locale}}
+              </li>
+              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link>
+              <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
+            </div>
+          </transition>
+        </div>
       </div>
+
+      <div v-else class="flex gap-2">
+        <ButoomCustomVue @click="$router.push({name:'login'})">{{ $t(`navbar.login`) }}</ButoomCustomVue>
+        <ButoomCustomVue @click="$router.push({name:'sign-up'})">{{ $t(`navbar.register`) }}</ButoomCustomVue>
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -50,9 +58,14 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBookOpen,faQuestionCircle,faBell,faUser,faAngleDown,faBars,faTimes } from '@fortawesome/free-solid-svg-icons'
+import { mapGetters,mapMutations } from 'vuex'
+import ButoomCustomVue from './ButoomCustom.vue'
 
 export default {
   name: 'Navbar',
+  components: {
+    FontAwesomeIcon,ButoomCustomVue,
+  },
 
   data () {
     return {
@@ -70,11 +83,8 @@ export default {
       locales:process.env.VUE_APP_I18N_SUPPORTED_LOCALE.split(",")
     }
   },
-
-  components: {
-    FontAwesomeIcon,
-  },
   methods:{
+    ...mapMutations("auth",["login","logout"]),
     toggleOpenUserMenu(){
       this.openUserMenu = !this.openUserMenu
     },
@@ -85,13 +95,26 @@ export default {
       if (this.$i18n.locale !== locale) {
         this.$i18n.locale = locale
       }
+    },
+    logoutHandler(){
+      localStorage.removeItem('user');
+      this.logout()
     }
   },
   computed:{
+    ...mapGetters("auth",["getUserAuth"]),
     isOpen(){
       return this.openMovilMenu?"left-0":"-left-full"
     }
-  }
+  },
+  mounted() {
+    console.log("mounted")
+    if (localStorage.user) {
+      const userData = JSON.parse(localStorage.getItem("user"))
+      console.log("mounted",userData)
+      this.login(userData);
+    }
+  },
 
 }
 </script>
