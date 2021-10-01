@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - run: npm ci && npm run build
         env:
           VUE_APP_API_BASE: ${{ secrets.VUE_APP_API_BASE }}
@@ -18,5 +23,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRONOIA_WEB_APP }}'
-          channelId: pre-live
+          channelId: live
           projectId: pronoia-web-app
