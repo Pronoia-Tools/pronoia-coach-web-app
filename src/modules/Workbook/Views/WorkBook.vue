@@ -133,7 +133,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 import Swal from 'sweetalert2'
 
@@ -155,7 +155,8 @@ export default {
     }
   },
   computed:{
-    ...mapGetters("workBook",["getWorkBookById"]),
+    ...mapGetters("workBook",["getWorkBookById", "getLastWorkBook"]),
+    ...mapState("workBook", ["lastWorkBook"])
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
@@ -176,7 +177,7 @@ export default {
           description: '',
         }
       }else{
-        // console.log("getWorkBookById",this.idWorkBook)
+        console.log("getWorkBookById",this.idWorkBook)
         workBookSelected = this.getWorkBookById(this.idWorkBook) 
         if (!workBookSelected){
           this.$router.push({name:"no-workbook"})
@@ -191,11 +192,15 @@ export default {
         allowOutsideClick:false
       })
       Swal.showLoading()
+      let newWorkbook = await this.saveWorkbook(this.workBook);
+      Swal.fire("Guardado", "entrada guardada",'success').then(()=>{
+        console.log('id')
+      console.log(newWorkbook.id)
+      this.$router.push({path: '/workbook/'+newWorkbook.id})
+      });
+      
+      
 
-
-      await this.saveWorkbook(this.workBook)
-
-      Swal.fire("Guardado", "entrada guardada",'success')
     },
     async updateCurrentWorkbook(){
       new Swal({

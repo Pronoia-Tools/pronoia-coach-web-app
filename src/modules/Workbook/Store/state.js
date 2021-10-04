@@ -1,4 +1,5 @@
 export default () => ({
   workbooks:[],
-  loading:true
+  loading:true,
+  lastWorkBook: {},
 })

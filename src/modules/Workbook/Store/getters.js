@@ -1,3 +1,4 @@
+
 export const getWorkBooks = (state) => {
   // console.log(id)
   const workbooks = state.workbooks;
@@ -6,6 +7,12 @@ export const getWorkBooks = (state) => {
 
   return workbooks;
 };
+
+export const getLastWorkBook = (state) => () => {
+  return state.lastWorkBook;
+};
+
+
 export const getLoading = (state) => {
   // console.log(id)
   const loading = state.loading;
@@ -99,9 +106,9 @@ export const getWorkBookFilter = (state) => (
 };
 
 export const getWorkBookById = (state) => (id) => {
-  // console.log(id)
-  const workbook = state.workbooks.find((workbook) => workbook.id === id);
+  const workbook = state.workbooks.find((workbook) => {return workbook.id === parseInt(id);});
+
   if (!workbook) return;
 
-  return { ...workbook };
+  return workbook;
 };
