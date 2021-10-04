@@ -1,9 +1,10 @@
 <template>
   <!-- HEADER --> 
   <div class="relative">
-    <div class=" p-5 pl-20 flex justify-between items-center">
-      <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
-      
+    
+    <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.go(-1)">
+        <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
+        <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
     </div>
     <div class="">
       <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
@@ -151,19 +152,17 @@
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
-
-
       </div>
     </div>
-
-
   </div>
-  
+  <template v-if="workBook">
+    <QuestionsListVue :sectionSelected="sectionSelected" :idWorkbook="idWorkBook"/>
+  </template>
 </template>
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm } from '@fortawesome/free-solid-svg-icons'
+import {faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { Editor, EditorContent, FloatingMenu  } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
@@ -178,13 +177,15 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters,mapActions } from 'vuex'
+import QuestionsListVue from '../Components/QuestionsList.vue'
 
 export default {
   components: {
     EditorContent,
     FontAwesomeIcon,
     FloatingMenu,
-    ButoomCustomVue
+    ButoomCustomVue,
+    QuestionsListVue
   },
   props: {
     idWorkBook: {
@@ -212,6 +213,7 @@ export default {
       myAlignCenter:faAlignCenter,
       myAlignJustify:faAlignJustify,
       myFilm:faFilm,
+      myArrowLeft:faArrowLeft,
       
       editor: null,
       openTableContent:false,
@@ -232,41 +234,44 @@ export default {
     getContentTable(){
       var titles = [];
       
-      console.log({"sections":this.workBook.sections})
+      // console.log({"sections":this.workBook.sections})
       for(var i = 0; i < this.workBook.sections.length; i++){
-          let content ={}
-            
-          content.classes = "bg-red-300 text-center font-bold"
-          content.type = "horizontalRule"
-          content.content = `${ this.$t('workbook.workbookText.section') } ${i+1}`
-          content.sectionNumber = i
-          titles.push(content);
-          for(var j = 0; j < this.workBook.sections[i].content.length; j++){
+        let content ={}
+        content.classes = "bg-red-300 text-center font-bold"
+        content.type = "horizontalRule"
+        content.content = `${ this.$t('workbook.workbookText.section') } ${i+1}`
+        content.sectionNumber = i
+        titles.push(content);
+        for(var j = 0; j < this.workBook.sections[i].content.length; j++){
 
-            if(this.workBook.sections[i].content[j].type === "heading"){
-              let content = {          }
-              switch (this.workBook.sections[i].content[j].attrs.level) {
-                case 1:
-                    content.classes = "pl-2 font-extrabold"
-                  break;
-                case 2:
-                    content.classes = "pl-6 font-bold"
-                  break;
-                case 3:
-                    content.classes = "pl-10 font-semibold"
-                  break;
-              
-                default:
-                    content.classes = "pl-14 font-medium"
-                  break;
-              }
-              content.content=this.workBook.sections[i].content[j].content[0].text,
-              content.type = "heading"
-              titles.push(content);
+          if(this.workBook.sections[i].content[j].type === "heading"){
+            let content = {}
+            switch (this.workBook.sections[i].content[j].attrs.level) {
+              case 1:
+                  content.classes = "pl-2 font-extrabold"
+                break;
+              case 2:
+                  content.classes = "pl-6 font-bold"
+                break;
+              case 3:
+                  content.classes = "pl-10 font-semibold"
+                break;
+            
+              default:
+                  content.classes = "pl-14 font-medium"
+                break;
             }
+            content.content=this.workBook.sections[i].content[j].content[0].text,
+            content.type = "heading"
+            titles.push(content);
           }
-         
-       
+        }
+        let question ={}
+        question.classes = "bg-blue-300 text-center font-bold"
+        question.type = "heading"
+        question.content = `Questions`
+        // question.sectionNumber = i
+        titles.push(question);
       }
       return titles;
     },
@@ -281,7 +286,7 @@ export default {
     ...mapActions("workBook",["updateWorkbookSection","updateWorkbookAddSection"]),
     gotoSection(section){
       if (section.type === "horizontalRule") {
-        console.log(section)
+        // console.log(section)
         this.sectionSelected = section.sectionNumber
       }
     },
@@ -298,14 +303,14 @@ export default {
     },
     async addImage() {
       const { value: url } = await Swal.fire({
-        title: 'Image URL',
+        title: this.$t('workbook.workbookText.alerts.addImage.title') ,
         input: 'text',
-        inputLabel: 'Your image IRL',
-        inputPlaceholder: 'Enter your image IRL'
+        inputLabel: this.$t('workbook.workbookText.alerts.addImage.inputLabel'),
+        inputPlaceholder: this.$t('workbook.workbookText.alerts.addImage.inputPlaceholder')
       })
       if (url) {
          const { value: color } = await Swal.fire({
-          title: 'Select width',
+          title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
           input: 'radio',
           inputOptions: {
             "full":"full",
@@ -315,7 +320,7 @@ export default {
           },
           inputValidator: (value) => {
             if (!value) {
-              return 'You need to choose something!'
+              return this.$t('workbook.workbookText.alerts.addImage.widthImage.validatorMessage')
             }
           }
         })
@@ -327,10 +332,10 @@ export default {
     },
     async addVideo() {
       const { value: url } = await Swal.fire({
-        title: 'Video URL',
+        title: this.$t('workbook.workbookText.alerts.addVideo.title'),
         input: 'text',
-        inputLabel: 'Your video IRL',
-        inputPlaceholder: 'Enter your video IRL'
+        inputLabel: this.$t('workbook.workbookText.alerts.addVideo.inputLabel'),
+        inputPlaceholder: this.$t('workbook.workbookText.alerts.addVideo.inputPlaceholder')
       })
       if (url) {
         this.editor.chain().focus().setIframe({ src: url }).run()
@@ -347,19 +352,19 @@ export default {
       let workBookSelected
 
       if (this.idWorkBook==="new") {
-        workBookSelected = {
-          title:"",
-          published:new Date(),
-          edition:1,
-          language:"",
-          price:"",
-          currency:"",
-          status:"Editable",
-          author:"",
-          tags:""
-        }
+        // workBookSelected = {
+        //   title:"",
+        //   published:new Date(),
+        //   edition:1,
+        //   language:"",
+        //   price:"",
+        //   currency:"",
+        //   status:"Editable",
+        //   author:"",
+        //   tags:""
+        // }
       }else{
-        console.log(this.idWorkBook)
+        // console.log(this.idWorkBook)
         workBookSelected =await this.getWorkBookById(this.idWorkBook) 
         if (!workBookSelected){
           this.$router.push({name:"no-workbook"})
@@ -374,31 +379,40 @@ export default {
     },
     async updateCurrentWorkbook(){
       new Swal({
-        title: 'Espere por favor!',
+        title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
       })
       Swal.showLoading()
 
       await this.updateWorkbookSection({json:this.editor.getJSON(),sectionSelected:this.sectionSelected,idWorkBook:this.idWorkBook})
 
-      Swal.fire("Actualizado", "entrada actualizada",'success')
+
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated')
+      })
+      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
     },
     async updateCurrentWorkbookAddSection(){
       new Swal({
-        title: 'Espere por favor!!',
+        title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
       })
       Swal.showLoading()
 
       await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
 
-      Swal.fire("Actualizado", "entrada actualizada",'success')
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated')
+      })
+      // Swal.fire("Actualizado", "entrada actualizada",'success')
     },
     
   },
 
   mounted() {
-    console.log("mounted")
+    // console.log("mounted")
     this.editor = new Editor({
       extensions: [
         StarterKit,
@@ -421,10 +435,10 @@ export default {
     this.editor.destroy(),
     window.removeEventListener("scroll", this.onScroll)
   },
-  created(){
+  // created(){
     
-    console.log("created")
-  },
+  //   // console.log("created")
+  // },
   watch:{
     idWorkBook(){
         this.loadWorkBook()

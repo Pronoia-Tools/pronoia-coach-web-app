@@ -44,9 +44,25 @@ export const updateWorkbookAddSection = (state,{idWorkBook}) => {
     if (eWorkbook.id === idWorkBook) {
       const newWorkbook = {...eWorkbook}
       newWorkbook.sections[eWorkbook.sections.length] = { 
+        type:"doc",
         content:[],
-        type:"doc"
+        questions:[]
        }
+
+      return newWorkbook
+    }else{
+      return eWorkbook
+    }
+  })
+  state.workbooks = newWorkbookList
+}
+
+export const updateWorkbookAddQuestion = (state,{idWorkbook, sectionSelected, newQuestion}) => {
+  console.log({"{{mutation}} updateWorkbookAddQuestion":{idWorkbook, sectionSelected, newQuestion}})
+  const newWorkbookList = state.workbooks.map(eWorkbook => {
+    if (eWorkbook.id === idWorkbook) {
+      const newWorkbook = {...eWorkbook}
+      newWorkbook.sections[sectionSelected].questions.push(newQuestion)
 
       return newWorkbook
     }else{
