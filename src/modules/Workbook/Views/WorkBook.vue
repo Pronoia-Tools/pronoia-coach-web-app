@@ -168,11 +168,12 @@ export default {
           published:new Date(),
           edition:1,
           language:"",
-          price:"",
+          price:0.00,
           currency:"",
           status:"Editable",
           author:"",
-          tags:""
+          tags:"",
+          description: '',
         }
       }else{
         // console.log("getWorkBookById",this.idWorkBook)
