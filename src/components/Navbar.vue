@@ -28,8 +28,8 @@
     <div class="flex gap-2 items-center">
       <font-awesome-icon :icon="myBars" @click="toggleOpenMovileMenu" class="cursor-pointer md:hidden"/>
       
-      <div class="flex gap-2" v-if="getUserAuth.isAuthenticated">
-        <span>{{`${getUserAuth.user.firstname} ${getUserAuth.user.lastname}`}}</span>
+      <div class="flex gap-2" v-if="this.isAuthenticated">
+        <span>{{`${this.user.firstName} ${this.user.lastName}`}}</span>
         <div class="cursor-pointer" @click="toggleOpenUserMenu">
           <font-awesome-icon :icon="myUser" />
           <font-awesome-icon :icon="myArrowDown"/>
@@ -58,7 +58,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBookOpen,faQuestionCircle,faBell,faUser,faAngleDown,faBars,faTimes } from '@fortawesome/free-solid-svg-icons'
-import { mapGetters,mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 import ButoomCustomVue from './ButoomCustom.vue'
 
 export default {
@@ -103,18 +103,19 @@ export default {
   },
   computed:{
     ...mapGetters("auth",["getUserAuth"]),
+    ...mapState("auth", ["isAuthenticated", "user"]),
     isOpen(){
       return this.openMovilMenu?"left-0":"-left-full"
     }
   },
-  mounted() {
-    console.log("mounted")
-    if (localStorage.user) {
-      const userData = JSON.parse(localStorage.getItem("user"))
-      console.log("mounted",userData)
-      this.login(userData);
-    }
-  },
+  // mounted() {
+  //   console.log("mounted")
+  //   if (this.isAuthenticated) {
+  //     const userData = JSON.parse(localStorage.getItem("user"))
+  //     console.log("mounted",userData)
+  //     this.login(userData);
+  //   }
+  // },
 
 }
 </script>
