@@ -3,7 +3,7 @@ import PronoiaAPI from "../../../api/PronoiaAPI";
 export const signUp = async ({ commit }, data) => {
   let response = await PronoiaAPI.post("/auth/register", data);
   commit("signUp", response);
-  return true;
+  return response;
 };
 
 export const login = async ({ commit }, data) => {
@@ -11,11 +11,11 @@ export const login = async ({ commit }, data) => {
     let response = await PronoiaAPI.post("/auth/login", data);
     console.log({ "[[ACTIONS {{login}} ]]": response });
     commit("login", response.data);
-    return response.status;
+
+    return response.data;
   } catch (error) {
-    if (error.response) {
-      return error.response.status;
-    } else return 500;
+    console.log(error);
+    return null;
   }
 };
 // export const saveWorkbook = async ({commit},workbook) =>{
