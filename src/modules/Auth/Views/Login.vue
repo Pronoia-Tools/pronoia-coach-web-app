@@ -57,8 +57,8 @@
 <script>
 // @ is an alias to /src
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { mapActions } from 'vuex';
-import Swall from "sweetalert2"
+import { mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   name: "Login",
@@ -67,8 +67,14 @@ export default {
     return { usuario: "", password: "" };
   },
   methods: {
-    ...mapActions("auth",["login"]),
+    ...mapActions("auth", ["login"]),
     async submitLogin(values) {
+      new Swal({
+        title: "Please wait",
+        allowOutsideClick: false,
+      });
+      Swal.showLoading();
+
       console.log(values);
       // e.preventDefault();
       // if (!e.signDashboard) {
@@ -79,18 +85,22 @@ export default {
       // axios.post("http://solodata.es/auth", json).then((data) => {
       //   console.log(data);
       // });
-      const loged = await this.login(jsonUserData)
-      console.log({loged})
-      if (loged) {
+      const loged = await this.login(jsonUserData);
+      if (loged === 200) {
+        console.log({ loged });
         // localStorage.setItem("user", JSON.stringify(loged));
-        localStorage.setItem("user",JSON.stringify(loged))
-        this.$router.push({name:"WorkBookLayout"})
-      }else{
-        Swall.fire({
-          title:"Ups... Something went wrong!!",
-          text:"Try again",
-          icon:"error"
-        })
+        localStorage.setItem("user", JSON.stringify(loged));
+        this.$router.push({ name: "WorkBookLayout" });
+        Swal.fire("You have succesfully logged in", "", "success");
+      }
+      if (loged === 400) Swal.fire("This email is not registered", "", "error");
+      if (loged === 401) Swal.fire("Incorrect password", "", "error");
+      if (loged === 500) {
+        Swal.fire({
+          title: "Ups... Something went wrong!!",
+          text: "Try again",
+          icon: "error",
+        });
       }
     },
   },

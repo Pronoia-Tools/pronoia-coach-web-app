@@ -11,6 +11,7 @@ export const login = async ({ commit }, data) => {
     let response = await PronoiaAPI.post("/auth/login", data);
     console.log({ "[[ACTIONS {{login}} ]]": response });
     commit("login", response.data);
+
     return response.data;
   } catch (error) {
     console.log(error);
