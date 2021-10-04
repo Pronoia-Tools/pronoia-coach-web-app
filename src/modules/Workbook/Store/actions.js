@@ -1,3 +1,5 @@
+import PronoiaAPI from "../../../api/PronoiaAPI";
+
 // export const myAccion = async ({commit}) => {
 
 // }
@@ -480,14 +482,12 @@ export const loadWorkbooks = async ({ commit }) => {
 };
 
 export const saveWorkbook = async ({ commit }, workbook) => {
-  // console.log(commit,workbook)
 
-  const data = await new Promise((resolve) =>
-    setTimeout(() => resolve(workbook), 1000)
-  );
-  if (!data) return;
-  console.log(data);
-  commit("saveWorkbook", { id: "4", ...data });
+  let response = await PronoiaAPI.post('/workbook', workbook );
+
+  if (!response) return;
+  console.log(response);
+  commit("saveWorkbook", response);
 
   return true;
 };
