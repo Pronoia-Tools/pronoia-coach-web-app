@@ -97,21 +97,20 @@
           >
         </div>
         <div>
-          <button class="p-2 bg-purple-900 text-white">Submit</button>
+          <button class="p-2 bg-purple-900 text-white" >Submit</button>
         </div>
 
-        <a href="#" class="underline text-purple-900"
-          >I already have an account</a
-        >
+        <a href="/login" class="underline text-purple-900">I already have an account</a>
+
       </Form>
     </div>
   </div>
 </template>
 
 <script>
-import { Form, Field, ErrorMessage } from "vee-validate";
-import { mapActions } from "vuex";
-import Swal from "sweetalert2";
+import { Form, Field, ErrorMessage } from "vee-validate"
+import { mapActions, mapState } from 'vuex';
+import Swall from "sweetalert2";
 
 export default {
   components: {
@@ -119,40 +118,29 @@ export default {
     Field,
     ErrorMessage,
   },
-  methods: {
-    ...mapActions("auth", ["signUp"]),
-
-    async submitSignUp(data) {
-      new Swal({
-        title: "Espere por favor!",
-        allowOutsideClick: false,
-      });
-      Swal.showLoading();
+  computed: {
+    ...mapState("auth", ["isAuthenticated"]),
+  },
+  methods:{
+    ...mapActions("auth",["signUp"]),
+    
+    async submitSignUp(data){
       let revisedData = {
         firstname: data.firstName,
         lastname: data.LastName,
         email: data.email,
         password: data.password,
-        country: data.country,
+        country: data.country 
       };
-      let response = await this.signUp(revisedData).catch((error) => {
-        if (error.response) {
-          if (error.response.status === 400) {
-            Swal.fire("The user already exists", "", "error");
-          } else {
-            Swal.fire(
-              "There was an error while creating the user.",
-              "Try again later",
-              "error"
-            );
-          }
-        }
-      });
-
-      if (response && response.status === 200) {
-        Swal.fire("Your account has been succesfully created", "", "success");
+      await this.signUp(revisedData);
+      if (this.isAuthenticated) {
+        this.$router.push({name:"WorkBookLayout"});
+      } else {
+        Swall.fire({
+          title:"Ups... Something went wrong!!",
+          text:"Try again",
+          icon:"error"
+        });
       }
-    },
-  },
-};
-</script>
+    }
+  }
