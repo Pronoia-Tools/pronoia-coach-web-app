@@ -89,15 +89,15 @@ export default {
           icon:"error"
         });
       }
-      if (loged === 400) Swal.fire("This email is not registered", "", "error");
-      if (loged === 401) Swal.fire("Incorrect password", "", "error");
-      if (loged === 500) {
-        Swal.fire({
-          title: "Ups... Something went wrong!!",
-          text: "Try again",
-          icon: "error",
-        });
-      }
+      // if (loged === 400) Swal.fire("This email is not registered", "", "error");
+      // if (loged === 401) Swal.fire("Incorrect password", "", "error");
+      // if (loged === 500) {
+      //   Swal.fire({
+      //     title: "Ups... Something went wrong!!",
+      //     text: "Try again",
+      //     icon: "error",
+      //   });
+      // }
     },
   },
 };

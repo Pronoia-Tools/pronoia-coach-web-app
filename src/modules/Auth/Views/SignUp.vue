@@ -142,5 +142,7 @@ export default {
           icon:"error"
         });
       }
-    }
+    },
   }
+}
+</script>
