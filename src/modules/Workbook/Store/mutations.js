@@ -10,7 +10,7 @@ export const setWorkbooks = (state,workbooks) => {
   state.loading = false
 }
 export const saveWorkbook = (state,workbook) => {
-  state.workbooks = [workbook, ...state.workbooks]
+  state.workbooks.push(workbook)
 }
 
 export const updateWorkbook = (state,workbook) => {
