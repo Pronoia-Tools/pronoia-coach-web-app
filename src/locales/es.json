@@ -28,10 +28,10 @@
   },
   "login":{	
     "email":"Email",	
-    "password":"Password",	
-    "log-in":"Log in",	
-    "register":"Register",	
-    "forgot-password":"Forgot your Password?"	
+    "password":"Contraseña",	
+    "log-in":"Iniciar sesión",	
+    "register":"Registrar",	
+    "forgot-password":"¿Olvidaste tu contraseña?"	
   },	
   "sign-up":{	
     "first-name":"Primer nombre",	
@@ -51,7 +51,7 @@
   },
   "workbook":{
     "workbookLayout":{
-      "sales":"ventas",
+      "sales":"Ventas",
       "eWorkbooks":"eWorkbooks",
       "customers":"clientes",
       "createWorkbook":"Crear workbook"
@@ -80,13 +80,13 @@
     },
     "NoWorkBookSelected": {
       "headerTable": {
-        "Title": "Title",
-        "Published": "Published at",
-        "Edition": "Edition",
-        "Language": "Language",
-        "Price": "Price",
-        "Status": "Status",
-        "Options": "Options"
+        "Title": "Titulo",
+        "Published": "Publicado el",
+        "Edition": "Edición",
+        "Language": "Idioma",
+        "Price": "Precio",
+        "Status": "Estado",
+        "Options": "Opciones"
       },
       "filter": "Filtrar",	
       "inputLanguage":{	
@@ -116,8 +116,8 @@
       "published": "Estado",
       "language": "Lenguaje",
       "price": "Precio",
-      "currency": "divisa",
-      "tags": "etiquetas",
+      "currency": "Divisa",
+      "tags": "Etiquetas",
       "describePlaceHolder": "Descríbete aquí...",
 
       "save": "Guardar Workbook",
@@ -155,7 +155,7 @@
         "addImage":{
           "title":"Imagen URL",
           "inputLabel":"URL de la imagen",
-          "inputPlaceholder":"inserta URL de la imagen",
+          "inputPlaceholder":"Inserta URL de la imagen",
           "widthImage":{
             "title":"Selecciona anchura",
             "validatorMessage":"Necesitas escoger algo!"
