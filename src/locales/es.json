@@ -1,31 +1,60 @@
 {
+  "input":{	
+    "select":"Seleccionar",	
+    "submit":"Enviar"	
+  },	
+  "languages":{	
+    "spanish":"Español",	
+    "english":"Ingles"	
+  },	
+  "countries":{	
+    "mexico":"México",	
+    "usa":"Estados Unidos"	
+  },
   "swallAlertGeneral":{
     "succces":"Completado",
     "saved":"Guardado",
     "updated":"Actualizado",
     "deleted":"Eliminado",
+    "confirmDelete":{	
+      "title":"¿Estas seguro?",	
+      "textTrashcan": "Veras este workbook en el basurero!!",	
+      "confirmButtonText": "Eliminar",	
+      "denyButtonText": "Cancelar"	
+    },
     "error":"Ups... Algo salió mal",
+    "try-again":"Intenta nuevamente",
     "wait":"Estamos trabajando en ello!"
+  },
+  "login":{	
+    "email":"Email",	
+    "password":"Password",	
+    "log-in":"Log in",	
+    "register":"Register",	
+    "forgot-password":"Forgot your Password?"	
+  },	
+  "sign-up":{	
+    "first-name":"Primer nombre",	
+    "last-name":"Apellidos",	
+    "email":"Email",	
+    "password":"Contraseña",	
+    "password-confirmation":"Confirma contraseña",	
+    "country":"Pais",	
+    "checkBox":"Inscríbeme como entrenador y dame acceso al panel de control del entrenador",	
+    "submit":"Enviar",	
+    "already-have-acount":"Ya tengo una cuenta"	
+  },	
+  "feedbackButton":{	
+    "report-type":"Tipo de reporte",	
+    "description":"Descripción",	
+    "send":"Enviar"	
   },
   "workbook":{
     "workbookLayout":{
       "sales":"ventas",
       "eWorkbooks":"eWorkbooks",
-      "customers":"clientes"
-    },
-    "NoWorkBookSelected": {
-      "headerTable": {
-        "Title": "Title",
-        "Published": "Published at",
-        "Edition": "Edition",
-        "Language": "Language",
-        "Price": "Price",
-        "Status": "Status",
-        "Options": "Options"
-      },
-      "filter": {
-        "filter": "filter"
-      }
+      "customers":"clientes",
+      "createWorkbook":"Crear workbook"
     },
     "workbookList": {
       "title": "Todos los workbooks",
@@ -39,6 +68,40 @@
         "label6": "Ordenar  por",
         "button1": "Cancelar",
         "button2": "Aplicar filtro"
+      },	
+      "categories":{	
+        "novel":"Novela",	
+        "biography":"Biografía"	
+      },	
+      "arrange":{	
+        "newest":"Mas nuevo",	
+        "cheapest":"Mas barato"	
+      }
+    },
+    "NoWorkBookSelected": {
+      "headerTable": {
+        "Title": "Title",
+        "Published": "Published at",
+        "Edition": "Edition",
+        "Language": "Language",
+        "Price": "Price",
+        "Status": "Status",
+        "Options": "Options"
+      },
+      "filter": "Filtrar",	
+      "inputLanguage":{	
+        "select":"Selecciona idioma"	
+      },	
+      "inputStatus":{	
+        "status":"Estado",	
+        "options":{	
+          "published":"Piblicado",	
+          "editable":"Editable",	
+          "uneditable":"No editable"	
+        }	
+      },	
+      "inputTitle":{	
+        "placeholder":"Titulo o Autor"	
       }
     },
     "workbook": {
