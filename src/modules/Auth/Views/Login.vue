@@ -10,7 +10,7 @@
     <!-- Login Form -->
     <Form @submit="submitLogin" class=" text-center  container mx-auto">
       <div class="my-4">
-        <p class="text-gray-600">Email</p>
+        <p class="text-gray-600">{{$t("login.email")}}</p>
         <Field
           type="email"
           id="login"
@@ -23,7 +23,7 @@
         <ErrorMessage class="text-red-400" name="email"></ErrorMessage>
       </div>
       <div class="my-4">
-        <p class="text-gray-600">Password</p>
+        <p class="text-gray-600">{{$t("login.password")}}</p>
         <Field
           type="password"
           class=" border border-gray-300 py-2"
@@ -37,7 +37,7 @@
         <input
           type="submit"
           class="bg-blue-800 p-3 text-white cursor-pointer"
-          value="Log In"
+          :value="$t('login.log-in')"
         />
       </div>
     </Form>
@@ -45,10 +45,10 @@
     <!-- Remind Passowrd -->
     <div class="flex flex-col text-center">
       <router-link class="text-blue-800 underline my-2" to="/register"
-        >Register</router-link
+        >{{$t("login.register")}}</router-link
       >
       <router-link class="text-blue-800 underline my-2" to="/forgot-password"
-        >Forgot your Password?</router-link
+        >{{$t("login.forgot-password")}}</router-link
       >
     </div>
   </div>
@@ -84,8 +84,8 @@ export default {
         this.$router.push({name:"WorkBookLayout"});
       }else{
         Swall.fire({
-          title:"Ups... Something went wrong!!",
-          text:"Try again",
+          title:this.$t("swallAlertGeneral.error"),
+          text:this.$t("swallAlertGeneral.try-again"),
           icon:"error"
         });
       }

@@ -2,7 +2,7 @@
   <div class="container grid grid-cols-5 sm:grid-cols-6 md:grid-cols-11 py-4 px-4 text-center border border-transparent hover:border-gray-500">
     <span class="col-span-1">{{workbookDetails.id}}</span>
     <span class="col-span-1 md:col-span-2">{{workbookDetails.title}}</span>
-    <!-- <span class="col-span-1 hidden sm:block md:col-span-2">{{dateString}}</span> -->
+    <span class="col-span-1 hidden sm:block md:col-span-2">{{dateString}}</span>
     <span class="col-span-1">{{workbookDetails.edition}}</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.language}}</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.price}}$</span>

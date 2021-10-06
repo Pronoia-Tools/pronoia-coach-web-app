@@ -26,7 +26,7 @@
           class="flex justify-between items-center p-2 px-4 border border-transparent hover:border-gray-500 transition-all"
           @click="$router.push({name:'workbook',params:{idWorkBook:'new'}})"
         >
-          Create New Workbook <font-awesome-icon :icon="plus" />
+          {{$t("workbook.workbookLayout.createWorkbook")}} <font-awesome-icon :icon="plus" />
         </div>
       
       <div class="border-b border-black flex justify-between items-center p-2">

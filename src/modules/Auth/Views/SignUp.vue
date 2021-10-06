@@ -9,7 +9,7 @@
       >
         <div class=" grid grid-cols-2 gap-4 w-full">
           <div class="field">
-            <label class="block" for="fistName">First Name</label>
+            <label class="block" for="fistName">{{$t("sign-up.first-name")}}</label>
             <Field
               class="w-full px-2 py-1 border rounded border-gray-400"
               type="text"
@@ -20,7 +20,7 @@
           </div>
 
           <div class="field">
-            <label class="block" for="LastName">Last Name</label>
+            <label class="block" for="LastName">{{$t("sign-up.last-name")}}</label>
             <Field
               class="w-full px-2 py-1 border rounded border-gray-400"
               type="text"
@@ -32,7 +32,7 @@
         </div>
 
         <div class="field w-full">
-          <label class="block" for="email">Email</label>
+          <label class="block" for="email">{{$t("sign-up.email")}}</label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             type="email"
@@ -43,7 +43,7 @@
         </div>
 
         <div class="field w-full">
-          <label class="block" for="password">Password</label>
+          <label class="block" for="password">{{$t("sign-up.password")}}</label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             type="password"
@@ -55,7 +55,7 @@
 
         <div class="field w-full">
           <label class="block" for="passwordConfirm"
-            >Password Confirmation</label
+            >{{$t("sign-up.password-confirmation")}}</label
           >
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
@@ -70,16 +70,16 @@
         </div>
 
         <div class="field w-full">
-          <label class="block" for="country">Country</label>
+          <label class="block" for="country">{{$t("sign-up.country")}}</label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             name="country"
             rules="required"
             as="select"
           >
-            <option value="" disabled>Select</option>
-            <option value="Mx">México</option>
-            <option value="USA">Estados unidos</option>
+            <option value="" disabled>{{$t("input.select")}}</option>
+            <option :value="$t('languages.mexico')">{{$t("countries.mexico")}}</option>
+            <option :value="$t('languages.usa')">{{$t("countries.usa")}}</option>
           </Field>
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
@@ -92,15 +92,14 @@
             :value="true"
           />
           <label class="block text-blue-500" for="cbox2"
-            >Sign me up as a coach and give me access to the Coach's
-            Dashboard</label
+            >{{$t("sign-up.checkBox")}}</label
           >
         </div>
         <div>
-          <button class="p-2 bg-purple-900 text-white" >Submit</button>
+          <button class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</button>
         </div>
 
-        <a href="/login" class="underline text-purple-900">I already have an account</a>
+        <router-link to="/login" class="underline text-purple-900">{{$t("sign-up.already-have-acount")}}</router-link>
 
       </Form>
     </div>
@@ -137,8 +136,8 @@ export default {
         this.$router.push({name:"WorkBookLayout"});
       } else {
         Swall.fire({
-          title:"Ups... Something went wrong!!",
-          text:"Try again",
+          title:this.$t("swallAlertGeneral.error"),
+          text:this.$t("swallAlertGeneral.try-again"),
           icon:"error"
         });
       }
