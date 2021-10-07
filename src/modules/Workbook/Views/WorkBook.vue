@@ -36,7 +36,8 @@
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.by') }}:</label>
-              <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.author">
+              <span class="border border-gray-500 bg-gray-200 rounded px-2 py-2 w-full text-left">{{workBook.author.firstName + workBook.author.lastName}}</span>
+              <!-- <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.author" > -->
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.edition') }}:</label>
@@ -156,7 +157,8 @@ export default {
   },
   computed:{
     ...mapGetters("workBook",["getWorkBookById", "getLastWorkBook"]),
-    ...mapState("workBook", ["lastWorkBook"])
+    ...mapState("workBook", ["lastWorkBook"]),
+    ...mapState("auth", ["user"])
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
@@ -172,7 +174,7 @@ export default {
           price:0.00,
           currency:"",
           status:"Editable",
-          author:"",
+          author: this.user,
           tags:"",
           description: '',
         }
@@ -184,6 +186,7 @@ export default {
         }
       }
       this.workBook = workBookSelected
+
     },
 
     async saveNewWorkbook(){
