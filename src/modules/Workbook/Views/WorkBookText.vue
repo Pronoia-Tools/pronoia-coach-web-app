@@ -227,7 +227,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters("workBook",["getWorkBookById"]),
+    ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     isSidebarOpen(){      
       return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
     },
@@ -283,7 +283,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions("workBook",["updateWorkbookSection","updateWorkbookAddSection"]),
+    ...mapActions("workBook",["loadWorkBookUnits", "updateWorkbookSection","updateWorkbookAddSection"]),
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
@@ -365,7 +365,7 @@ export default {
         // }
       }else{
         // console.log(this.idWorkBook)
-        workBookSelected =await this.getWorkBookById(this.idWorkBook) 
+        workBookSelected =await this.loadWorkBookUnits(this.idWorkBook) 
         if (!workBookSelected){
           this.$router.push({name:"no-workbook"})
         }

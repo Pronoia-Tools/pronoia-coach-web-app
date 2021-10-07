@@ -496,16 +496,37 @@ export const saveWorkbook = async ({ commit }, workbook) => {
 };
 
 export const updateWorkbook = async ({ commit }, workbook) => {
-  console.log(commit, workbook);
+  let response = await PronoiaAPI.put('/workbook/'+workbook.id, workbook );
 
-  const data = await new Promise((resolve) =>
-    setTimeout(() => resolve(workbook), 1000)
-  );
-  if (!data) return;
+  if (!response) return;
+  commit("updateWorkbook", response.data);
 
-  commit("updateWorkbook", data);
+  return response.data;
+};
 
-  return true;
+export const deleteWorkbook = async ({commit}, workbook) =>{
+
+  let response = await PronoiaAPI.delete('/workbook/'+workbook.id);
+
+  if (!response) return;
+  commit("deleteWorkbook", response.data);
+
+  return response.data;
+};
+
+  ///UNITS
+
+
+export const loadWorkBookUnits = async ({ commit }, workbook_id) => {
+  let response = await PronoiaAPI.get('/workbook/'+workbook_id+'/unit');
+  console.log(response)
+  console.log(response.data)
+
+  if (!response) return;
+  commit("saveWorkbook", response.data);
+
+  return response.data;
+
 };
 
 export const updateWorkbookSection = async ({ commit }, section) => {
@@ -542,16 +563,3 @@ export const updateWorkbookAddQuestion = async ({commit},{idWorkbook, sectionSel
     return true
 }
 
-export const deleteWorkbook = async ({commit},id) =>{
-//   console.log(commit,id)
-
-  // if(!data) return
-  const data = await new Promise((resolve) =>
-    setTimeout(() => resolve(id), 1000)
-  );
-  if (!data) return;
-
-  commit("deleteWorkbook", id);
-
-  return true;
-};

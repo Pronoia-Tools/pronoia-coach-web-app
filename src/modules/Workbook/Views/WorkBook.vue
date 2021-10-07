@@ -231,7 +231,7 @@ export default {
             allowOutsideClick:false
           })
           Swal.showLoading()
-          await this.deleteWorkbook(this.workBook.id)
+          await this.deleteWorkbook(this.workBook)
           Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
           this.$router.push({name:"no-workbook"})
         } 
