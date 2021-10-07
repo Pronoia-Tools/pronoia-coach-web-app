@@ -11,8 +11,8 @@
 
       <div id="sidebar" class="">
         <!-- SIDEBAREXTRA -->
-        <div class="border border-black h-full">
-          <div class=" h-48 w-64  flex flex-wrap justify-around border border-black">
+        <div class="transition-all border border-black h-full" :class="isSidebarOpen">
+          <div class=" h-48 flex flex-wrap justify-around border border-black">
             <img 
               v-for="(image, index) in imagesArray" 
               :key="index" 
@@ -223,7 +223,7 @@ export default {
       myArrowLeft:faArrowLeft,
       
       editor: null,
-      openTableContent:false,
+      openTableContent:true,
       imagesArray:[
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico",
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355578/qrgrpfyaybctx2zhvldk.png"
@@ -237,23 +237,24 @@ export default {
   computed:{
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     isSidebarOpen(){      
-      return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
+      // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
+      return this.openTableContent?"bg-red-200 w-64  ":"bg-blue-200 w-0"
     },
     getContentTable(){
       var titles = [];
       
       // console.log({"sections":this.workBook.sections})
-      if (!this.workBook.sections) {
+      if (!this.workBook.units) {
         return titles
       }
-      for(var i = 0; i < this.workBook.sections.length; i++){
+      for(var i = 0; i < this.workBook.units.length; i++){
         let content ={}
         content.classes = "text-center font-bold"
         content.type = "horizontalRule"
         content.content = `${ this.$t('workbook.workbookText.section') } ${i+1}`
         content.sectionNumber = i
         titles.push(content);
-        for(var j = 0; j < this.workBook.sections[i].content.length; j++){
+        for(var j = 0; j < this.workBook.units[i].contents.length; j++){
 
           if(this.workBook.sections[i].content[j].type === "heading"){
             let content = {}
