@@ -48,8 +48,8 @@
                 </select>
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.language">
                   <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
-                  <option value="Spanish">Español</option>
-                  <option value="English">Ingles</option>
+                  <option value="Spanish">{{$t("languages.spanish")}}</option>
+                  <option value="English">{{$t("languages.english")}}</option>
                 </select>
               </div>
           </div>
@@ -188,13 +188,13 @@ export default {
 
     async saveNewWorkbook(){
       new Swal({
-        title: 'Espere por favor!',
+        title: this.$t("swallAlertGeneral.wait"),
         allowOutsideClick:false
       })
       Swal.showLoading()
       let newWorkbook = await this.saveWorkbook(this.workBook);
-      Swal.fire("Guardado", "entrada guardada",'success').then(()=>{
-        console.log('id')
+      Swal.fire(this.$t("swallAlertGeneral.saved"), "",'success').then(()=>{
+      console.log('id')
       console.log(newWorkbook.id)
       this.$router.push({path: '/workbook/'+newWorkbook.id})
       });
@@ -204,32 +204,32 @@ export default {
     },
     async updateCurrentWorkbook(){
       new Swal({
-        title: 'Espere por favor!',
+        title: this.$t("swallAlertGeneral.wait"),
         allowOutsideClick:false
       })
       Swal.showLoading()
 
       await this.updateWorkbook(this.workBook)
 
-      Swal.fire("Actualizado", "entrada actualizada",'success')
+      Swal.fire(this.$t("swallAlertGeneral.updated"), "",'success')
     },
     deleteCurrentWorkbook(){
       Swal.fire({
-        title: 'Are you sure?',
-        text: "you will see this in the trashcan!!",
+        title: this.$t("swallAlertGeneral.confirmDelete.title"),
+        text: this.$t("swallAlertGeneral.confirmDelete.textTrashcan"),
         icon: 'warning',
         showDenyButton: true,
-        confirmButtonText: `Delete`,
-        denyButtonText: `Cancel`,
+        confirmButtonText: this.$t("swallAlertGeneral.confirmDelete.confirmButtonText"),
+        denyButtonText: this.$t("swallAlertGeneral.confirmDelete.denyButtonText"),
       }).then(async (result) => {
         if (result.isConfirmed) {
           new Swal({
-            title: 'Espere por favor!',
+            title: this.$t("swallAlertGeneral.wait"),
             allowOutsideClick:false
           })
           Swal.showLoading()
           await this.deleteWorkbook(this.workBook.id)
-          Swal.fire("Deleted", "entrada deleted",'success')
+          Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
           this.$router.push({name:"no-workbook"})
         } 
       })

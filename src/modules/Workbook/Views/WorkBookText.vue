@@ -309,7 +309,7 @@ export default {
         inputPlaceholder: this.$t('workbook.workbookText.alerts.addImage.inputPlaceholder')
       })
       if (url) {
-         const { value: color } = await Swal.fire({
+         const { value: width } = await Swal.fire({
           title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
           input: 'radio',
           inputOptions: {
@@ -324,9 +324,9 @@ export default {
             }
           }
         })
-        if (color) {
-          // Swal.fire({ html: `You selected: ${color}` })
-          this.editor.chain().focus().setImage({ src: url,class:`w-${color}` }).run()
+        if (width) {
+          // Swal.fire({ html: `You selected: ${width}` })
+          this.editor.chain().focus().setImage({ src: url,class:`w-${width}` }).run()
         }
       }
     },

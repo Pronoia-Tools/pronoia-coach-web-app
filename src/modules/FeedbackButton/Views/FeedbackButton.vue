@@ -17,7 +17,7 @@
 
           <Form @submit="sendReport" class="  text-center  container mx-auto">
             <div class="my-4">
-              <p class="text-gray-600">Type of report</p>
+              <p class="text-gray-600">{{$t("feedbackButton.report-type")}}</p>
               <Field
                 type="text"
                 class=" border border-gray-300 py-2"
@@ -28,7 +28,7 @@
               <ErrorMessage class="text-red-400" name="report"></ErrorMessage>
             </div>
             <div class="my-4">
-              <p class="text-gray-600">Description</p>
+              <p class="text-gray-600">{{$t("feedbackButton.description")}}</p>
               <Field
                 rows="8"
                 as="textarea"
@@ -46,7 +46,7 @@
               <input
                 type="submit"
                 class="bg-darkLogo  p-3 text-white cursor-pointer"
-                value="Send"
+                :value="$t('feedbackButton.send')"
               />
             </div>
           </Form>

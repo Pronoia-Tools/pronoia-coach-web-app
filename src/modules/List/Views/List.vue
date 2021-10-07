@@ -41,9 +41,9 @@
                 name="language"
                 form="filterForm"
               >
-                <option value="" selected>-</option>
-                <option value="Spanish">Spanish</option>
-                <option value="English">English</option>
+                <option value="" selected>{{$t("input.select")}}</option>
+                <option :value="$t('languages.spanis')">{{$t("languages.spanish")}}</option>
+                <option :value="$t('languages.englis')">{{$t("languages.english")}}</option>
                 <option value="language3">language3</option>
                 <option value="language4">language4</option>
               </select>
@@ -58,9 +58,9 @@
                 form="filterForm"
                 v-model="searchCategory"
               >
-                <option value="" selected>-</option>
-                <option value="Biography">Novel</option>
-                <option value="Novel">Biography</option>
+                <option value="" selected>{{$t("input.select")}}</option>
+                <option value="Biography">{{$t("workbook.workbookList.categories.novel")}}</option>
+                <option value="Novel">{{$t("workbook.workbookList.categories.biography")}}</option>
               </select>
             </div>
           </div>
@@ -95,8 +95,9 @@
                 name="arrangeBy"
                 form="filterForm"
               >
-                <option value="Newest">Newest</option>
-                <option value="Cheapest">Cheapest</option>
+                <option value="" selected>{{$t("input.select")}}</option>
+                <option value="Newest">{{$t("workbook.workbookList.arrange.newest")}}</option>
+                <option value="Cheapest">{{$t("workbook.workbookList.arrange.cheapest")}}</option>
               </select>
             </div>
           </div>
