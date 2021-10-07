@@ -90,9 +90,9 @@
         </div>
         
         <div class="">
-          <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
+          <!-- <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
             {{ $t('workbook.workbookText.addSection') }}
-          </ButoomCustomVue>
+          </ButoomCustomVue> -->
           <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
             {{ $t('workbook.workbookText.save') }}
           </ButoomCustomVue>
@@ -156,7 +156,7 @@
     </div>
   </div>
   <template v-if="workBook">
-    <QuestionsListVue :sectionSelected="sectionSelected" :idWorkbook="idWorkBook"/>
+    <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/>
   </template>
 </template>
 
@@ -223,7 +223,8 @@ export default {
       ],
       windowTop:0,
       workBook:null,
-      sectionSelected:0
+      unitSelected:0,
+      unitSelectedIndex:0
     }
   },
   computed:{
@@ -283,11 +284,11 @@ export default {
     }
   },
   methods:{
-    ...mapActions("workBook",["loadWorkBookUnits", "updateWorkbookSection","updateWorkbookAddSection"]),
+    ...mapActions("workBook",["loadWorkBookUnits", "updateWorkbookUnit", "updateWorkbookSection","updateWorkbookAddSection"]),
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
-        this.sectionSelected = section.sectionNumber
+        this.unitSelected = section.sectionNumber
       }
     },
     clipboard(image){
@@ -349,32 +350,25 @@ export default {
       this.windowTop = window.top.scrollY /* or: e.target.documentElement.scrollTop */
     },
     async loadWorkBook(){
-      let workBookSelected
-
-      if (this.idWorkBook==="new") {
-        // workBookSelected = {
-        //   title:"",
-        //   published:new Date(),
-        //   edition:1,
-        //   language:"",
-        //   price:"",
-        //   currency:"",
-        //   status:"Editable",
-        //   author:"",
-        //   tags:""
-        // }
-      }else{
-        // console.log(this.idWorkBook)
-        workBookSelected =await this.loadWorkBookUnits(this.idWorkBook) 
-        if (!workBookSelected){
-          this.$router.push({name:"no-workbook"})
-        }
+      let workBookSelected = await this.getWorkBookById(this.idWorkBook) 
+      if (!workBookSelected){
+        this.$router.push({name:"no-workbook"})
       }
+
+      if (!workBookSelected.units) {
+        console.log('no units loaded')
+        workBookSelected = await this.loadWorkBookUnits(workBookSelected)
+      }
+
       this.editor.commands.clearContent()
 
       this.workBook = workBookSelected
       if (this.editor && this.workBook) {
-        this.editor.commands.insertContent(this.workBook.sections[this.sectionSelected])
+        if (this.unitSelected === 0) {
+          this.unitSelectedIndex = 0;
+          this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
+        }
+        this.editor.commands.insertContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
     async updateCurrentWorkbook(){
@@ -384,8 +378,8 @@ export default {
       })
       Swal.showLoading()
 
-      await this.updateWorkbookSection({json:this.editor.getJSON(),sectionSelected:this.sectionSelected,idWorkBook:this.idWorkBook})
-
+      this.workBook.units[this.unitSelectedIndex].contents = this.editor.getJSON();
+      await this.updateWorkbookUnit([this.workBook, this.unitSelectedIndex])
 
       Toast.fire({
         icon: 'success',
@@ -393,21 +387,21 @@ export default {
       })
       // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
     },
-    async updateCurrentWorkbookAddSection(){
-      new Swal({
-        title: this.$t('swallAlertGeneral.wait'),
-        allowOutsideClick:false
-      })
-      Swal.showLoading()
+    // async updateCurrentWorkbookAddSection(){
+    //   new Swal({
+    //     title: this.$t('swallAlertGeneral.wait'),
+    //     allowOutsideClick:false
+    //   })
+    //   Swal.showLoading()
 
-      await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
+    //   await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
 
-      Toast.fire({
-        icon: 'success',
-        text: this.$t('swallAlertGeneral.updated')
-      })
-      // Swal.fire("Actualizado", "entrada actualizada",'success')
-    },
+    //   Toast.fire({
+    //     icon: 'success',
+    //     text: this.$t('swallAlertGeneral.updated')
+    //   })
+    //   // Swal.fire("Actualizado", "entrada actualizada",'success')
+    // },
     
   },
 
@@ -427,7 +421,7 @@ export default {
 
       ],
       content: ``,
-    }),
+    });
     this.loadWorkBook()
     window.addEventListener("scroll", this.onScroll)
   },
@@ -443,7 +437,7 @@ export default {
     idWorkBook(){
         this.loadWorkBook()
     },
-    sectionSelected(){
+    unitSelected(){
         this.loadWorkBook()
     }
   }
