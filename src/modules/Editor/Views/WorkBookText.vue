@@ -214,12 +214,12 @@ export default {
     }
   },
   computed:{
-    ...mapGetters("workBook",["getWorkBookById"]),
-    // isSidebarOpen(){      
-    //   return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
-    // },
-    // getContentTable(){
-    //   var titles = [];
+    ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
+    isSidebarOpen(){      
+      return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
+    },
+    getContentTable(){
+      var titles = [];
       
     //   // console.log({"sections":this.workBook.sections})
     //   for(var i = 0; i < this.workBook.sections.length; i++){
