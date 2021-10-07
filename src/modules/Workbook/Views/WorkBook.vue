@@ -10,14 +10,14 @@
         <FontAwesomeIcon :icon="Backward" class="text-3xl"/>
         <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
       </div>
-      <div class="flex items-center gap-1">
+      <!-- <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
       </div>
       <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.submit') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
-      </div>  
+      </div>   -->
     </div>
 
     <!-- WORKBOOK DETAILS v2 -->
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <div class="px-4">
+    <!-- <div class="px-4">
       <h2 class="text-subtitle">{{ $t('workbook.workbook.for') }}</h2>
       <h3>{{ $t('workbook.workbook.send') }}</h3>
       <div class="flex gap-5 flex-col md:flex-row">
@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -40,7 +40,7 @@
     "password":"Password",
     "password-confirmation":"Password confirmation",
     "country":"Country",
-    "checkBox":"Sign me up as a coach and give me access to the Coach's Dashboard",
+    "checkBox":"Add me to the coaching dashboard waitlist",
     "submit":"Submit",
     "already-have-acount":"I already have an account"
   },

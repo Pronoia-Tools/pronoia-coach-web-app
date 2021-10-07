@@ -44,7 +44,7 @@
 
     <!-- Remind Passowrd -->
     <div class="flex flex-col text-center">
-      <router-link class="text-blue-800 underline my-2" to="/register"
+      <router-link class="text-blue-800 underline my-2" to="/signup"
         >{{$t("login.register")}}</router-link
       >
       <router-link class="text-blue-800 underline my-2" to="/forgot-password"
@@ -81,7 +81,7 @@ export default {
       await this.login(jsonUserData);
       if (this.isAuthenticated) {
         // localStorage.setItem("user",JSON.stringify(response));
-        this.$router.push({name:"WorkBookLayout"});
+        this.$router.push({name:"no-workbook"});
       }else{
         Swall.fire({
           title:this.$t("swallAlertGeneral.error"),

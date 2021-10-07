@@ -7,22 +7,22 @@
     <!-- LINKS -->
     <div class="flex flex-col flex-grow justify-start items-center md:justify-around absolute top-0 w-1/2 h-screen transition-all duration-500 bg-black bg-opacity-75 text-white
                 md:relative md:h-auto md:w-auto md:flex-row  md:left-0 md:bg-white md:bg-opacity-0 md:text-black"
-        :class="isOpen"
+        :class="isOpen" v-if="this.isAuthenticated"
     >
       <font-awesome-icon :icon="myTimes" class=" self-end m-5 text-xl md:hidden" @click="toggleOpenMovileMenu"/>
       <nav class="flex gap-4 flex-col text-center m-4
                    md:flex-row md:m-1">
-        <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link>
+        <!-- <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link> -->
         <router-link to="/workbook">{{ $t(`navbar.workBookFactory`) }}</router-link>
-        <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
-        <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link>
+        <!-- <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
+        <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link> -->
       </nav>
-      <div class="flex gap-5 flex-col
+      <!-- <div class="flex gap-5 flex-col
                    md:flex-row">
         <font-awesome-icon :icon="myQuestionCircle" />
         <font-awesome-icon :icon="myIcon" />
         <font-awesome-icon :icon="myBell" />
-      </div>
+      </div> -->
     </div>
     <!-- USER -->
     <div class="flex gap-2 items-center">
