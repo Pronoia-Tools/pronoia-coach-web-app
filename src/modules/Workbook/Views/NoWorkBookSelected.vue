@@ -4,7 +4,7 @@
   </div>
   <div class="container mx-auto" v-else>
     <!-- HEADERS -->
-    <div class="flex flex-col gap-1 justify-end px-8 mt-16 mb-2 md:flex-row md:mt-4">
+    <!-- <div class="flex flex-col gap-1 justify-end px-8 mt-16 mb-2 md:flex-row md:mt-4">
       <input type="text" placeholder="Title or Author" v-model="searchTitle" class="border border-gray-500 rounded p-2 ">
       <select name="Language" class="border border-gray-500 rounded p-2 w-full md:w-40" v-model="searchlanguage">
         <option value="" selected>{{$t("workbook.NoWorkBookSelected.inputLanguage.select")}}</option>
@@ -18,7 +18,7 @@
         <option value="Uneditable">{{$t("workbook.NoWorkBookSelected.inputStatus.options.uneditable")}}</option>
       </select>
       <ButoomCustomVue @click="print">{{$t("workbook.NoWorkBookSelected.filter")}}</ButoomCustomVue>
-    </div>
+    </div> -->
 
     <!-- TABLE -->
     <div class="w-full">
@@ -52,14 +52,14 @@
 </template>
 
 <script>
-import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import { mapGetters } from 'vuex'
 import Spiner from '../../../components/Spiner.vue'
 import WorkBookRow from '../Components/workBookRow.vue'
 
 export default {
   components:{
-    ButoomCustomVue,
+    // ButoomCustomVue,
     Spiner,
     WorkBookRow
   },

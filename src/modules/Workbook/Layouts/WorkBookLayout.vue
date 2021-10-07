@@ -2,9 +2,9 @@
   <div class="flex">
     <!-- SIDEBAR -->
     <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
-      <div class="border-b border-black flex justify-between items-center p-2">
+      <!-- <div class="border-b border-black flex justify-between items-center p-2">
         {{ $t('workbook.workbookLayout.sales') }} <font-awesome-icon :icon="sortDown" />
-      </div>
+      </div> -->
       <div class="border-b border-black flex justify-between items-center p-2" @click="toogleDropdownWorkBooks">
         {{ $t('workbook.workbookLayout.eWorkbooks') }} 
         <font-awesome-icon :icon="sortDown" v-if="!dropdownWorkbooks"/>
@@ -29,9 +29,9 @@
           {{$t("workbook.workbookLayout.createWorkbook")}} <font-awesome-icon :icon="plus" />
         </div>
       
-      <div class="border-b border-black flex justify-between items-center p-2">
+      <!-- <div class="border-b border-black flex justify-between items-center p-2">
         {{ $t('workbook.workbookLayout.customers') }} <font-awesome-icon :icon="sortUp" />
-      </div>
+      </div> -->
 
 
     </div>
@@ -62,7 +62,7 @@ export default {
       myChevronRight:faChevronRight,
       myChevronLeft:faChevronLeft,
 
-      dropdownWorkbooks:false,
+      dropdownWorkbooks:true,
       sidebarOpen:false
     }
   },
