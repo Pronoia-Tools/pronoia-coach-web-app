@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import workBookRouter from "../modules/Workbook/Router/index";
-// import Home from "../views/Home.vue";
+import editorRouter from "../modules/Editor/Router/index"
 
 const routes = [
   {
@@ -45,13 +45,7 @@ const routes = [
   },
   {
     path: "/workbook/:idWorkBook/edit",
-    name: "workbook-rich-text",
-    component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkBookText.vue"),
-    props: (route) => {
-      return {
-        idWorkBook: route.params.idWorkBook
-      }
-    }
+    ...editorRouter
   }
 ];
 
