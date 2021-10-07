@@ -1,11 +1,11 @@
 <template>
-  <!-- HEADER --> 
-  <div class="relative">
-    <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.go(-1)">
+  <div class="relative h-screen flex flex-col">
+    <div class="flex-1 flex-shrink-0">
+      <div class="p-2 pl-3 cursor-pointer flex items-center gap-2" @click="$router.go(-1)">
         <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
         <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
-    </div>
-    <div class="">
+      </div>
+      <!-- BUTTONS EDITOR -->
       <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
         <div>
           <button @click="editor.chain().focus().undo().run()">
@@ -95,15 +95,17 @@
           <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
             {{ $t('workbook.workbookText.save') }}
           </ButoomCustomVue>
-          <ButoomCustomVue @click="toogleSidebarOpen">
+          <!-- <ButoomCustomVue @click="toogleSidebarOpen">
             <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
               <FontAwesomeIcon v-else :icon="myChevronLeft"/>
               Menu
-            </ButoomCustomVue>
+          </ButoomCustomVue> -->
         </div>
         
-      </div>
+      </div> <!-- END BUTTONS EDITOR -->
+    </div>
 
+    <div class="flex-grow overflow-auto">
       <div class="relative">
         <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10">
           <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
@@ -135,28 +137,10 @@
           </button>
         </floating-menu>
         <editor-content :editor="editor" class="min-h-screen" spellcheck="false"/>
-
-        <!-- SIDEBAREXTRA -->
-        <!-- <div class="index transition-all duration-500 delay-200 bg-gray-100 border border-gray-600" :class="isSidebarOpen">
-          <div class="h-2/6 w-64  flex flex-wrap justify-around border border-black">
-            <img 
-              v-for="(image, index) in imagesArray" 
-              :key="index" 
-              :src="image" alt="image workbook" 
-              class="w-20 h-20 border border-myLightBlue"
-              @click="clipboard(image)"
-            >
-          </div>
-          <div v-if="workBook" class="overflow-y-auto overflow-scroll text-black text-left">
-            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
-          </div>
-        </div> -->
+        <QuestionsListVue :sectionSelected="section" :idWorkbook="idWorkBook"/>
       </div>
     </div>
   </div>
-  <template v-if="workBook">
-    <QuestionsListVue :sectionSelected="section" :idWorkbook="idWorkBook"/>
-  </template>
 </template>
 
 <script>
@@ -279,9 +263,9 @@ export default {
     //   return titles;
     // },
     fixed(){
-      if(this.windowTop > 180 ){
-        return "fixed top-0 left-0 bg-blue-400 w-full"
-      }
+      // if(this.windowTop > 180 ){
+      //   return "fixed top-0 left-0 bg-blue-400 w-full"
+      // }
       return "" 
     }
   },

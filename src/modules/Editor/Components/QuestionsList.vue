@@ -47,7 +47,9 @@ export default {
     workQuestions(){
       const workbookQuestion = this.getWorkBookById(this.idWorkbook)
       // console.log(workbookQuestion)
-      this.questionsArray = workbookQuestion.sections[this.sectionSelected].questions
+      if(workbookQuestion.sections.length > 0){
+        this.questionsArray = workbookQuestion.sections[this.sectionSelected].questions
+      }
     },
     async addQuestion(){
       const { value: newQuestion } = await Swal.fire({

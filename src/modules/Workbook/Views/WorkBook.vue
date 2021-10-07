@@ -168,6 +168,8 @@ export default {
       if (this.idWorkBook==="new") {
         workBookSelected = {
           title:"",
+          image:"",
+          category:"",
           published:new Date(),
           edition:1,
           language:"",
@@ -177,6 +179,7 @@ export default {
           author: this.user,
           tags:"",
           description: '',
+          sections:[]
         }
       }else{
         console.log("getWorkBookById",this.idWorkBook)

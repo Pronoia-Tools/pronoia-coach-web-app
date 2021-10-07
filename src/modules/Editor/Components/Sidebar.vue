@@ -53,6 +53,10 @@ export default {
     getContentTable(){
       var titles = [];
       // console.log({"sections":this.workBook.sections})
+      if (this.workBook.sections.length < 1) {
+        return titles
+      }
+
       for(var i = 0; i < this.workBook.sections.length; i++){
         let content ={}
         content.classes = "text-center font-bold"

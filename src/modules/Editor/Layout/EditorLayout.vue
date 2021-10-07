@@ -4,7 +4,7 @@
     <div class="w-52 border-r border-b border-black flex-shrink-0">
       <Sidebar :idWorkBook="idWorkBook"></Sidebar>
     </div>
-    <div class="flex-grow relative h-screen overflow-auto">    
+    <div class="flex-grow relative h-screen">    
       <router-view></router-view>
     </div>
   </div>
