@@ -218,8 +218,8 @@ export default {
     isSidebarOpen(){      
       return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
     },
-    getContentTable(){
-      var titles = [];
+    // getContentTable(){
+    //   var titles = [];
       
     //   // console.log({"sections":this.workBook.sections})
     //   for(var i = 0; i < this.workBook.sections.length; i++){
@@ -270,7 +270,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions("workBook",["updateWorkbookSection","updateWorkbookAddSection"]),
+    ...mapActions("workBook",["loadWorkBookUnits", "updateWorkbookSection","updateWorkbookAddSection"]),
     // gotoSection(section){
     //   if (section.type === "horizontalRule") {
     //     // console.log(section)
