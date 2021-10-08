@@ -1,18 +1,18 @@
 <template>
   <!-- HEADER --> 
-  <div class="h-screen">
+  <div class="">
 
     <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
         <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
         <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
     </div>
 
-    <div id="container" class="flex h-full overflow-hidden">
+    <div id="container" class="flex">
 
-      <div id="sidebar" class="">
+      <div id="sidebar" class="h-screen">
         <!-- SIDEBAREXTRA -->
         <div class="transition-all border border-black h-full" :class="isSidebarOpen">
-          <div class="h-48 flex flex-wrap justify-around border border-black">
+          <div class="h-1/4 flex flex-wrap justify-around border border-black">
             <img 
               v-for="(image, index) in imagesArray" 
               :key="index" 
@@ -21,145 +21,143 @@
               @click="clipboard(image)"
             >
           </div>
-          <div v-if="workBook" class="overflow-y-auto overflow-scroll h-full text-black text-left">
+          <div v-if="workBook" class="h-3/4 text-black text-left">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
       </div>
 
-      <div id="editor" class="">
-        <div class="h-full">
-          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
-            <div>
-              <button @click="editor.chain().focus().undo().run()">
-                <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
-              </button>
-              <button class="mr-5" @click="editor.chain().focus().redo().run()">
-                <FontAwesomeIcon :icon="myRedo"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-                <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-                <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
-                <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-                <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
-                <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
-                <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
-              </button>
+      <div id="editor" class="h-screen flex flex-col">
+        <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+          <div>
+            <button @click="editor.chain().focus().undo().run()">
+              <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
+            </button>
+            <button class="mr-5" @click="editor.chain().focus().redo().run()">
+              <FontAwesomeIcon :icon="myRedo"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+              <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+              <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
+              <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+              <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
+              <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
+              <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
+            </button>
 
-              <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
-                paragraph
-              </button>
+            <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
+              paragraph
+            </button>
 
-              <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-                H1
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-                H2
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-                H3
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-                H4
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-                H5
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-                H6
-              </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+              H1
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+              H2
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+              H3
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
+              H4
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
+              H5
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
+              H6
+            </button>
 
-              <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
-                <FontAwesomeIcon :icon="myListOl"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
-                <FontAwesomeIcon :icon="myList"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
-                <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
-              </button>
-              <button @click="addImage">
-                <FontAwesomeIcon :icon="myImage"></FontAwesomeIcon>
-              </button>
-              <button @click="addVideo">
-                <FontAwesomeIcon :icon="myFilm"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setTextAlign('left').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }">
-                <FontAwesomeIcon :icon="myAlignLeft"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setTextAlign('center').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }">
-                <FontAwesomeIcon :icon="myAlignCenter"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setTextAlign('right').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }">
-                <FontAwesomeIcon :icon="myAlignRight"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setTextAlign('justify').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }">
-                <FontAwesomeIcon :icon="myAlignJustify"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setHorizontalRule().run()">
-                ___
-              </button>
-            </div>
-            
-            <div class="">
-              <!-- <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
-                {{ $t('workbook.workbookText.addSection') }}
-              </ButoomCustomVue> -->
-              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
-                {{ $t('workbook.workbookText.save') }}
+            <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+              <FontAwesomeIcon :icon="myListOl"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+              <FontAwesomeIcon :icon="myList"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
+              <FontAwesomeIcon :icon="myCode"></FontAwesomeIcon>
+            </button>
+            <button @click="addImage">
+              <FontAwesomeIcon :icon="myImage"></FontAwesomeIcon>
+            </button>
+            <button @click="addVideo">
+              <FontAwesomeIcon :icon="myFilm"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setTextAlign('left').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }">
+              <FontAwesomeIcon :icon="myAlignLeft"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setTextAlign('center').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }">
+              <FontAwesomeIcon :icon="myAlignCenter"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setTextAlign('right').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }">
+              <FontAwesomeIcon :icon="myAlignRight"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setTextAlign('justify').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }">
+              <FontAwesomeIcon :icon="myAlignJustify"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setHorizontalRule().run()">
+              ___
+            </button>
+          </div>
+          
+          <div class="">
+            <!-- <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
+              {{ $t('workbook.workbookText.addSection') }}
+            </ButoomCustomVue> -->
+            <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
+              {{ $t('workbook.workbookText.save') }}
+            </ButoomCustomVue>
+            <ButoomCustomVue @click="toogleSidebarOpen">
+              <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
+                <FontAwesomeIcon v-else :icon="myChevronLeft"/>
+                Menu
               </ButoomCustomVue>
-              <ButoomCustomVue @click="toogleSidebarOpen">
-                <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
-                  <FontAwesomeIcon v-else :icon="myChevronLeft"/>
-                  Menu
-                </ButoomCustomVue>
-            </div>
-            
           </div>
+          
+        </div>
 
-          <div class="relative h-full overflow-auto ">
-            <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10">
-              <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-                H1
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-                H2
-              </button>
-              <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-                H3
-              </button>
-              <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-                <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-                <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
-                <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-                <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
-                <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
-              </button>
-              <button @click="editor.chain().focus().setHorizontalRule().run()">
-                ___
-              </button>
-            </floating-menu>
-            <editor-content :editor="editor" class="min-h-screen" spellcheck="false"/>
-            <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/>
-          </div>
+        <div class="flex-grow overflow-auto">
+          <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10">
+            <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+              H1
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+              H2
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
+              H3
+            </button>
+            <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+              <FontAwesomeIcon :icon="myBold"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+              <FontAwesomeIcon :icon="myItalic"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
+              <FontAwesomeIcon :icon="myUnderline"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+              <FontAwesomeIcon :icon="myStrikethrough"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
+              <FontAwesomeIcon :icon="myQuoteLeft"></FontAwesomeIcon>
+            </button>
+            <button @click="editor.chain().focus().setHorizontalRule().run()">
+              ___
+            </button>
+          </floating-menu>
+          <editor-content :editor="editor" class="min-h-screen" spellcheck="false"/>
+          <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/>
         </div>
       </div>
     </div>
@@ -239,7 +237,7 @@ export default {
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     isSidebarOpen(){      
       // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
-      return this.openTableContent?"bg-red-200 w-64  ":"bg-blue-200 w-0 "
+      return this.openTableContent?" w-64  ":" w-0 "
     },
     getContentTable(){
       var titles = [];
@@ -281,7 +279,7 @@ export default {
         })
 
         let questions ={}
-        questions.classes = "bg-blue-300 text-center font-bold"
+        questions.classes = "text-center font-bold"
         questions.type = "heading"
         questions.content = `questions`
         titles.push(questions);
