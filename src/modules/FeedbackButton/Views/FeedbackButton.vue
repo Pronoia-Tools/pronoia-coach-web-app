@@ -76,7 +76,7 @@ export default {
   components: { Form, Field, ErrorMessage, FontAwesomeIcon },
   data() {
     const route = useRoute();
-    console.log(route.name);
+    // console.log(route.name);
     return {
       myBug: faBug,
       showModal: false,

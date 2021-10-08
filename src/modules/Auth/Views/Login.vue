@@ -100,5 +100,10 @@ export default {
       // }
     },
   },
+  created() {
+    if (this.isAuthenticated) {
+      this.$router.push({name:"no-workbook"});
+    }
+  }
 };
 </script>
