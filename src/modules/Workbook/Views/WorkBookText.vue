@@ -21,7 +21,7 @@
               @click="clipboard(image)"
             >
           </div>
-          <div v-if="workBook" class="h-3/4 text-black text-left">
+          <div v-if="workBook && openTableContent" class="h-3/4 text-black text-left">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
