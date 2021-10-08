@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 border border-border mb-20">
+  <div class="p-3 border border-border mb-20 mt-10">
     <h1 id="Questions" class="text-subtitle">{{ $t('workbook.workbookText.questions') }}</h1>
     <div class="">
       <div class="w-full">
@@ -47,7 +47,9 @@ export default {
     workQuestions(){
       const workbookQuestion = this.getWorkBookById(this.idWorkbook)
       console.log(workbookQuestion)
-      this.questionsArray = workbookQuestion.sections[this.sectionSelected].questions
+      if (workbookQuestion.units) {
+        // this.questionsArray = workbookQuestion.units[this.sectionSelected].questions
+      }
     },
     async addQuestion(){
       const { value: newQuestion } = await Swal.fire({
