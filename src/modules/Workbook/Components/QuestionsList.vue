@@ -47,8 +47,8 @@ export default {
     workQuestions(){
       const workbookQuestion = this.getWorkBookById(this.idWorkbook)
       console.log(workbookQuestion)
-      if (workbookQuestion.sections) {
-        this.questionsArray = workbookQuestion.sections[this.sectionSelected].questions
+      if (workbookQuestion.units) {
+        // this.questionsArray = workbookQuestion.units[this.sectionSelected].questions
       }
     },
     async addQuestion(){
