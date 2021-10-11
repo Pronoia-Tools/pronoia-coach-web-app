@@ -4,11 +4,16 @@
   </div>
   <div class="w-full p-5 mt-10 md:p-10 md:mt-0" v-else>
     <!-- Header -->
-    <div class="w-full flex justify-between items-start flex-col gap-4 
+    <div class="w-full flex justify-end items-start flex-col gap-4 
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
-        <FontAwesomeIcon :icon="Backward" class="text-3xl"/>
+        <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
         <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
+        <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
+          <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
+            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
+          </div>
       </div>
       <!-- <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
@@ -78,13 +83,13 @@
                 
         <textarea class=" col-span-12 h-40 p-4 placeholder-black mt-4 border border-gray-500" :placeholder=" $t('workbook.workbook.describePlaceHolder') " v-model="workBook.description"></textarea>
         
-        <div class="text-right col-span-12">
+        <!-- <div class="text-right col-span-12">
           <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
             <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
             <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -131,7 +136,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 import { mapGetters, mapActions, mapState } from 'vuex';
@@ -140,7 +145,9 @@ import Swal from 'sweetalert2'
 
 export default {
   components:{
-    ButoomCustomVue,FontAwesomeIcon,SpinerVue
+    ButoomCustomVue,
+    // FontAwesomeIcon,
+    SpinerVue
   },
   props: {
     idWorkBook: {
