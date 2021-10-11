@@ -563,6 +563,22 @@ export const updateWorkbookAddSection = async ({ commit }, idWorkBook) => {
   return true;
 };
 
+export const updateWorkbookAddImages = async ({ commit }, {idWorkbook,images}) => {
+  const formData = new FormData()
+  console.log({
+    idWorkbook,
+    images
+  })
+  images.forEach(file => {
+    formData.append("images",file)  
+  });
+  
+  const imagesAdded = await PronoiaAPI.post(`workbook/${idWorkbook}/images`,formData)
+  console.log(imagesAdded)
+  commit("updateWorkbookAddImages", {idWorkbook,imagesAdded:imagesAdded.data});
+  return true;
+};
+
 export const updateWorkbookAddQuestion = async ({commit},{idWorkbook, sectionSelected, newQuestion}) =>{
   
     const data = await new Promise(resolve => setTimeout(() => resolve({idWorkbook,sectionSelected,newQuestion:{"id":"5",question:newQuestion}}), 1000));

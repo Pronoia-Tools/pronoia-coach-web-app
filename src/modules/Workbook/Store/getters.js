@@ -50,7 +50,7 @@ export const getWorkBookFilter = (state) => (
   price2 = "",
   arrangeBy = ""
 ) => {
-  console.log(price1, price2);
+  // console.log(price1, price2);
   if (
     title.length === 0 &&
     language.length === 0 &&
@@ -73,7 +73,7 @@ export const getWorkBookFilter = (state) => (
       (workbook.price > parseInt(price1, 10) &&
         workbook.price < parseInt(price2, 10))
     ) {
-      console.log(workbook);
+      // console.log(workbook);
       return workbook;
     }
   });
@@ -109,6 +109,6 @@ export const getWorkBookById = (state) => (id) => {
   const workbook = state.workbooks.find((workbook) => {return workbook.id === parseInt(id);});
 
   if (!workbook) return;
-
+  // console.log(workbook)
   return workbook;
 };

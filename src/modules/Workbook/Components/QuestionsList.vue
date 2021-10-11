@@ -46,7 +46,7 @@ export default {
     ...mapActions("workBook",["updateWorkbookAddQuestion"]),
     workQuestions(){
       const workbookQuestion = this.getWorkBookById(this.idWorkbook)
-      console.log(workbookQuestion)
+      // console.log(workbookQuestion)
       if (workbookQuestion.units) {
         // this.questionsArray = workbookQuestion.units[this.sectionSelected].questions
       }
@@ -75,7 +75,7 @@ export default {
         // this.questionsArray = newArrayList
 
         const res = await this.updateWorkbookAddQuestion({idWorkbook:this.idWorkbook,sectionSelected:this.sectionSelected,newQuestion:newQuestion})
-        console.log(res)
+        // console.log(res)
         if (res) {
           Toast.fire({
             icon: 'success',

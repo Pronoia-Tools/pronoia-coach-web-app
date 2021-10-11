@@ -54,8 +54,25 @@ export const updateWorkbookAddSection = (state,{idWorkBook}) => {
         type:"doc",
         content:[],
         questions:[]
-       }
+      }
 
+      return newWorkbook
+    }else{
+      return eWorkbook
+    }
+  })
+  state.workbooks = newWorkbookList
+}
+
+export const updateWorkbookAddImages = (state,{idWorkbook,imagesAdded}) => {
+  
+  const newWorkbookList = state.workbooks.map(eWorkbook => {
+    if (eWorkbook.id === parseInt(idWorkbook)) {
+      const newWorkbook = {...eWorkbook}
+      newWorkbook.images = [
+        ...eWorkbook.images,
+        ...imagesAdded
+      ]
       return newWorkbook
     }else{
       return eWorkbook
