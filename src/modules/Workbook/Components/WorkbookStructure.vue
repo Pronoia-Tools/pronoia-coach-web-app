@@ -5,20 +5,17 @@
                 <Menu :menuItems="menuItemsHeader" :clickHandler="menuItemsClick"></Menu>
             </div>
         </div>
-        <Tree :value="workBookData">
+        <Tree :value="workBookData" :ondragend="dragEnd">
             <template v-slot="{node, index, path, tree}" >
-                <div class="flex flex-row justify-between " :key=index>
+                <div class="flex flex-row justify-between cursor-pointer" 
+                    :key=index
+                    :class="[node.type === 'content' && node.id === unitSelected ? 'bg-green-50' : 'non']"
+                    > 
                     <!-- DATA -->
-                    <!-- {{ node.type === 'content' ? unitSelected : ''}}
-                    {{ node.type === 'content' ? node.id : ''}}
-                    {{ node.type === 'content' && node.id === unitSelected ? 'bg-gray-200' : 'non'}} -->
-                    
-                    <div class="flex flex-row ">
+                    <div class="flex flex-row flex-grow" >
                         <div v-if ="node.children && node.children.length > 0 && node.type === 'section'" @click="tree.toggleFold(node, path)">
-                      
                                 <font-awesome-icon v-if = "node.$folded" :icon="myFolderPlus" />
-                                <font-awesome-icon v-else :icon="myFolderOpen" />
-                         
+                                <font-awesome-icon v-else :icon="myFolderOpen" />    
                         </div>
                         <div v-else>
                             <div v-if = "node.type === 'content'"> 
@@ -29,7 +26,7 @@
                             </div>
                         </div>
                         
-                        <div class="pl-1">
+                        <div class="pl-1 flex-grow" @click="itemClick(node)">
                             {{node.text}}
                         </div>
                     </div>
@@ -79,7 +76,15 @@ export default {
         unitSelected: {
             type: Number,
             required: true,
-        }
+        },
+        clickHandler: {
+            type: Function,
+            required: true,
+        },
+        dragEndHandler: {
+            type: Function,
+            required: true,
+        },
     },
     setup() {
         const handleSelection = (selectedItem) => {
@@ -145,6 +150,9 @@ export default {
             }
             return true
         },
+        itemClick(node){
+            this.clickHandler(node)
+        },
         add(node, type) {
             this.addHandler(node, type)
         },
@@ -154,6 +162,9 @@ export default {
         },
         remove(node, path) {
             this.removeHandler(node, path)
+        },
+        dragEnd(tree, store) {
+            this.dragEndHandler(tree, store)
         }
     },
 }

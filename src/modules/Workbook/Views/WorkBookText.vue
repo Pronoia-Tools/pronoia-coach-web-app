@@ -25,7 +25,7 @@
         </div>
         <!-- SIDE tree -->
         <div class="pl-1">
-          <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected"></WorkbookStructure>
+          <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
         </div>
         
       </div>
@@ -407,10 +407,10 @@ export default {
           this.unitSelectedIndex = 0;
           this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
         }
-        console.log(this.workBook)
-        console.log(this.workBook.units)
-        console.log(this.unitSelected)
-        console.log(this.unitSelectedIndex)
+        // console.log(this.workBook)
+        // console.log(this.workBook.units)
+        // console.log(this.unitSelected)
+        // console.log(this.unitSelectedIndex)
         console.log(this.treeData)
         this.editor.commands.insertContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
@@ -446,6 +446,32 @@ export default {
     //   })
     //   // Swal.fire("Actualizado", "entrada actualizada",'success')
     // },
+    async changeStructure(){
+      // (tree, store)
+      // console.log(tree)
+      // console.log(store)
+      // console.log('scjage')
+      // console.log(this.treeData)
+      // console.log(this.treeData[0])
+      // console.log(this.$data.treeData)
+      // console.log(this.$data.treeData[0])
+      await this.updateWorkbookStructure([this.workBook, this.treeData])
+    },
+    async changeUnit(node){
+      if(node.type === 'content') {
+        let tempIndex = this.workBook.units.findIndex(x => x.id === node.id)
+
+        if(tempIndex === undefined) {
+          console.log('not found')
+        } else {
+          if(this.unitSelected !== tempIndex){
+            await this.updateCurrentWorkbook()
+            this.unitSelected = node.id
+            this.unitSelectedIndex = tempIndex
+          }
+        }
+      }
+    },
     async treeAddNode(node, type) {
       const { value: title } = await Swal.fire({
         title: 'Enter the title:',
@@ -496,9 +522,27 @@ export default {
         // 
       }
     },
-    treeEditNode(node, path) {
-      console.log(path)
-      console.log(node)
+    async treeEditNode(node) {
+      const { value: title } = await Swal.fire({
+        title: 'Enter the title:',
+        input: 'text',
+        inputValue: node.text,
+        inputAttributes: {
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        },
+        inputValidator: (value) => {
+          if (!value) {
+            return 'You need to write something!'
+          }
+        },
+        showCancelButton: true,
+      })
+
+      if (title && title !== node.text) {
+        node.text = title
+        await this.updateWorkbookStructure([this.workBook, this.treeData])
+      }
     },
     treeRemoveNode(node, path) {
       Swal.fire({
@@ -526,6 +570,15 @@ export default {
               parentNode.children.splice(index, 1)
             } else {
               parentNode.splice(index, 1)
+            }
+
+            await this.updateWorkbookStructure([this.workBook, this.treeData])
+
+            if(node.type === 'content' && this.unitSelected === node.id) {
+              await this.updateCurrentWorkbook()
+              // select another one
+              // this.unitSelected = newUnit.id   
+              // this.unitSelectedIndex = this.workBook.units.findIndex(x => x.id === this.unitSelected)
             }
             
           }

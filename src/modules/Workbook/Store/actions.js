@@ -516,11 +516,12 @@ export const deleteWorkbook = async ({commit}, workbook) =>{
 
   ///UNITS
 
-export const updateWorkbookStructure = async ({commit}, [workbook, tree]) => {
+export const updateWorkbookStructure = async ({commit}, [workbook, treeData]) => {
   let updatedWorkbook = {
     id: workbook.id,
-    structure: {tree: tree}
+    structure: {tree: treeData}
   }
+
   let response = await PronoiaAPI.put('/workbook/'+updatedWorkbook.id, updatedWorkbook );
 
   if (!response) return;
