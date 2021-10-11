@@ -425,9 +425,9 @@ export default {
         allowOutsideClick:false
       })
       Swal.showLoading()
-      console.log({images})
+      // console.log({images})
       const res = await this.updateWorkbookAddImages({idWorkbook:this.idWorkBook,images})
-      console.log({res})
+      // console.log({res})
       if(res){
         Toast.fire({
           icon: 'success',

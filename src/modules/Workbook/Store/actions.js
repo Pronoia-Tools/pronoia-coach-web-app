@@ -564,6 +564,9 @@ export const updateWorkbookAddSection = async ({ commit }, idWorkBook) => {
 };
 
 export const updateWorkbookAddImages = async ({ commit }, {idWorkbook,images}) => {
+  
+  if(!idWorkbook || !images) return
+  
   const formData = new FormData()
   console.log({
     idWorkbook,
