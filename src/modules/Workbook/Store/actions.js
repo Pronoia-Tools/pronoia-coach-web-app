@@ -516,6 +516,18 @@ export const deleteWorkbook = async ({commit}, workbook) =>{
 
   ///UNITS
 
+export const updateWorkbookStructure = async ({commit}, [workbook, tree]) => {
+  let updatedWorkbook = {
+    id: workbook.id,
+    structure: {tree: tree}
+  }
+  let response = await PronoiaAPI.put('/workbook/'+updatedWorkbook.id, updatedWorkbook );
+
+  if (!response) return;
+  commit("updateWorkbook", response.data);
+
+  return response.data;
+}
 
 export const loadWorkBookUnits = async ({ commit }, workbook) => {
   let response = await PronoiaAPI.get('/workbook/'+workbook.id+'/unit');
@@ -526,6 +538,15 @@ export const loadWorkBookUnits = async ({ commit }, workbook) => {
   return response.data;
 
 };
+
+export const createWorkBookUnit = async ({ commit }, [workbook, unit]) => {
+  let response = await PronoiaAPI.post('/workbook/'+workbook.id+'/unit', unit);
+
+  if (!response) return;
+  commit("updateWorkbook", response.data.workbook);
+
+  return response.data.unit;
+}
 
 export const updateWorkbookUnit = async ({ commit }, [workbook, unitSelectedIndex]) => {
    
@@ -551,6 +572,7 @@ export const updateWorkbookSection = async ({ commit }, section) => {
 
   return true;
 };
+
 export const updateWorkbookAddSection = async ({ commit }, idWorkBook) => {
   const data = await new Promise((resolve) =>
     setTimeout(() => resolve(idWorkBook), 1000)

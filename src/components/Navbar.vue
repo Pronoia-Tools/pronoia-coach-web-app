@@ -35,10 +35,10 @@
           <font-awesome-icon :icon="myArrowDown"/>
           <transition name="slide-fade">
             <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-              <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+              <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
               </li>
-              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link>
+              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link> -->
               <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>

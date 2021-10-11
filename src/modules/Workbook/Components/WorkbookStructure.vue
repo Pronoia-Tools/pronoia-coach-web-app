@@ -2,14 +2,18 @@
     <div>
         <div class="flex flex-row justify-end bg-gray-200">
             <div class="flex flex-row pr-2">
-                <Menu :menuItems="menuItemsHeader" :menuItemsHeaderHandler="menuItemsHeaderHandler"></Menu>
+                <Menu :menuItems="menuItemsHeader" :clickHandler="menuItemsClick"></Menu>
             </div>
         </div>
         <Tree :value="workBookData">
             <template v-slot="{node, index, path, tree}" >
                 <div class="flex flex-row justify-between " :key=index>
                     <!-- DATA -->
-                    <div class="flex flex-row">
+                    <!-- {{ node.type === 'content' ? unitSelected : ''}}
+                    {{ node.type === 'content' ? node.id : ''}}
+                    {{ node.type === 'content' && node.id === unitSelected ? 'bg-gray-200' : 'non'}} -->
+                    
+                    <div class="flex flex-row ">
                         <div v-if ="node.children && node.children.length > 0 && node.type === 'section'" @click="tree.toggleFold(node, path)">
                       
                                 <font-awesome-icon v-if = "node.$folded" :icon="myFolderPlus" />
@@ -31,8 +35,8 @@
                     </div>
 
                     <!-- actions -->
-                    <Menu v-if = "node.type === 'section'" :menuItems="menuItemsNode" :menuItemsHeaderHandler="menuItemsHeaderNode" :context="{node, index, path, tree}"></Menu>
-                    <Menu v-if = "node.type === 'content'" :menuItems="menuItemsContent" :menuItemsHeaderHandler="menuItemsHeaderNode" :context="{node, index, path, tree}"></Menu>
+                    <Menu v-if = "node.type === 'section'" :menuItems="menuItemsNode" :clickHandler="menuItemsClick" :context="{node, index, path, tree}"></Menu>
+                    <Menu v-if = "node.type === 'content'" :menuItems="menuItemsContent" :clickHandler="menuItemsClick" :context="{node, index, path, tree}"></Menu>
                     
             
                 </div>
@@ -72,6 +76,10 @@ export default {
             type: Function,
             required: true,
         },
+        unitSelected: {
+            type: Number,
+            required: true,
+        }
     },
     setup() {
         const handleSelection = (selectedItem) => {
@@ -111,12 +119,13 @@ export default {
         }
     },
     methods:{
-        menuItemsHeaderHandler(menuItem) {
-
-            return menuItem
-        },
-        menuItemsHeaderNode(menuItem, context) {
-
+        menuItemsClick(menuItem, context) {
+            if(!context) {
+                context = {
+                    node: null,
+                    path: null
+                }
+            }
             switch(menuItem.name) {
                 case "New Section":
                     this.add(context.node, 'section')

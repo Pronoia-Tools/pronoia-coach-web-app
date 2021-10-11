@@ -19,13 +19,13 @@
               @click="clipboard(image)"
             >
           </div>
-          <div v-if="workBook && openTableContent" class="h-full text-black text-left">
+          <!-- <div v-if="workBook && openTableContent" class="h-full text-black text-left">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
-          </div>
+          </div> -->
         </div>
         <!-- SIDE tree -->
         <div class="pl-1">
-          <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode"></WorkbookStructure>
+          <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected"></WorkbookStructure>
         </div>
         
       </div>
@@ -269,6 +269,7 @@ export default {
         newUnit.sectionNumber = unit.id
         titles.push(newUnit);
 
+        if(unit.contents && unit.contents.content) {
         unit.contents.content.forEach(elementEditor => {
           if(elementEditor.type === "heading"){
             let content = {}
@@ -292,7 +293,7 @@ export default {
             titles.push(content);
           }
         })
-
+        }
         let questions ={}
         questions.classes = "text-center font-bold"
         questions.type = "heading"
@@ -310,7 +311,14 @@ export default {
     }
   },
   methods:{
-    ...mapActions("workBook",["loadWorkBookUnits", "updateWorkbookUnit", "updateWorkbookSection","updateWorkbookAddSection"]),
+    ...mapActions("workBook",[
+      "loadWorkBookUnits", 
+      "updateWorkbookUnit", 
+      "updateWorkbookStructure",
+      "createWorkBookUnit",
+      //non used 
+      "updateWorkbookSection",
+      "updateWorkbookAddSection"]),
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
@@ -390,11 +398,20 @@ export default {
 
       this.workBook = workBookSelected
       if (this.editor && this.workBook) {
-        this.treeData = [{text: 'node 1', type:'section'}, {text: 'node 2', type:'section', children: [{text: 'node 2-1', type:'section'}]}, {text:'unit', type:'content'}];
+        if(this.workBook.structure && this.workBook.structure.tree) {
+          this.treeData = this.workBook.structure.tree
+        } else {
+          this.treeData = [{text: 'node 1', type:'section'}, {text: 'node 2', type:'section', children: [{text: 'node 2-1', type:'section'}]}, {text:'unit', type:'content'}];
+        }
         if (this.unitSelected === 0) {
           this.unitSelectedIndex = 0;
           this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
         }
+        console.log(this.workBook)
+        console.log(this.workBook.units)
+        console.log(this.unitSelected)
+        console.log(this.unitSelectedIndex)
+        console.log(this.treeData)
         this.editor.commands.insertContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
@@ -446,21 +463,42 @@ export default {
       })
 
       if (title) {
-        console.log(title)
-        console.log(type)
-        let newNode = {text: title, type: type} 
-        if (node.children) {
-          node.children.push(newNode)
+        let newNode = {text: title, type: type}
+        let newUnit = {}
+        if(type === 'content') {
+          const unit = {
+            title: title
+          }
+          newUnit = await this.createWorkBookUnit([this.workBook, unit])
+          this.workBook.units.push(newUnit)
+          newNode.id = newUnit.id    
+          
         }
-        else {
-          node.children = [newNode]
+
+        if(!node) {
+          this.treeData.push(newNode)
+        } else {
+          if (node.children) {
+            node.children.push(newNode)
+          }
+          else {
+            node.children = [newNode]
+          }
         }
+
+        await this.updateWorkbookStructure([this.workBook, this.treeData])
+
+        if(type === 'content') {
+          this.unitSelected = newUnit.id   
+          this.unitSelectedIndex = this.workBook.units.findIndex(x => x.id === this.unitSelected)
+        }
+
+        // 
       }
     },
     treeEditNode(node, path) {
       console.log(path)
       console.log(node)
-
     },
     treeRemoveNode(node, path) {
       Swal.fire({

@@ -29,7 +29,7 @@ export default {
             type: Array,
             required: true,
         },
-        menuItemsHeaderHandler: {
+        clickHandler: {
             type: Function,
             required: true,
         },
@@ -57,9 +57,9 @@ export default {
         },
         click(menuItem) {
             if(this.context) {
-                this.menuItemsHeaderHandler(menuItem, this.context)
+                this.clickHandler(menuItem, this.context)
             } else {
-                this.menuItemsHeaderHandler(menuItem)
+                this.clickHandler(menuItem, null)
             }
             this.toggleOpen()
         },
