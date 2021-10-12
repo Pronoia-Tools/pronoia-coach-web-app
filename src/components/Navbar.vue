@@ -35,10 +35,10 @@
           <font-awesome-icon :icon="myArrowDown"/>
           <transition name="slide-fade">
             <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-              <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+              <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
               </li>
-              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link>
+              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link> -->
               <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>
@@ -58,7 +58,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBookOpen,faQuestionCircle,faBell,faUser,faAngleDown,faBars,faTimes } from '@fortawesome/free-solid-svg-icons'
-import { mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import ButoomCustomVue from './ButoomCustom.vue'
 
 export default {
@@ -84,7 +84,7 @@ export default {
     }
   },
   methods:{
-    ...mapMutations("auth",["login","logout"]),
+    // ...mapMutations("auth",["login","logout"]),
     toggleOpenUserMenu(){
       this.openUserMenu = !this.openUserMenu
     },
@@ -97,13 +97,13 @@ export default {
       }
     },
     logoutHandler(){
-      localStorage.removeItem('user');
-      this.logout()
+      this.logout;
     }
   },
   computed:{
     ...mapGetters("auth",["getUserAuth"]),
     ...mapState("auth", ["isAuthenticated", "user"]),
+    ...mapActions("auth", ["logout"]),
     isOpen(){
       return this.openMovilMenu?"left-0":"-left-full"
     }

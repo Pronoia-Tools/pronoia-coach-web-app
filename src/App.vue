@@ -9,6 +9,7 @@
 <script>
 import NavbarVue from "./components/Navbar.vue";
 import FeedbackButton from "./modules/FeedbackButton/Views/FeedbackButton.vue";
+import { mapActions } from 'vuex'
 
 export default {
   name: "MyComponent",
@@ -16,6 +17,12 @@ export default {
     NavbarVue,
     FeedbackButton,
   },
+  computed:{
+    ...mapActions("auth",["loadSession"])
+  },
+  created() {
+    this.loadSession;
+  }
 };
 </script>
 <style>

@@ -4,7 +4,6 @@ export default {
   name: "WorkBookLayout",
   component: () =>import(/* webpackChunkName: "WorkBookLayout" */ "../Layouts/WorkBookLayout.vue"),
   beforeEnter:(to,from,next)=>{
-    console.log(store.state.auth.isAuthenticated)
     if(store.state.auth.isAuthenticated){
       next()
     }else{
