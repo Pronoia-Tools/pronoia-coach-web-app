@@ -10,19 +10,21 @@
         </div>
         <!-- SIDEBAREXTRA -->
         <div class="transition-all border border-black h-full" :class="isSidebarOpen">
-          <div class="h-1/4 flex flex-wrap justify-around border border-black">
+          <div v-if="workBook" class="h-32 flex flex-wrap justify-around border border-black gap-2 overflow-auto">
             <img 
-              v-for="(image, index) in imagesArray" 
+              v-for="(image, index) in imageLibrary" 
               :key="index" 
-              :src="image" alt="image workbook" 
-              class="w-20 h-20 border border-myLightBlue"
-              @click="clipboard(image)"
+              :src="image.url" alt="image workbook" 
+              class=" w-16 h-16 border border-myLightBlue"
+              @click="clipboard(image.url)"
             >
           </div>
           <!-- <div v-if="workBook && openTableContent" class="h-full text-black text-left">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div> -->
         </div>
+        <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
+        <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
         <!-- SIDE tree -->
         <div class="pl-1">
           <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
@@ -192,7 +194,7 @@ import Heading from "../Helpers/heading"
 import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
-import { mapGetters,mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import QuestionsListVue from '../Components/QuestionsList.vue'
 import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
@@ -235,10 +237,7 @@ export default {
       
       editor: null,
       openTableContent:true,
-      imagesArray:[
-        "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico",
-        "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355578/qrgrpfyaybctx2zhvldk.png"
-      ],
+      windowTop:0,
       workBook:null,
       units:null,
       unitSelected:0,
@@ -249,7 +248,11 @@ export default {
     }
   },
   computed:{
+    ...mapGetters("image", ["getImages"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
+    imageLibrary(){
+      return this.getImages
+    },
     isSidebarOpen(){      
       // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
       return this.openTableContent?" w-64  ":" w-0 "
@@ -303,12 +306,12 @@ export default {
       
       return titles;
     },
-    fixed(){
-      if(this.windowTop > 180 ){
-        return "fixed top-0 left-0 bg-blue-400 w-full"
-      }
-      return "" 
-    }
+    // fixed(){
+    //   if(this.windowTop > 180 ){
+    //     return "fixed top-0 left-0 bg-blue-400 w-full"
+    //   }
+    //   return "" 
+    // }
   },
   methods:{
     ...mapActions("workBook",[
@@ -319,6 +322,9 @@ export default {
       //non used 
       "updateWorkbookSection",
       "updateWorkbookAddSection"]),
+    ...mapActions("image",[
+      "loadImageLibrary",
+      "uploadImages"]),
     editorChanged(){
       
       if (this.saveInterval) {
@@ -354,7 +360,7 @@ export default {
         inputPlaceholder: this.$t('workbook.workbookText.alerts.addImage.inputPlaceholder')
       })
       if (url) {
-         const { value: width } = await Swal.fire({
+          const { value: width } = await Swal.fire({
           title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
           input: 'radio',
           inputOptions: {
@@ -452,6 +458,37 @@ export default {
     //   })
     //   // Swal.fire("Actualizado", "entrada actualizada",'success')
     // },
+    loadData() {
+      // this.loadImageLibrary();
+      if (this.getImages.length === 0) {
+        this.loadImageLibrary()
+      }
+    },
+    async onSelectedImage(event){
+      const images = event.target.files
+      
+      new Swal({
+        title: this.$t('swallAlertGeneral.wait'),
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+      // console.log({images})
+      const res = await this.uploadImages(images)
+      console.log(res)
+      // console.log({res})
+      if(res){
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.saved')
+        })
+      }else{
+        Toast.fire({
+          icon: 'error',
+          text: this.$t('swallAlertGeneral.error')
+        })
+      }
+      // this.loadWorkBook(this.idWorkBook)
+    },
     async changeStructure(){
       // (tree, store)
       // console.log(tree)
@@ -614,6 +651,9 @@ export default {
   },
   beforeUnmount() {
     this.editor.destroy()
+  },
+  created(){
+    this.loadData() 
   },
   // created(){
     

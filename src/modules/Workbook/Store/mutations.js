@@ -58,7 +58,7 @@ export const updateWorkbookAddSection = (state,{idWorkBook}) => {
         type:"doc",
         content:[],
         questions:[]
-       }
+      }
 
       return newWorkbook
     }else{

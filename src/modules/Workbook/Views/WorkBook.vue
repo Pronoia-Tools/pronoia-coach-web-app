@@ -30,8 +30,14 @@
       <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
-        <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center">
-          <img class="h-full" src="https://cdn.discordapp.com/attachments/817229566779064340/891000630779473950/unknown.png" alt="cover book">
+        <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative">
+          <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false">
+          
+          <img v-if="workBook.image" :class="`h-full ${localImage?'hidden':'visible'}`" :src="workBook.image" alt="cover book">
+          
+          <img v-if="localImage" class="h-full" :src="localImage" alt="Local image">
+          
+          <button class="absolute w-10 h-10 -bottom-4 -right-1 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
         </div>
                 
         <div class=" text-right col-span-12 md:col-span-8 row-span-6 h-96 flex flex-col gap-4">
@@ -136,17 +142,18 @@
 </template>
 
 <script>
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft,faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faArrowLeft,faInfoCircle,faPlus } from '@fortawesome/free-solid-svg-icons'
 import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 import { mapGetters, mapActions, mapState } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 import Swal from 'sweetalert2'
+import {uploadImageWorkbook} from '../Helpers/uploadImage'
 
 export default {
   components:{
     ButoomCustomVue,
-    // FontAwesomeIcon,
+    FontAwesomeIcon,
     SpinerVue
   },
   props: {
@@ -159,7 +166,11 @@ export default {
     return{
       Backward:faArrowLeft,
       InfoCircle:faInfoCircle,
+      myPlus:faPlus,
       workBook:null,
+
+      localImage:null,
+      file:null
     }
   },
   computed:{
@@ -175,6 +186,7 @@ export default {
       if (this.idWorkBook==="new") {
         workBookSelected = {
           title:"",
+          image:"",
           published:new Date(),
           edition:1,
           language:"",
@@ -202,15 +214,16 @@ export default {
         allowOutsideClick:false
       })
       Swal.showLoading()
+
+      if (this.file) {
+        const image = await uploadImageWorkbook(this.file)
+        this.workBook.image = image
+        console.log({image})
+      }
       let newWorkbook = await this.saveWorkbook(this.workBook);
       Swal.fire(this.$t("swallAlertGeneral.saved"), "",'success').then(()=>{
-      console.log('id')
-      console.log(newWorkbook.id)
       this.$router.push({path: '/workbook/'+newWorkbook.id})
       });
-      
-      
-
     },
     async updateCurrentWorkbook(){
       new Swal({
@@ -218,6 +231,14 @@ export default {
         allowOutsideClick:false
       })
       Swal.showLoading()
+      
+      // upload image
+      console.log(this.file)
+      if (this.file) {
+        const image = await uploadImageWorkbook(this.file)
+        this.workBook.image = image
+        console.log({image})
+      }
 
       await this.updateWorkbook(this.workBook)
 
@@ -244,7 +265,19 @@ export default {
         } 
       })
       
-    }
+    },
+    onSelectedImage(event){
+      const image = event.target.files[0]
+      if (!image) {
+        this.localImage = null
+        this.file = null
+        return
+      }
+      this.file = image
+      const fr =  new FileReader()
+      fr.onload = ()=> this.localImage = fr.result
+      fr.readAsDataURL(image) 
+    },
   },
   created(){
     this.loadWorkBook()
@@ -252,6 +285,8 @@ export default {
   watch:{
     idWorkBook(){
         this.loadWorkBook()
+        this.file = null
+        this.localImage=null
     }
   }
 };
