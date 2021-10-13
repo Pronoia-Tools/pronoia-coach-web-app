@@ -324,7 +324,7 @@ export default {
       if (this.saveInterval) {
         clearInterval(this.saveInterval)
       }
-      // autosave every 3 min after the user stop typing 
+      // autosave every 1.5 min after the user stop typing 
       this.saveInterval = setTimeout(() => this.updateCurrentWorkbook() , 90000);
       
     },
