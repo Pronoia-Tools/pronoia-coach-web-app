@@ -12,7 +12,7 @@
         <div class="transition-all border border-black h-full" :class="isSidebarOpen">
           <div v-if="workBook" class="h-32 flex flex-wrap justify-around border border-black gap-2 overflow-auto">
             <img 
-              v-for="(image, index) in workBook.images" 
+              v-for="(image, index) in imageLibrary" 
               :key="index" 
               :src="image.url" alt="image workbook" 
               class=" w-16 h-16 border border-myLightBlue"
@@ -194,7 +194,7 @@ import Heading from "../Helpers/heading"
 import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
-import { mapGetters,mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import QuestionsListVue from '../Components/QuestionsList.vue'
 import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
@@ -251,7 +251,11 @@ export default {
     }
   },
   computed:{
+    ...mapGetters("image", ["getImages"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
+    imageLibrary(){
+      return this.getImages
+    },
     isSidebarOpen(){      
       // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
       return this.openTableContent?" w-64  ":" w-0 "
@@ -318,10 +322,12 @@ export default {
       "updateWorkbookUnit", 
       "updateWorkbookStructure",
       "createWorkBookUnit",
-      "updateWorkbookAddImages",
       //non used 
       "updateWorkbookSection",
       "updateWorkbookAddSection"]),
+    ...mapActions("image",[
+      "loadImageLibrary",
+      "uploadImages"]),
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
@@ -449,6 +455,12 @@ export default {
     //   })
     //   // Swal.fire("Actualizado", "entrada actualizada",'success')
     // },
+    loadData() {
+      // this.loadImageLibrary();
+      if (this.getImages.length === 0) {
+        this.loadImageLibrary()
+      }
+    },
     async onSelectedImage(event){
       const images = event.target.files
       
@@ -458,7 +470,8 @@ export default {
       })
       Swal.showLoading()
       // console.log({images})
-      const res = await this.updateWorkbookAddImages({idWorkbook:this.idWorkBook,images})
+      const res = await this.uploadImages(images)
+      console.log(res)
       // console.log({res})
       if(res){
         Toast.fire({
@@ -471,7 +484,7 @@ export default {
           text: this.$t('swallAlertGeneral.error')
         })
       }
-      this.loadWorkBook(this.idWorkBook)
+      // this.loadWorkBook(this.idWorkBook)
     },
     async changeStructure(){
       // (tree, store)
@@ -638,6 +651,9 @@ export default {
   beforeUnmount() {
     this.editor.destroy(),
     window.removeEventListener("scroll", this.onScroll)
+  },
+  created(){
+    this.loadData() 
   },
   // created(){
     
