@@ -10,7 +10,7 @@
     <div class="col-span-2 flex gap-4 justify-center flex-wrap">
       <font-awesome-icon class="cursor-pointer" :icon="myEdit" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:workbookDetails.id}})"/>
       <font-awesome-icon class="cursor-pointer" :icon="myEye"  @click="$router.push({name:'workbook',params:{idWorkBook:workbookDetails.id}})"/>
-      <font-awesome-icon class="cursor-pointer" :icon="myTrash" />
+      <font-awesome-icon class="cursor-pointer" :icon="myTrash" @click="deleteCurrentWorkbook" />
     </div>
   </div>
 </template>
@@ -18,6 +18,9 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { mapActions } from 'vuex';
+import Swal from 'sweetalert2'
+
 
 export default {
   components:{
@@ -40,7 +43,33 @@ export default {
     dateString(){
       return this.workbookDetails.published.toDateString()
     }
-  }
+  },
+  methods:{
+    ...mapActions("workBook",["deleteWorkbook"]),
+  
+    deleteCurrentWorkbook(){
+      Swal.fire({
+        title: this.$t("swallAlertGeneral.confirmDelete.title"),
+        text: this.$t("swallAlertGeneral.confirmDelete.textTrashcan"),
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: this.$t("swallAlertGeneral.confirmDelete.confirmButtonText"),
+        denyButtonText: this.$t("swallAlertGeneral.confirmDelete.denyButtonText"),
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          new Swal({
+            title: this.$t("swallAlertGeneral.wait"),
+            allowOutsideClick:false
+          })
+          Swal.showLoading()
+          await this.deleteWorkbook(this.workbookDetails)
+          Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
+          this.$router.push({name:"no-workbook"})
+        } 
+      })
+      
+    }
+  },
 
 }
 </script>
