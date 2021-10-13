@@ -162,7 +162,7 @@
                 ___
               </button>
             </floating-menu> -->
-            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false"/>
+            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
             
           </div>
 
@@ -239,13 +239,13 @@ export default {
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355540/oarli2auqa71pbyu5gcu.ico",
         "https://res.cloudinary.com/dtyjtokie/image/upload/v1630355578/qrgrpfyaybctx2zhvldk.png"
       ],
-      windowTop:0,
       workBook:null,
       units:null,
       unitSelected:0,
       unitSelectedIndex:0,
 
-      treeData: []
+      treeData: [],
+      saveInterval:null,
     }
   },
   computed:{
@@ -319,6 +319,15 @@ export default {
       //non used 
       "updateWorkbookSection",
       "updateWorkbookAddSection"]),
+    editorChanged(){
+      
+      if (this.saveInterval) {
+        clearInterval(this.saveInterval)
+      }
+      // autosave every 1.5 min after the user stop typing 
+      this.saveInterval = setTimeout(() => this.updateCurrentWorkbook() , 90000);
+      
+    },
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
@@ -333,8 +342,9 @@ export default {
       navigator.clipboard.writeText(image)
     },
     saveWoorkbook(){
-      console.log(this.editor.getHTML())
-      console.log(this.editor.getJSON())
+      // console.log(this.editor.getHTML())
+      // console.log(this.editor.getJSON())
+      this.updateCurrentWorkbook()
     },
     async addImage() {
       const { value: url } = await Swal.fire({
@@ -379,10 +389,6 @@ export default {
     toogleSidebarOpen(){
       this.openTableContent = !this.openTableContent
     },
-    onScroll() {
-      // console.log(window.top.scrollY)
-      this.windowTop = window.top.scrollY /* or: e.target.documentElement.scrollTop */
-    },
     async loadWorkBook(){
       let workBookSelected = await this.getWorkBookById(this.idWorkBook) 
       if (!workBookSelected){
@@ -412,7 +418,7 @@ export default {
         // console.log(this.unitSelected)
         // console.log(this.unitSelectedIndex)
         console.log(this.treeData)
-        this.editor.commands.insertContent(this.workBook.units[this.unitSelectedIndex].contents)
+        this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
     async updateCurrentWorkbook(){
@@ -427,7 +433,7 @@ export default {
 
       Toast.fire({
         icon: 'success',
-        text: this.$t('swallAlertGeneral.updated')
+        text: `workbook ${this.$t('swallAlertGeneral.updated')}`
       })
       // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
     },
@@ -601,16 +607,13 @@ export default {
           types: ['heading', 'paragraph'],
         }),
         Heading
-
       ],
       content: ``,
     });
     this.loadWorkBook()
-    window.addEventListener("scroll", this.onScroll)
   },
   beforeUnmount() {
-    this.editor.destroy(),
-    window.removeEventListener("scroll", this.onScroll)
+    this.editor.destroy()
   },
   // created(){
     
