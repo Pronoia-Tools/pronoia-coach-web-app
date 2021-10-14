@@ -2,7 +2,7 @@
   <div class="container grid grid-cols-5 sm:grid-cols-6 md:grid-cols-11 py-4 px-4 text-center border border-transparent hover:border-gray-500">
     <span class="col-span-1">{{workbookDetails.id}}</span>
     <span class="col-span-1 md:col-span-2">{{workbookDetails.title}}</span>
-    <span class="col-span-1 hidden sm:block md:col-span-2"><!--{{dateString}}--></span>
+    <span class="col-span-1 hidden sm:block md:col-span-2">{{dateString}}</span>
     <span class="col-span-1">{{workbookDetails.edition}}</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.language}}</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.price}}$</span>
@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { mapActions } from 'vuex';
 import Swal from 'sweetalert2'
+import moment from 'moment'
 
 
 export default {
@@ -41,7 +42,7 @@ export default {
   },
   computed:{
     dateString(){
-      return this.workbookDetails.published.toDateString()
+      return moment.utc(this.workbookDetails.published).local().format('D-MMM-Y')
     }
   },
   methods:{
