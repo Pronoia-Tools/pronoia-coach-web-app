@@ -42,7 +42,7 @@ export default {
   },
   computed:{
     dateString(){
-      return moment.utc(this.workbookDetails.published).local().format('D-MMM-Y')
+      return moment.utc(this.workbookDetails.published).local().format("MMM Do YY")
     }
   },
   methods:{
