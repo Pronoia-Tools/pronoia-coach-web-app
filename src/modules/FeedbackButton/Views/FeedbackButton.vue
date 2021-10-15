@@ -65,12 +65,14 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
+// import axios from "axios";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { useRoute } from "vue-router";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import PronoiaAPI from "../../../api/PronoiaAPI"
 
+import Swal from "sweetalert2"
 export default {
   name: "FeedbackButton",
   components: { Form, Field, ErrorMessage, FontAwesomeIcon },
@@ -87,12 +89,27 @@ export default {
   },
   setup() {},
   methods: {
-    sendReport(e) {
-      e.path = this.route;
-      console.log(e);
-      axios.post("http://solodata.es/auth", e).then((data) => {
-        console.log(data);
-      });
+    async sendReport(e) {
+      // e.path = this.route;
+      try {
+        const {data} = await PronoiaAPI.post("/report", e)
+        console.log(data)
+        
+        this.report = ""
+        this.description = ""
+        this.showModal = false
+        Swal.fire({
+          icon:"success",
+          title: `${data.report} ${this.$t("swallAlertGeneral.sent")}`
+        })
+        
+      } catch (error) {
+        Swal.fire({
+          icon:"error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text:error.response.data.message
+        })
+      }
     },
   },
 };
