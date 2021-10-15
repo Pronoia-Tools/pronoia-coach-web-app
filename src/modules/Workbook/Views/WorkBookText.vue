@@ -10,24 +10,35 @@
         </div>
         <!-- SIDEBAREXTRA -->
         <div class="transition-all border border-black h-full" :class="isSidebarOpen">
-          <div v-if="workBook" class="h-32 flex flex-wrap justify-around border border-black gap-2 overflow-auto">
-            <img 
-              v-for="(image, index) in imageLibrary" 
-              :key="index" 
-              :src="image.url" alt="image workbook" 
-              class=" w-16 h-16 border border-myLightBlue"
-              @click="clipboard(image.url)"
-            >
+          <div>
+            <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toogleGaleryOpen">
+              <span>Galery</span>
+              <FontAwesomeIcon :icon="myAngleDown" v-if="galeryMenuOpen"></FontAwesomeIcon>
+              <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
+            </div>
+            <div class=" overflow-hidden transition-all" :class="isGaleryOpen">
+              <div v-if="workBook" class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32">
+                <img 
+                  v-for="(image, index) in imageLibrary" 
+                  :key="index" 
+                  :src="image.url" alt="image workbook" 
+                  class=" w-16 h-16 border border-myLightBlue"
+                  @click="clipboard(image.url)"
+                >
+              </div>
+              <!-- <div v-if="workBook && openTableContent" class="h-full text-black text-left">
+                <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
+              </div> -->
+              <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
+              <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
+
+            </div>
+            <!-- SIDE tree -->
+            <div class="pl-1">
+              <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
+            </div>
           </div>
-          <!-- <div v-if="workBook && openTableContent" class="h-full text-black text-left">
-            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
-          </div> -->
-        </div>
-        <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
-        <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
-        <!-- SIDE tree -->
-        <div class="pl-1">
-          <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
+
         </div>
         
       </div>
@@ -180,7 +191,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
@@ -234,6 +245,8 @@ export default {
       myAlignJustify:faAlignJustify,
       myFilm:faFilm,
       myArrowLeft:faArrowLeft,
+      myAngleDown:faAngleDown,      
+      myAngleUp:faAngleUp,
       
       editor: null,
       openTableContent:true,
@@ -245,6 +258,7 @@ export default {
 
       treeData: [],
       saveInterval:null,
+      galeryMenuOpen:false,
     }
   },
   computed:{
@@ -256,6 +270,9 @@ export default {
     isSidebarOpen(){      
       // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
       return this.openTableContent?" w-64  ":" w-0 "
+    },
+    isGaleryOpen(){
+      return this.galeryMenuOpen ? "h-44":"h-0"
     },
     getContentTable(){
       var titles = [];
@@ -325,6 +342,9 @@ export default {
     ...mapActions("image",[
       "loadImageLibrary",
       "uploadImages"]),
+    toogleGaleryOpen(){
+      this.galeryMenuOpen = !this.galeryMenuOpen
+    },
     editorChanged(){
       
       if (this.saveInterval) {
