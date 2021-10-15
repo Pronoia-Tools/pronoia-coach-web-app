@@ -47,7 +47,7 @@
       <router-link class="text-blue-800 underline my-2" to="/signup"
         >{{$t("login.register")}}</router-link
       >
-      <router-link class="text-blue-800 underline my-2" to="/forgot-password"
+      <router-link class="text-blue-800 underline my-2" to="/restore"
         >{{$t("login.forgot-password")}}</router-link
       >
     </div>
