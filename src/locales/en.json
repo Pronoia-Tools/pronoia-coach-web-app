@@ -12,6 +12,7 @@
     "usa":"United States"
   },
   "swallAlertGeneral":{
+    "sent":"Sent",
     "succces":"Completed",
     "saved":"Saved",
     "updated":"Updated",
