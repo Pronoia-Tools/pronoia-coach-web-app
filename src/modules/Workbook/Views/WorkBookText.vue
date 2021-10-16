@@ -1,53 +1,88 @@
 <template>
-  <!-- HEADER --> 
+
   <div class="">
+
     <div id="container" class="flex">
 
-      <div id="sidebar" class="h-full">
+      <!-- SIDEBAR -->
+      <div id="sidebar" class="h-full" v-if="openSideBar">
+
+        <!-- GO BACk -->
         <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
           <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
           <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
         </div>
-        <!-- SIDEBAREXTRA -->
-        <div class="transition-all border border-black h-full" :class="isSidebarOpen">
-          <div>
-            <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toogleGaleryOpen">
-              <span>Galery</span>
-              <FontAwesomeIcon :icon="myAngleDown" v-if="galeryMenuOpen"></FontAwesomeIcon>
-              <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
-            </div>
-            <div class=" overflow-hidden transition-all" :class="isGaleryOpen">
-              <div v-if="workBook" class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32">
-                <img 
-                  v-for="(image, index) in imageLibrary" 
-                  :key="index" 
-                  :src="image.url" alt="image workbook" 
-                  class=" w-16 h-16 border border-myLightBlue"
-                  @click="clipboard(image.url)"
-                >
-              </div>
-              <!-- <div v-if="workBook && openTableContent" class="h-full text-black text-left">
-                <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
-              </div> -->
-              <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
-              <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
 
-            </div>
-            <!-- SIDE tree -->
-            <div class="pl-1">
-              <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
-            </div>
+        <!-- TABLE OF CONTENTS -->
+        <div class="transition-all border border-black h-full w-64">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleTableContent">
+            <span>Table of Content</span>
+            <FontAwesomeIcon :icon="myAngleDown" v-if="openTableContent"></FontAwesomeIcon>
+            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
+          </div>
+          <div v-if="workBook && openTableContent" class="h-full text-black text-left">
+            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
+          </div>
+        </div>
+
+        <!-- IMAGE LIBRARY -->
+        <div class="transition-all border border-black h-full w-64">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+            <span>Image Library</span>
+            <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
+            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
 
+          <div v-show="openImageLibrary" class=" overflow-hidden transition-all">
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32">
+              <img 
+                v-for="(image, index) in imageLibrary" 
+                :key="index" 
+                :src="image.url" alt="image workbook" 
+                class=" w-16 h-16 border border-myLightBlue"
+                @click="clipboard(image.url)"
+              >
+            </div>
+            <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
+            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
+
+          </div>
+            
         </div>
+
+        <!-- WORKBOOK STRUCTURE -->
+        <!-- <div class="transition-all border border-black h-full w-64">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleUnitLibrary">
+            <span>Structure? Library</span>
+            <FontAwesomeIcon :icon="myAngleDown" v-if="openUnitLibrary"></FontAwesomeIcon>
+            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
+          </div>
+          <div v-show="openUnitLibrary" class="pl-1">
+            <WorkbookStructure :workBookData="treeData" :addHandler="treeAddNode" :removeHandler="treeRemoveNode" :editHandler="treeEditNode" :unitSelected="unitSelected" :clickHandler="changeUnit" :dragEndHandler="changeStructure"></WorkbookStructure>
+          </div>
+        </div> -->
         
       </div>
 
+      <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col pl-10 pr-10">
-        <div id="editor" class="h-1/2 flex flex-col">
+        
+        
+        <div id="editor" class="h-3/4 flex flex-col">
+
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+            
             <div>
+              <ButoomCustomVue @click="toggleSideBar" class="mr-1">
+                <FontAwesomeIcon v-if="openSideBar" :icon="myChevronLeft"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
+              </ButoomCustomVue>  
+
+              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
+                {{ $t('workbook.workbookText.save') }}
+              </ButoomCustomVue>
+
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -123,30 +158,20 @@
               <button @click="editor.chain().focus().setTextAlign('justify').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }">
                 <FontAwesomeIcon :icon="myAlignJustify"></FontAwesomeIcon>
               </button>
+
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </div>
-            
-            <div class="">
-              <!-- <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
-                {{ $t('workbook.workbookText.addSection') }}
-              </ButoomCustomVue> -->
-              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
-                {{ $t('workbook.workbookText.save') }}
-              </ButoomCustomVue>
-              <ButoomCustomVue @click="toogleSidebarOpen">
-                <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
-                  <FontAwesomeIcon v-else :icon="myChevronLeft"/>
-                  Menu
-                </ButoomCustomVue>
+
             </div>
             
           </div>
 
           <!--Editor --> 
           <div class="flex-grow overflow-auto z-0">
-            <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
+
+            <!-- FLOATING MENU --> 
+            <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
               <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
                 H1
               </button>
@@ -174,7 +199,9 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </floating-menu> -->
+            </floating-menu>
+
+            <!-- EDITOR ITSELF -->
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
             
           </div>
@@ -182,18 +209,20 @@
           
         </div>
 
-        <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/>
+        <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
       </div>
+
     </div>
 
   </div>
+
 </template>
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import { Editor, EditorContent } from '@tiptap/vue-3'
+import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Typography from '@tiptap/extension-typography'
 import Image from "../Helpers/Image"
@@ -206,26 +235,28 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions } from 'vuex'
-import QuestionsListVue from '../Components/QuestionsList.vue'
-import WorkbookStructure from '../Components/WorkbookStructure.vue'
+
+// import QuestionsListVue from '../Components/QuestionsList.vue'
+// import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
 export default {
   components: {
     EditorContent,
     FontAwesomeIcon,
-    // FloatingMenu,
+    FloatingMenu,
     ButoomCustomVue,
-    QuestionsListVue,
-    WorkbookStructure,
+    // QuestionsListVue,
+    // WorkbookStructure,
   },
   props: {
     idWorkBook: {
       type: String,
-      requird: true,
+      required: true,
     },
   },
   data() {
     return {
+      // Icons
       myBold:faBold,
       myItalic:faItalic,
       myUnderline:faUnderline,
@@ -248,17 +279,23 @@ export default {
       myAngleDown:faAngleDown,      
       myAngleUp:faAngleUp,
       
+      // Menus state
+      openSideBar: true,
+      openTableContent: true,
+      openImageLibrary: true,
+      openUnitLibrary: true,
+
+      // Data Objects
       editor: null,
-      openTableContent:true,
-      windowTop:0,
       workBook:null,
-      units:null,
       unitSelected:0,
       unitSelectedIndex:0,
 
+      // future structure
       treeData: [],
+
+      //helpers
       saveInterval:null,
-      galeryMenuOpen:false,
     }
   },
   computed:{
@@ -267,29 +304,19 @@ export default {
     imageLibrary(){
       return this.getImages
     },
-    isSidebarOpen(){      
-      // return `${this.windowTop < 180?"h-screen absolute right-1 top-0":"h-4/5 fixed top-14"} ${this.openTableContent?`text-white right-0 `:`-right-full hidden`}` 
-      return this.openTableContent?" w-64  ":" w-0 "
-    },
-    isGaleryOpen(){
-      return this.galeryMenuOpen ? "h-44":"h-0"
-    },
     getContentTable(){
       var titles = [];
       
-      // console.log({"sections":this.workBook.sections})
       if (!this.workBook.units) {
         return titles
       }
-      this.workBook.units.forEach(unit => {
-        let newUnit ={}
-        newUnit.classes = "text-center font-bold"
-        newUnit.type = "horizontalRule"
-        newUnit.content = unit.name
-        newUnit.sectionNumber = unit.id
-        titles.push(newUnit);
 
-        if(unit.contents && unit.contents.content) {
+      if(this.workBook.units.length<=this.unitSelectedIndex){
+        return titles
+      }
+
+      let unit = this.workBook.units[this.unitSelectedIndex]
+      if(unit.contents && unit.contents.content) {
         unit.contents.content.forEach(elementEditor => {
           if(elementEditor.type === "heading"){
             let content = {}
@@ -313,22 +340,16 @@ export default {
             titles.push(content);
           }
         })
-        }
-        let questions ={}
-        questions.classes = "text-center font-bold"
-        questions.type = "heading"
-        questions.content = `questions`
-        titles.push(questions);
-      });
+      }
+      // let questions ={}
+      // questions.classes = "text-center font-bold"
+      // questions.type = "heading"
+      // questions.content = `questions`
+      // titles.push(questions);
+
       
       return titles;
     },
-    // fixed(){
-    //   if(this.windowTop > 180 ){
-    //     return "fixed top-0 left-0 bg-blue-400 w-full"
-    //   }
-    //   return "" 
-    // }
   },
   methods:{
     ...mapActions("workBook",[
@@ -342,18 +363,19 @@ export default {
     ...mapActions("image",[
       "loadImageLibrary",
       "uploadImages"]),
-    toogleGaleryOpen(){
-      this.galeryMenuOpen = !this.galeryMenuOpen
+    toggleSideBar() {
+      this.openSideBar = !this.openSideBar
     },
-    editorChanged(){
-      
-      if (this.saveInterval) {
-        clearInterval(this.saveInterval)
-      }
-      // autosave every 1.5 min after the user stop typing 
-      this.saveInterval = setTimeout(() => this.updateCurrentWorkbook() , 90000);
-      
+    toggleTableContent() {
+      this.openTableContent = !this.openTableContent
     },
+    toggleImageLibrary() {
+      this.openImageLibrary = !this.openImageLibrary
+    },
+    toggleUnitLibrary() {
+      this.openUnitLibrary = !this.openUnitLibrary
+    },
+
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
@@ -366,11 +388,6 @@ export default {
         text: 'Copied into the clipboard '
       })
       navigator.clipboard.writeText(image)
-    },
-    saveWoorkbook(){
-      // console.log(this.editor.getHTML())
-      // console.log(this.editor.getJSON())
-      this.updateCurrentWorkbook()
     },
     async addImage() {
       const { value: url } = await Swal.fire({
@@ -412,78 +429,6 @@ export default {
         this.editor.chain().focus().setIframe({ src: url }).run()
       }
     },
-    toogleSidebarOpen(){
-      this.openTableContent = !this.openTableContent
-    },
-    async loadWorkBook(){
-      let workBookSelected = await this.getWorkBookById(this.idWorkBook) 
-      if (!workBookSelected){
-        this.$router.push({name:"no-workbook"})
-      }
-
-      if (!workBookSelected.units) {
-        console.log('no units loaded')
-        workBookSelected = await this.loadWorkBookUnits(workBookSelected)
-      }
-
-      this.editor.commands.clearContent()
-
-      this.workBook = workBookSelected
-      if (this.editor && this.workBook) {
-        if(this.workBook.structure && this.workBook.structure.tree) {
-          this.treeData = this.workBook.structure.tree
-        } else {
-          this.treeData = [{text: 'node 1', type:'section'}, {text: 'node 2', type:'section', children: [{text: 'node 2-1', type:'section'}]}, {text:'unit', type:'content'}];
-        }
-        if (this.unitSelected === 0) {
-          this.unitSelectedIndex = 0;
-          this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
-        }
-        // console.log(this.workBook)
-        // console.log(this.workBook.units)
-        // console.log(this.unitSelected)
-        // console.log(this.unitSelectedIndex)
-        console.log(this.treeData)
-        this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
-      }
-    },
-    async updateCurrentWorkbook(){
-      new Swal({
-        title: this.$t('swallAlertGeneral.wait'),
-        allowOutsideClick:false
-      })
-      Swal.showLoading()
-
-      this.workBook.units[this.unitSelectedIndex].contents = this.editor.getJSON();
-      await this.updateWorkbookUnit([this.workBook, this.unitSelectedIndex])
-
-      Toast.fire({
-        icon: 'success',
-        text: `workbook ${this.$t('swallAlertGeneral.updated')}`
-      })
-      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
-    },
-    // async updateCurrentWorkbookAddSection(){
-    //   new Swal({
-    //     title: this.$t('swallAlertGeneral.wait'),
-    //     allowOutsideClick:false
-    //   })
-    //   Swal.showLoading()
-
-    //   await this.updateWorkbookAddSection({idWorkBook:this.idWorkBook})
-
-    //   Toast.fire({
-    //     icon: 'success',
-    //     text: this.$t('swallAlertGeneral.updated')
-    //   })
-    //   // Swal.fire("Actualizado", "entrada actualizada",'success')
-    // },
-    loadData() {
-      // this.loadImageLibrary();
-      if (this.getImages.length === 0) {
-        this.loadImageLibrary()
-      }
-    },
     async onSelectedImage(event){
       const images = event.target.files
       
@@ -509,6 +454,38 @@ export default {
       }
       // this.loadWorkBook(this.idWorkBook)
     },
+
+    // Saving
+    editorChanged(){
+      
+      if (this.saveInterval) {
+        clearInterval(this.saveInterval)
+      }
+      // autosave every 1.5 min after the user stop typing 
+      this.saveInterval = setTimeout(() => this.updateCurrentWorkbook() , 90000);
+      
+    },
+    async updateCurrentWorkbook() {
+      this.workBook.units[this.unitSelectedIndex].contents = this.editor.getJSON();
+      await this.updateWorkbookUnit([this.workBook, this.unitSelectedIndex])
+    },
+    async updateCurrentWorkbookHanlder(){
+      new Swal({
+        title: this.$t('swallAlertGeneral.wait'),
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+
+      await this.updateCurrentWorkbook()
+
+      Toast.fire({
+        icon: 'success',
+        text: `workbook ${this.$t('swallAlertGeneral.updated')}`
+      })
+      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
+    },
+
+    // Methodss for tree. It was structure, future will be library? + Structure?
     async changeStructure(){
       // (tree, store)
       // console.log(tree)
@@ -648,11 +625,49 @@ export default {
         } 
       })
       
-    }
-  },
+    },
 
+    // Load Data methods
+    async loadWorkBook(){
+      let workBookSelected = await this.getWorkBookById(this.idWorkBook) 
+      if (!workBookSelected){
+        this.$router.push({name:"no-workbook"})
+      }
+
+      if (!workBookSelected.units) {
+        console.log('no units loaded')
+        workBookSelected = await this.loadWorkBookUnits(workBookSelected)
+      }
+
+      this.editor.commands.clearContent()
+
+      this.workBook = workBookSelected
+      if (this.editor && this.workBook) {
+        if(this.workBook.structure && this.workBook.structure.tree) {
+          this.treeData = this.workBook.structure.tree
+        } else {
+          this.treeData = [{text: 'node 1', type:'section'}, {text: 'node 2', type:'section', children: [{text: 'node 2-1', type:'section'}]}, {text:'unit', type:'content'}];
+        }
+        if (this.unitSelected === 0) {
+          this.unitSelectedIndex = 0;
+          this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
+        }
+        // console.log(this.workBook)
+        // console.log(this.workBook.units)
+        // console.log(this.unitSelected)
+        // console.log(this.unitSelectedIndex)
+        console.log(this.treeData)
+        this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
+      }
+    },
+    loadData() {
+      if (this.getImages.length === 0) {
+        this.loadImageLibrary()
+      }
+    },
+  },
+  // Mounted loads workbook
   mounted() {
-    // console.log("mounted")
     this.editor = new Editor({
       extensions: [
         StarterKit,
@@ -672,13 +687,10 @@ export default {
   beforeUnmount() {
     this.editor.destroy()
   },
+  // Loads data - Image Library
   created(){
     this.loadData() 
   },
-  // created(){
-    
-  //   // console.log("created")
-  // },
   watch:{
     idWorkBook(){
         this.loadWorkBook()

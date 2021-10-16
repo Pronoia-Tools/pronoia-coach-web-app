@@ -72,7 +72,7 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
     async submitLogin(values) {
-      console.log(values);
+      // console.log(values);
       // e.preventDefault();
       // if (!e.signDashboard) {
       //   e.signDashboard = false;
