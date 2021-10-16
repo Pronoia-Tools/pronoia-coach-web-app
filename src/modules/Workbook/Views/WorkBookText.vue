@@ -79,7 +79,7 @@
                 <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
               </ButoomCustomVue>  
 
-              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
+              <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
                 {{ $t('workbook.workbookText.save') }}
               </ButoomCustomVue>
 
@@ -162,6 +162,9 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
+              <button @click="editor.commands.setQuestion({unit_id: unitSelected})">
+                Q
+              </button>
 
             </div>
             
@@ -235,6 +238,8 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions } from 'vuex'
+
+import Question from "../../Question/Helpers/QuestionExtensionEditor"
 
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
@@ -467,6 +472,7 @@ export default {
     },
     async updateCurrentWorkbook() {
       this.workBook.units[this.unitSelectedIndex].contents = this.editor.getJSON();
+      console.log(this.editor.getJSON())
       await this.updateWorkbookUnit([this.workBook, this.unitSelectedIndex])
     },
     async updateCurrentWorkbookHanlder(){
@@ -678,7 +684,8 @@ export default {
         TextAlign.configure({
           types: ['heading', 'paragraph'],
         }),
-        Heading
+        Heading,
+        Question
       ],
       content: ``,
     });
