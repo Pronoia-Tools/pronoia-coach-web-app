@@ -78,16 +78,16 @@
             as="select"
           >
             <option value="" disabled>{{$t("input.select")}}</option>
-            <option :value="$t('languages.mexico')">{{$t("countries.mexico")}}</option>
-            <option :value="$t('languages.usa')">{{$t("countries.usa")}}</option>
+            <option value="Mexico">{{$t("countries.mexico")}}</option>
+            <option value="USA">{{$t("countries.usa")}}</option>
           </Field>
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-        <div class="flex justify-center items-center gap-3 my-4">
+        <div class="flex justify-center items-center gap-3 my-4 bg-red-800">
           <Field
             type="checkbox"
-            name="signDashboard"
+            name="notifyme"
             class="block"
             :value="true"
           />
@@ -129,17 +129,30 @@ export default {
         lastname: data.LastName,
         email: data.email,
         password: data.password,
-        country: data.country 
+        country: data.country,
+        notify:data.notifyme
       };
-      await this.signUp(revisedData);
-      if (this.isAuthenticated) {
-        this.$router.push({name:"WorkBookLayout"});
-      } else {
+      if (!revisedData.notify) {
+        revisedData.notify=false
+      }
+      try {
+        await this.signUp(revisedData);
+        if (this.isAuthenticated) {
+          this.$router.push({name:"WorkBookLayout"});
+        } else {
+          Swall.fire({
+            title:this.$t("swallAlertGeneral.error"),
+            text:this.$t("swallAlertGeneral.try-again"),
+            icon:"error"
+          });
+        }
+        
+      } catch (error) {
         Swall.fire({
-          title:this.$t("swallAlertGeneral.error"),
-          text:this.$t("swallAlertGeneral.try-again"),
-          icon:"error"
-        });
+          icon:"error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text:error.response.data.message
+        })
       }
     },
   }
