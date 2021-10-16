@@ -1,5 +1,10 @@
 {
+  "restorePassword":{
+    "emailText":"Enter your email address and we will send you a password reset link",
+    "emailSent":"Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
+  },
   "input":{
+    "send":"Send",
     "select":"Select",
     "submit":"Submit"
   },

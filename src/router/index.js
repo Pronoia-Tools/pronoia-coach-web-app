@@ -35,6 +35,14 @@ const routes = [
       ),
   },
   {
+    path: "/restore",
+    name: "restore-password",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../modules/Auth/Views/Restore.vue"
+      ),
+  },
+  {
     path: "/list",
     name: "list",
     component: () => import("../modules/List/Views/List.vue"),
