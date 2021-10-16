@@ -1,13 +1,16 @@
 <template>
-  <!-- HEADER --> 
+
   <div class="">
+
     <div id="container" class="flex">
 
-      <div id="sidebar" class="h-full">
+      <!-- SIDEBAR -->
+      <div id="sidebar" class="h-full" v-if="openTableContent">
         <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
           <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
           <h1>{{ $t('workbook.workbookText.bookDetails') }}</h1>
         </div>
+
         <!-- SIDEBAREXTRA -->
         <div class="transition-all border border-black h-full" :class="isSidebarOpen">
           <div>
@@ -43,11 +46,25 @@
         
       </div>
 
+      <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col pl-10 pr-10">
-        <div id="editor" class="h-1/2 flex flex-col">
+        
+        
+        <div id="editor" class="h-3/4 flex flex-col">
+
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+            
             <div>
+              <ButoomCustomVue @click="toogleSidebarOpen" class="mr-1">
+                <FontAwesomeIcon v-if="openTableContent" :icon="myChevronLeft"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
+              </ButoomCustomVue>  
+
+              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
+                {{ $t('workbook.workbookText.save') }}
+              </ButoomCustomVue>
+
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -123,30 +140,20 @@
               <button @click="editor.chain().focus().setTextAlign('justify').run()" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }">
                 <FontAwesomeIcon :icon="myAlignJustify"></FontAwesomeIcon>
               </button>
+
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </div>
-            
-            <div class="">
-              <!-- <ButoomCustomVue @click="updateCurrentWorkbookAddSection" class="mr-1">
-                {{ $t('workbook.workbookText.addSection') }}
-              </ButoomCustomVue> -->
-              <ButoomCustomVue @click="updateCurrentWorkbook" class="mr-1">
-                {{ $t('workbook.workbookText.save') }}
-              </ButoomCustomVue>
-              <ButoomCustomVue @click="toogleSidebarOpen">
-                <FontAwesomeIcon v-if="openTableContent" :icon="myChevronRight"/>
-                  <FontAwesomeIcon v-else :icon="myChevronLeft"/>
-                  Menu
-                </ButoomCustomVue>
+
             </div>
             
           </div>
 
           <!--Editor --> 
           <div class="flex-grow overflow-auto z-0">
-            <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
+
+            <!-- FLOATING MENU --> 
+            <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
               <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
                 H1
               </button>
@@ -174,7 +181,9 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </floating-menu> -->
+            </floating-menu>
+
+            <!-- EDITOR ITSELF -->
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
             
           </div>
@@ -182,18 +191,20 @@
           
         </div>
 
-        <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/>
+        <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
       </div>
+
     </div>
 
   </div>
+
 </template>
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import { Editor, EditorContent } from '@tiptap/vue-3'
+import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Typography from '@tiptap/extension-typography'
 import Image from "../Helpers/Image"
@@ -206,16 +217,16 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions } from 'vuex'
-import QuestionsListVue from '../Components/QuestionsList.vue'
+// import QuestionsListVue from '../Components/QuestionsList.vue'
 import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
 export default {
   components: {
     EditorContent,
     FontAwesomeIcon,
-    // FloatingMenu,
+    FloatingMenu,
     ButoomCustomVue,
-    QuestionsListVue,
+    // QuestionsListVue,
     WorkbookStructure,
   },
   props: {
