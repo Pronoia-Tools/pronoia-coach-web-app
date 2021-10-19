@@ -21,7 +21,7 @@
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
           <div v-if="workBook && openTableContent" class="h-full text-black text-left">
-            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
+            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
 
@@ -311,15 +311,11 @@ export default {
     },
     getContentTable(){
       var titles = [];
+      if (!this.workBook.units) return titles
+
+      if(this.workBook.units.length<=this.unitSelectedIndex) return titles
+
       
-      if (!this.workBook.units) {
-        return titles
-      }
-
-      if(this.workBook.units.length<=this.unitSelectedIndex){
-        return titles
-      }
-
       let unit = this.workBook.units[this.unitSelectedIndex]
       if(unit.contents && unit.contents.content) {
         unit.contents.content.forEach(elementEditor => {
@@ -341,7 +337,15 @@ export default {
                 break;
             }
             content.content=elementEditor.content[0].text,
+            content.id=elementEditor.content[0].text,
             content.type = "heading"
+            titles.push(content);
+          }else if(elementEditor.type === "Question"){
+            let content = {}
+            content.classes = "pl-2 font-extrabold"
+            content.content="Question"
+            content.id=`Question-${elementEditor.attrs.id}`
+            content.type = "Question"
             titles.push(content);
           }
         })
@@ -488,7 +492,8 @@ export default {
         icon: 'success',
         text: `workbook ${this.$t('swallAlertGeneral.updated')}`
       })
-      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
+      // console.log(this.editor.getJSON())
+      // console.log(this.workBook)
     },
 
     // Methodss for tree. It was structure, future will be library? + Structure?
@@ -662,7 +667,7 @@ export default {
         // console.log(this.workBook.units)
         // console.log(this.unitSelected)
         // console.log(this.unitSelectedIndex)
-        console.log(this.treeData)
+        console.log(this.unitSelected)
         this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
