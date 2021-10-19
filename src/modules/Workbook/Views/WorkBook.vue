@@ -8,7 +8,7 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
-        <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
+        <ButoomCustomVue :transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
         <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
             <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>

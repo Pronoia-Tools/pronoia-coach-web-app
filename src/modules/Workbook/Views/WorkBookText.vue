@@ -25,8 +25,12 @@
           </div>
         </div>
 
+        <ButoomCustomVue v-if="preview" @click="toogglePreview" class="mt-1 ml-1">
+          {{ $t('workbook.workbookText.exitPreview') }}
+        </ButoomCustomVue>
+
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-64">
+        <div v-if="!preview" class="transition-all border border-black h-full w-64">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
@@ -65,13 +69,13 @@
       </div>
 
       <!-- MAIN -->
-      <div id="content" class="h-screen flex flex-col pl-10 pr-10">
+      <div id="content" class="h-screen flex flex-col pl-10 pr-10 bg-red-200">
         
         
-        <div id="editor" class="h-3/4 flex flex-col">
+        <div id="editor" class="h-full flex flex-col">
 
           <!-- Menu Bar -->
-          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+          <div v-if="editor && !preview" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
             
             <div>
               <ButoomCustomVue @click="toggleSideBar" class="mr-1">
@@ -81,6 +85,11 @@
 
               <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
                 {{ $t('workbook.workbookText.save') }}
+              </ButoomCustomVue>
+
+              
+              <ButoomCustomVue @click="toogglePreview" class="mr-1">
+                {{ $t('workbook.workbookText.preview') }}
               </ButoomCustomVue>
 
               <button @click="editor.chain().focus().undo().run()">
@@ -171,7 +180,7 @@
           </div>
 
           <!--Editor --> 
-          <div class="flex-grow overflow-auto z-0">
+          <div class="flex-grow overflow-auto z-0 bg-red-300">
 
             <!-- FLOATING MENU --> 
             <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -301,6 +310,7 @@ export default {
 
       //helpers
       saveInterval:null,
+      preview:false
     }
   },
   computed:{
@@ -380,7 +390,9 @@ export default {
     toggleUnitLibrary() {
       this.openUnitLibrary = !this.openUnitLibrary
     },
-
+    toogglePreview(){
+      this.preview = !this.preview
+    },
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)
