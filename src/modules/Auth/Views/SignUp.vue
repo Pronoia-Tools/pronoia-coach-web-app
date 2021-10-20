@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col items-center">
     <div class=" w-10/12 md:w-6/12 lg:w-4/12 py-10">
-      <img src="img/Sammy_Logo.png" alt="logo" />
+      <img src="@/assets/WorkbookFactoryLogo.png" alt="logo" />
 
       <Form
         class="text-gray-500 px-10 flex flex-col items-center gap-2"
@@ -84,7 +84,7 @@
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-        <div class="flex justify-center items-center gap-3 my-4 bg-red-800">
+        <div class="flex justify-center items-center gap-3 my-4">
           <Field
             type="checkbox"
             name="notifyme"
