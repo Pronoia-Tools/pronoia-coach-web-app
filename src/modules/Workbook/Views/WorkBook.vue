@@ -8,7 +8,7 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
-        <ButoomCustomVue transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
+        <ButoomCustomVue transparent="true" @click="goToEditor">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
         <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
             <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
@@ -149,7 +149,7 @@ import { mapGetters, mapActions, mapState } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 import Swal from 'sweetalert2'
 import {uploadImageWorkbook} from '../Helpers/uploadImage'
-
+import {Toast} from '@/components/Toast.js'
 export default {
   components:{
     ButoomCustomVue,
@@ -180,6 +180,32 @@ export default {
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
+    async goToEditor(){
+      if (this.idWorkBook === "new") {
+        if (this.file) {
+          const image = await uploadImageWorkbook(this.file)
+          this.workBook.image = image
+          console.log({image})
+        }
+        let newWorkbook = await this.saveWorkbook(this.workBook);
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.saved'),
+          timer:1000
+        }).then(()=>{
+          this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
+        });
+      }else{
+          await this.updateCurrentWorkbook()
+          Toast.fire({
+            icon: 'success',
+            text: this.$t('swallAlertGeneral.updated'),
+            timer:500
+          }).then(()=>{
+            this.$router.push({name:'workbook-rich-text',params:{idWorkBook:this.idWorkBook}})
+          });
+      }
+    },
     loadWorkBook(){
       let workBookSelected
 
