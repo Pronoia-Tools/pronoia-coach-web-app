@@ -3,8 +3,8 @@
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="flex justify-center mx-10 my-10">
-      <img src="@/assets/logoWF.png" id="icon" alt="User Icon" />
+    <div class="flex justify-center mx-auto my-10 w-10/12 md:w-6/12 lg:w-4/12 py-10">
+      <img src="@/assets/WorkbookFactoryLogo.png" id="icon" alt="User Icon" />
     </div>
 
     <!-- Login Form -->

@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between items-center border border-black py-2 px-4 relative z-50">
     <div class=" w-28">
-      <img src="@/assets/logoWF.png" class="w-full " alt="logo navbar">
+      <img src="@/assets/WorkbookFactoryLogo.png" class="w-full " alt="logo navbar">
     </div>
 
     <!-- LINKS -->
