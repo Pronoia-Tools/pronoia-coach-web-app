@@ -174,7 +174,7 @@
           <div class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
-            <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
+            <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
               <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
                 H1
               </button>
@@ -202,7 +202,7 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </floating-menu>
+            </floating-menu> -->
 
             <!-- EDITOR ITSELF -->
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
@@ -225,7 +225,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
+// import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
+import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Typography from '@tiptap/extension-typography'
 import Image from "../Helpers/Image"
@@ -248,7 +249,7 @@ export default {
   components: {
     EditorContent,
     FontAwesomeIcon,
-    FloatingMenu,
+    // FloatingMenu,
     ButoomCustomVue,
     // QuestionsListVue,
     // WorkbookStructure,
