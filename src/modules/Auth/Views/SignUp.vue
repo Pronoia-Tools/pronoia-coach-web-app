@@ -78,8 +78,9 @@
             as="select"
           >
             <option value="" disabled>{{$t("input.select")}}</option>
-            <option value="Mexico">{{$t("countries.mexico")}}</option>
-            <option value="USA">{{$t("countries.usa")}}</option>
+            <option v-for="country in countryList" :key="country.countryCode" :value="country.name">{{country.name}}</option>
+            <!-- <option value="Mexico">{{$t("countries.mexico")}}</option>
+            <option value="USA">{{$t("countries.usa")}}</option> -->
           </Field>
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
@@ -110,12 +111,17 @@
 import { Form, Field, ErrorMessage } from "vee-validate"
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
-
+import countries from "@/assets/countryList.json"
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+  },
+  data(){
+    return{
+      countryList:countries
+    }
   },
   computed: {
     ...mapState("auth", ["isAuthenticated"]),
