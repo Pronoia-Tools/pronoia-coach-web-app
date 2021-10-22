@@ -1,5 +1,5 @@
 <template>
-  <button class="px-4 py-2 rounded" :class="isSolid">
+  <button class="px-4 py-2 rounded " :class="isSolid">
     <slot></slot>
   </button>
 </template>
