@@ -185,9 +185,6 @@ export default {
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
-    printLine(word){
-      console.log(word)
-    },
     async goToEditor(){
       if (this.idWorkBook === "new") {
         if (this.file) {
