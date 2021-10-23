@@ -191,7 +191,6 @@ export default {
         Toast.fire({
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved'),
-          timer:1000
         }).then(()=>{
           this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
         });
@@ -275,7 +274,6 @@ export default {
       Toast.fire({
         icon: 'success',
         text: this.$t('swallAlertGeneral.updated'),
-        timer:1000
       })
     },
     deleteCurrentWorkbook(){
@@ -297,7 +295,6 @@ export default {
           Toast.fire({
             icon: 'success',
             text: this.$t('swallAlertGeneral.saved'),
-            timer:1000
           })
           this.$router.push({name:"no-workbook"})
         } 
