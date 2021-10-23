@@ -9,11 +9,11 @@
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
         <ButtonGroupVue>
-          <ButoomCustomVue transparent="true" @click="goToEditor">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
+          <ButoomCustomVue transparent="true" class=" border-myPurple" @click="goToEditor">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
           <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="w-full flex flex-col gap-2">
-            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
-            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto bg-myPurple" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
+            <ButoomCustomVue class="w-full md:w-auto bg-myRedAlert" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
           </div>
         </ButtonGroupVue>
       </div>
