@@ -191,18 +191,17 @@ export default {
         Toast.fire({
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved'),
-        }).then(()=>{
+        })
           this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
-        });
+        
       }else{
           await this.updateCurrentWorkbook()
           Toast.fire({
             icon: 'success',
             text: this.$t('swallAlertGeneral.updated'),
-            timer:500
-          }).then(()=>{
+          })
             this.$router.push({name:'workbook-rich-text',params:{idWorkBook:this.idWorkBook}})
-          });
+          
       }
     },
     loadWorkBook(){
@@ -249,10 +248,9 @@ export default {
       Toast.fire({
         icon: 'success',
         text: this.$t('swallAlertGeneral.saved'),
-        timer:1000
-      }).then(()=>{
+      })
       this.$router.push({path: '/workbook/'+newWorkbook.id})
-      });
+      
     },
     async updateCurrentWorkbook(){
       new Swal({
