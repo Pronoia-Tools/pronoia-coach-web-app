@@ -48,6 +48,10 @@
           <img v-if="localImage" class="h-full" :src="localImage" alt="Local image">
           
           <button class="absolute w-10 h-10 -bottom-4 -right-1 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
+          <div class="absolute w-full h-5 top-0 left-0">
+            <progress max="100" class="w-full" :value="porcentage"></progress>
+            <span>{{porcentage}}</span>
+          </div>
         </div>
                 
         <div class=" text-right col-span-12 md:col-span-8 row-span-6 h-96 flex flex-col gap-4">
@@ -163,6 +167,7 @@ import {Toast} from '@/components/Toast.js'
 import ButtonGroupVue from '../../../components/ButtonGroup.vue';
 import ButtonAppVue from '../../../components/ButtonApp.vue';
 
+import { storage } from "@/firebase/firebase";
 export default {
   components:{
     // ButoomCustomVue,
@@ -191,7 +196,8 @@ export default {
       workBook:null,
 
       localImage:null,
-      file:null
+      file:null,
+      porcentage:0
     }
   },
   computed:{
@@ -201,6 +207,30 @@ export default {
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
+    handleUpload(){
+    const uploadTask = storage.ref(`images/${this.file.name}`).put(this.file);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.porcentage = progress
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(this.file.name)
+            .getDownloadURL()
+            .then(url => {
+              console.log(url);
+            });
+        }
+      );
+    },
     async goToEditor(){
       if (this.idWorkBook === "new") {
         if (this.file) {
@@ -261,7 +291,7 @@ export default {
       Swal.showLoading()
 
       if (this.file) {
-        const image = await uploadImageWorkbook(this.file)
+        const image = await this.handleUpload()
         this.workBook.image = image
         console.log({image})
       }
