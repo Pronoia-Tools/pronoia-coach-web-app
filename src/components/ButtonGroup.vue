@@ -1,39 +1,30 @@
 <template>
   <div class="relative" @blur="toogleOpen" tabindex="0" ref="dropdown">
-    <!-- <FontAwesomeIcon :icon="myEllipsisH" @click="toogleOpen" class="cursor-pointer rounded-full hover:bg-myPurple text-3xl px-2 transition"></FontAwesomeIcon> -->
-    
-    <svg 
-      @click="toogleOpen" 
-      class="cursor-pointer rounded-full hover:bg-myPurple transition block p-1 w-10 h-10" 
-      focusable="false" 
-      viewBox="0 0 24 24">
-        <path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path>
-    </svg>
-    <transition name="slide-fade" class="rounded shadow-xl" >
-      <div v-show="isOpen" class="absolute top-10 -right-0 py-2 w-56 border-black border flex flex-col divide-y divide-black bg-white" >
-        <div class="flex flex-col px-3 gap-2">
+    <!-- Button -->
+    <div @click="toogleOpen" class="cursor-pointer rounded-full hover:bg-gray-400 transition w-6 h-6 p-5 flex items-center justify-center">
+      <FontAwesomeIcon :icon="myEllipsisV"></FontAwesomeIcon>
+    </div>
+    <!-- MODAL -->
+    <transition name="slide-fade">
+      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -right-0 py-2 w-64 border border-black bg-white hover:bg-gray-50" >
+        <div class="grid grid-cols-3 gap-4 p-3 items-stretch">
           <slot></slot>
         </div>
-        <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
-          {{locale}}
-        </li>
-        <router-link to="/">{{ $t(`navbar.settings`) }}</router-link> -->
-        <!-- <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span> -->
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 export default {
   components:{
-    // FontAwesomeIcon
+    FontAwesomeIcon
   },
   data(){
     return{
-      // myEllipsisH:faEllipsisH,
+      myEllipsisV:faEllipsisV,
       isOpen:false
     }
   },

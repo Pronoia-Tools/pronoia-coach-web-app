@@ -111,7 +111,7 @@
       }
     },
     "workbook": {
-      "edit": "Editar WorkBook",
+      "edit": "Editar",
       "createCopy": "Crear copia",
       "submit": "Enviar para revisión de MarketPlace",
 
@@ -126,9 +126,9 @@
       "tags": "Etiquetas",
       "describePlaceHolder": "Descríbete aquí...",
 
-      "save": "Guardar Workbook",
-      "saveChanges": "Guardar cambios",
-      "delete": "Eliminar Workbook",
+      "save": "Guardar",
+      "saveChanges": "Actualizar",
+      "delete": "Eliminar",
 
       "for": "Para Coaches",
       "send": "Enviar copia a un cliente",

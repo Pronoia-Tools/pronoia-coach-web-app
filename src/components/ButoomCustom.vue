@@ -1,6 +1,6 @@
 <template>
   <!-- <button class="px-4 py-2 rounded" :class="isSolid"> -->
-  <button class="px-4 py-2 rounded" :class="isSolid">
+  <button class="px-4 py-2 rounded hover:bg-opacity-70 transition" :class="isSolid">
     <slot></slot>
   </button>
 </template>
