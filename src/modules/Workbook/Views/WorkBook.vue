@@ -8,12 +8,26 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
-        <ButoomCustomVue transparent="true" @click="goToEditor">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
-        <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
-          <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
-            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
-            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
-          </div>
+        <ButtonGroupVue>
+          <ButtonAppVue @click="goToEditor">
+            <FontAwesomeIcon :icon="myFileAlt"></FontAwesomeIcon>
+            <span>{{ $t('workbook.workbook.edit') }}</span>
+          </ButtonAppVue>
+          <ButtonAppVue class="bg-myPurple" v-if="idWorkBook==='new'" @click="saveNewWorkbook">
+            <FontAwesomeIcon :icon="mySave"></FontAwesomeIcon>
+            <span>{{ $t('workbook.workbook.save') }}</span>
+          </ButtonAppVue>
+          <template v-else>
+            <ButtonAppVue class="bg-myPurple" @click="updateCurrentWorkbook">
+              <FontAwesomeIcon :icon="myEdit"></FontAwesomeIcon>
+              <span>{{ $t('workbook.workbook.saveChanges') }}</span>
+            </ButtonAppVue>
+            <ButtonAppVue class="bg-myRedAlert" @click="deleteCurrentWorkbook">
+              <FontAwesomeIcon :icon="myTrash"></FontAwesomeIcon>
+              <span>{{ $t('workbook.workbook.delete') }}</span>
+            </ButtonAppVue>
+          </template>
+        </ButtonGroupVue>
       </div>
       <!-- <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
@@ -143,18 +157,23 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft,faInfoCircle,faPlus } from '@fortawesome/free-solid-svg-icons'
-import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+import { faArrowLeft,faInfoCircle,faPlus,faSave,faEdit,faTrash,faFileAlt } from '@fortawesome/free-solid-svg-icons'
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 import { mapGetters, mapActions, mapState } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 import Swal from 'sweetalert2'
 import {uploadImageWorkbook} from '../Helpers/uploadImage'
 import {Toast} from '@/components/Toast.js'
+import ButtonGroupVue from '../../../components/ButtonGroup.vue';
+import ButtonAppVue from '../../../components/ButtonApp.vue';
+
 export default {
   components:{
-    ButoomCustomVue,
+    // ButoomCustomVue,
     FontAwesomeIcon,
-    SpinerVue
+    SpinerVue,
+    ButtonGroupVue,
+    ButtonAppVue
   },
   props: {
     idWorkBook: {
@@ -164,9 +183,15 @@ export default {
   },
   data(){
     return{
+      // ICONS
       Backward:faArrowLeft,
       InfoCircle:faInfoCircle,
       myPlus:faPlus,
+      mySave:faSave,
+      myEdit:faEdit,
+      myTrash:faTrash,
+      myFileAlt:faFileAlt,
+
       workBook:null,
 
       localImage:null,

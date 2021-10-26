@@ -111,7 +111,7 @@
       }
     },
     "workbook": {
-      "edit": "Edit WorkBook",
+      "edit": "Edit",
       "createCopy": "Create a Copy",
       "submit": "Submit for MarketPlace Review",
 
@@ -126,9 +126,9 @@
       "tags": "Tags",
       "describePlaceHolder": "Describe yourself here...",
 
-      "save": "Save Workbook",
-      "saveChanges": "Save changes",
-      "delete": "Delete WorkBook",
+      "save": "Save",
+      "saveChanges": "Update",
+      "delete": "Delete",
 
       "for": "For Coaches",
       "send": "Send Copy to a client",
