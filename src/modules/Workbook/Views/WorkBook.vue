@@ -8,14 +8,6 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
-<<<<<<< HEAD
-        <ButoomCustomVue :transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
-        <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
-          <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
-            <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
-            <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
-          </div>
-=======
         <ButtonGroupVue>
           <ButtonAppVue @click="goToEditor">
             <FontAwesomeIcon :icon="myFileAlt"></FontAwesomeIcon>
@@ -36,7 +28,6 @@
             </ButtonAppVue>
           </template>
         </ButtonGroupVue>
->>>>>>> 68614683ee5744b8c7b87e0608f0d550d86fcf02
       </div>
       <!-- <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
