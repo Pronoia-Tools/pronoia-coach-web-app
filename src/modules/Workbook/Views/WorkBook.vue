@@ -8,12 +8,35 @@
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
+<<<<<<< HEAD
         <ButoomCustomVue :transparent="true" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:idWorkBook}})">{{ $t('workbook.workbook.edit') }}</ButoomCustomVue>
         <ButoomCustomVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">{{ $t('workbook.workbook.save') }}</ButoomCustomVue>
           <div v-else class="flex flex-col justify-end gap-2 md:flex-row">
             <ButoomCustomVue class="w-full md:w-auto" @click="updateCurrentWorkbook">{{ $t('workbook.workbook.saveChanges') }}</ButoomCustomVue>
             <ButoomCustomVue class="w-full md:w-auto" @click="deleteCurrentWorkbook" color="myRedAlert">{{ $t('workbook.workbook.delete') }}</ButoomCustomVue>
           </div>
+=======
+        <ButtonGroupVue>
+          <ButtonAppVue @click="goToEditor">
+            <FontAwesomeIcon :icon="myFileAlt"></FontAwesomeIcon>
+            <span>{{ $t('workbook.workbook.edit') }}</span>
+          </ButtonAppVue>
+          <ButtonAppVue class="bg-myPurple" v-if="idWorkBook==='new'" @click="saveNewWorkbook">
+            <FontAwesomeIcon :icon="mySave"></FontAwesomeIcon>
+            <span>{{ $t('workbook.workbook.save') }}</span>
+          </ButtonAppVue>
+          <template v-else>
+            <ButtonAppVue class="bg-myPurple" @click="updateCurrentWorkbook">
+              <FontAwesomeIcon :icon="myEdit"></FontAwesomeIcon>
+              <span>{{ $t('workbook.workbook.saveChanges') }}</span>
+            </ButtonAppVue>
+            <ButtonAppVue class="bg-myRedAlert" @click="deleteCurrentWorkbook">
+              <FontAwesomeIcon :icon="myTrash"></FontAwesomeIcon>
+              <span>{{ $t('workbook.workbook.delete') }}</span>
+            </ButtonAppVue>
+          </template>
+        </ButtonGroupVue>
+>>>>>>> 68614683ee5744b8c7b87e0608f0d550d86fcf02
       </div>
       <!-- <div class="flex items-center gap-1">
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.createCopy') }}</ButoomCustomVue>
@@ -143,18 +166,23 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft,faInfoCircle,faPlus } from '@fortawesome/free-solid-svg-icons'
-import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+import { faArrowLeft,faInfoCircle,faPlus,faSave,faEdit,faTrash,faFileAlt } from '@fortawesome/free-solid-svg-icons'
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 import { mapGetters, mapActions, mapState } from 'vuex';
 import SpinerVue from '../../../components/Spiner.vue';
 import Swal from 'sweetalert2'
 import {uploadImageWorkbook} from '../Helpers/uploadImage'
+import {Toast} from '@/components/Toast.js'
+import ButtonGroupVue from '../../../components/ButtonGroup.vue';
+import ButtonAppVue from '../../../components/ButtonApp.vue';
 
 export default {
   components:{
-    ButoomCustomVue,
+    // ButoomCustomVue,
     FontAwesomeIcon,
-    SpinerVue
+    SpinerVue,
+    ButtonGroupVue,
+    ButtonAppVue
   },
   props: {
     idWorkBook: {
@@ -164,9 +192,15 @@ export default {
   },
   data(){
     return{
+      // ICONS
       Backward:faArrowLeft,
       InfoCircle:faInfoCircle,
       myPlus:faPlus,
+      mySave:faSave,
+      myEdit:faEdit,
+      myTrash:faTrash,
+      myFileAlt:faFileAlt,
+
       workBook:null,
 
       localImage:null,
@@ -180,6 +214,30 @@ export default {
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
+    async goToEditor(){
+      if (this.idWorkBook === "new") {
+        if (this.file) {
+          const image = await uploadImageWorkbook(this.file)
+          this.workBook.image = image
+          console.log({image})
+        }
+        let newWorkbook = await this.saveWorkbook(this.workBook);
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.saved'),
+        })
+          this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
+        
+      }else{
+          await this.updateCurrentWorkbook()
+          Toast.fire({
+            icon: 'success',
+            text: this.$t('swallAlertGeneral.updated'),
+          })
+            this.$router.push({name:'workbook-rich-text',params:{idWorkBook:this.idWorkBook}})
+          
+      }
+    },
     loadWorkBook(){
       let workBookSelected
 
@@ -221,9 +279,12 @@ export default {
         console.log({image})
       }
       let newWorkbook = await this.saveWorkbook(this.workBook);
-      Swal.fire(this.$t("swallAlertGeneral.saved"), "",'success').then(()=>{
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.saved'),
+      })
       this.$router.push({path: '/workbook/'+newWorkbook.id})
-      });
+      
     },
     async updateCurrentWorkbook(){
       new Swal({
@@ -242,7 +303,10 @@ export default {
 
       await this.updateWorkbook(this.workBook)
 
-      Swal.fire(this.$t("swallAlertGeneral.updated"), "",'success')
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated'),
+      })
     },
     deleteCurrentWorkbook(){
       Swal.fire({
@@ -260,7 +324,10 @@ export default {
           })
           Swal.showLoading()
           await this.deleteWorkbook(this.workBook)
-          Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
+          Toast.fire({
+            icon: 'success',
+            text: this.$t('swallAlertGeneral.saved'),
+          })
           this.$router.push({name:"no-workbook"})
         } 
       })

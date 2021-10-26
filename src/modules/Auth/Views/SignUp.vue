@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col items-center">
     <div class=" w-10/12 md:w-6/12 lg:w-4/12 py-10">
-      <img src="img/Sammy_Logo.png" alt="logo" />
+      <img src="@/assets/WorkbookFactoryLogo.png" alt="logo" />
 
       <Form
         class="text-gray-500 px-10 flex flex-col items-center gap-2"
@@ -78,13 +78,14 @@
             as="select"
           >
             <option value="" disabled>{{$t("input.select")}}</option>
-            <option value="Mexico">{{$t("countries.mexico")}}</option>
-            <option value="USA">{{$t("countries.usa")}}</option>
+            <option v-for="country in countryList" :key="country.countryCode" :value="country.name">{{country.name}}</option>
+            <!-- <option value="Mexico">{{$t("countries.mexico")}}</option>
+            <option value="USA">{{$t("countries.usa")}}</option> -->
           </Field>
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-        <div class="flex justify-center items-center gap-3 my-4 bg-red-800">
+        <div class="flex justify-center items-center gap-3 my-4">
           <Field
             type="checkbox"
             name="notifyme"
@@ -110,12 +111,17 @@
 import { Form, Field, ErrorMessage } from "vee-validate"
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
-
+import countries from "@/assets/countryList.json"
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+  },
+  data(){
+    return{
+      countryList:countries
+    }
   },
   computed: {
     ...mapState("auth", ["isAuthenticated"]),

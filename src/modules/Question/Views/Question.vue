@@ -17,7 +17,7 @@
       </div>
       <div v-if="question">
           <div class="flex justify-start items-center text-xl gap-2">
-              <label >Question:</label>
+              <label v-bind:id="`Question-${question.id}`">Question:</label>
               <input v-if="editable" type="text" class="border border-gray-500 pl-1 pr-1 rounded" v-model="question.question">
               <span v-else class="border border-gray-500 bg-gray-200 rounded pl-1 pr-1 text-left">{{question.question}}</span>
           </div>

@@ -21,7 +21,7 @@
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
           <div v-if="workBook && openTableContent" class="h-full text-black text-left">
-            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.content}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
+            <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
 
@@ -183,7 +183,7 @@
           <div class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
-            <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
+            <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
               <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
                 H1
               </button>
@@ -211,7 +211,7 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-            </floating-menu>
+            </floating-menu> -->
 
             <!-- EDITOR ITSELF -->
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
@@ -234,7 +234,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
+// import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
+import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Typography from '@tiptap/extension-typography'
 import Image from "../Helpers/Image"
@@ -257,7 +258,7 @@ export default {
   components: {
     EditorContent,
     FontAwesomeIcon,
-    FloatingMenu,
+    // FloatingMenu,
     ButoomCustomVue,
     // QuestionsListVue,
     // WorkbookStructure,
@@ -321,15 +322,11 @@ export default {
     },
     getContentTable(){
       var titles = [];
+      if (!this.workBook.units) return titles
+
+      if(this.workBook.units.length<=this.unitSelectedIndex) return titles
+
       
-      if (!this.workBook.units) {
-        return titles
-      }
-
-      if(this.workBook.units.length<=this.unitSelectedIndex){
-        return titles
-      }
-
       let unit = this.workBook.units[this.unitSelectedIndex]
       if(unit.contents && unit.contents.content) {
         unit.contents.content.forEach(elementEditor => {
@@ -351,7 +348,15 @@ export default {
                 break;
             }
             content.content=elementEditor.content[0].text,
+            content.id=elementEditor.content[0].text,
             content.type = "heading"
+            titles.push(content);
+          }else if(elementEditor.type === "Question"){
+            let content = {}
+            content.classes = "pl-2 font-extrabold"
+            content.content="Question"
+            content.id=`Question-${elementEditor.attrs.id}`
+            content.type = "Question"
             titles.push(content);
           }
         })
@@ -500,7 +505,8 @@ export default {
         icon: 'success',
         text: `workbook ${this.$t('swallAlertGeneral.updated')}`
       })
-      // Swal.fire(this.$t('swallAlertGeneral.wait'), "entrada actualizada",'success')
+      // console.log(this.editor.getJSON())
+      // console.log(this.workBook)
     },
 
     // Methodss for tree. It was structure, future will be library? + Structure?
@@ -674,7 +680,7 @@ export default {
         // console.log(this.workBook.units)
         // console.log(this.unitSelected)
         // console.log(this.unitSelectedIndex)
-        console.log(this.treeData)
+        console.log(this.unitSelected)
         this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
