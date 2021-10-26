@@ -191,19 +191,17 @@ export default {
         Toast.fire({
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved'),
-          timer:1000
-        }).then(()=>{
+        })
           this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
-        });
+        
       }else{
           await this.updateCurrentWorkbook()
           Toast.fire({
             icon: 'success',
             text: this.$t('swallAlertGeneral.updated'),
-            timer:500
-          }).then(()=>{
+          })
             this.$router.push({name:'workbook-rich-text',params:{idWorkBook:this.idWorkBook}})
-          });
+          
       }
     },
     loadWorkBook(){
@@ -247,9 +245,12 @@ export default {
         console.log({image})
       }
       let newWorkbook = await this.saveWorkbook(this.workBook);
-      Swal.fire(this.$t("swallAlertGeneral.saved"), "",'success').then(()=>{
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.saved'),
+      })
       this.$router.push({path: '/workbook/'+newWorkbook.id})
-      });
+      
     },
     async updateCurrentWorkbook(){
       new Swal({
@@ -268,7 +269,10 @@ export default {
 
       await this.updateWorkbook(this.workBook)
 
-      Swal.fire(this.$t("swallAlertGeneral.updated"), "",'success')
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.updated'),
+      })
     },
     deleteCurrentWorkbook(){
       Swal.fire({
@@ -286,7 +290,10 @@ export default {
           })
           Swal.showLoading()
           await this.deleteWorkbook(this.workBook)
-          Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
+          Toast.fire({
+            icon: 'success',
+            text: this.$t('swallAlertGeneral.saved'),
+          })
           this.$router.push({name:"no-workbook"})
         } 
       })
