@@ -69,7 +69,7 @@
       </div>
 
       <!-- MAIN -->
-      <div id="content" class="h-screen flex flex-col pl-10 pr-10 bg-red-200">
+      <div id="content" class="h-screen flex flex-col pl-10 pr-10">
         
         
         <div id="editor" class="h-full flex flex-col">
@@ -180,7 +180,7 @@
           </div>
 
           <!--Editor --> 
-          <div class="flex-grow overflow-auto z-0 bg-red-300">
+          <div class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
             <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
