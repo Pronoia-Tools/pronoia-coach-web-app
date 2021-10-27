@@ -43,9 +43,9 @@
               <img 
                 v-for="(image, index) in imageLibrary" 
                 :key="index" 
-                :src="image.url" alt="image workbook" 
-                class=" w-16 h-16 border border-myLightBlue"
-                @click="clipboard(image.url)"
+                :src="image" alt="Galery image" 
+                class=" w-16 h-16 border border-myLightBlue object-cover"
+                @click="clipboard(image)"
               >
             </div>
             <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
@@ -339,6 +339,7 @@ export default {
   },
 computed:{
     ...mapGetters("image", ["getImages"]),
+    ...mapGetters("auth", ["getUserAuth"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
@@ -712,7 +713,7 @@ computed:{
     },
     loadData() {
       if (this.getImages.length === 0) {
-        this.loadImageLibrary()
+        this.loadImageLibrary(this.getUserAuth.user.email)
       }
     },
   },

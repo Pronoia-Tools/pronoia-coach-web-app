@@ -41,7 +41,7 @@
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative border">
-          <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false">
+          <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false" accept="image/*">
           
           <img v-if="workBook.image" :class="`h-full object-contain ${localImage?'hidden':'visible'}`" :src="workBook.image" alt="cover book">
           
