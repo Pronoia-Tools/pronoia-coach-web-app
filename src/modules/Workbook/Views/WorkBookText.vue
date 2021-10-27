@@ -5,7 +5,7 @@
     <div id="container" class="flex">
 
       <!-- SIDEBAR -->
-      <div id="sidebar" class="h-full" v-if="openSideBar">
+      <div id="sidebar" class="h-full transition-all duration-500 flex-shrink-0"  :class="isSidebarOpen" v-if="openSideBar">
 
         <!-- GO BACk -->
         <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
@@ -14,27 +14,28 @@
         </div>
 
         <!-- TABLE OF CONTENTS -->
-        <div class="transition-all border border-black h-full w-64">
+  
+        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleTableContent">
             <span>Table of Content</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openTableContent"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
-          <div v-if="workBook && openTableContent" class="h-full text-black text-left">
+          <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
 
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-64">
-          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" :class="isSidebarOpen" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
 
-          <div v-show="openImageLibrary" class=" overflow-hidden transition-all">
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32">
+          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" :class="isSidebarOpen">
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" :class="isSidebarOpen">
               <img 
                 v-for="(image, index) in imageLibrary" 
                 :key="index" 
@@ -63,6 +64,10 @@
         </div> -->
         
       </div>
+      <ButoomCustomVue @click="toggleSideBar" class="mr-1 h-10 my-1">
+        <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft"></FontAwesomeIcon>
+        <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
+      </ButoomCustomVue>  
 
       <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col pl-10 pr-10">
@@ -74,11 +79,6 @@
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
             
             <div>
-              <ButoomCustomVue @click="toggleSideBar" class="mr-1">
-                <FontAwesomeIcon v-if="openSideBar" :icon="myChevronLeft"></FontAwesomeIcon>
-                <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
-              </ButoomCustomVue>  
-
               <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
                 {{ $t('workbook.workbookText.save') }}
               </ButoomCustomVue>
@@ -286,6 +286,7 @@ export default {
       myAngleUp:faAngleUp,
       
       // Menus state
+      sidebarOpen:false,
       openSideBar: true,
       openTableContent: true,
       openImageLibrary: true,
@@ -304,11 +305,14 @@ export default {
       saveInterval:null,
     }
   },
-  computed:{
+computed:{
     ...mapGetters("image", ["getImages"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
+    },
+    isSidebarOpen(){
+      return this.sidebarOpen?"text-transparent invisible w-1":" w-64 visible"
     },
     getContentTable(){
       var titles = [];
@@ -374,7 +378,7 @@ export default {
       "loadImageLibrary",
       "uploadImages"]),
     toggleSideBar() {
-      this.openSideBar = !this.openSideBar
+      this.sidebarOpen = !this.sidebarOpen
     },
     toggleTableContent() {
       this.openTableContent = !this.openTableContent

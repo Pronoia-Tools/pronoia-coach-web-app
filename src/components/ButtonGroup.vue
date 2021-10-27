@@ -6,8 +6,8 @@
     </div>
     <!-- MODAL -->
     <transition name="slide-fade">
-      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -right-0 py-2 w-64 border border-black bg-white hover:bg-gray-50" >
-        <div class="grid grid-cols-3 gap-4 p-3 items-stretch">
+      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -right-0 py-2 w-40 border border-black bg-white hover:bg-gray-50" >
+        <div class="flex flex-col">
           <slot></slot>
         </div>
       </div>

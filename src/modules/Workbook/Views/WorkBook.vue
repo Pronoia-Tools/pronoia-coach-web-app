@@ -4,7 +4,7 @@
   </div>
   <div class="w-full p-5 mt-10 md:p-10 md:mt-0" v-else>
     <!-- Header -->
-    <div class="w-full flex justify-end items-start flex-col gap-4 
+    <div class="w-full flex justify-end items-end flex-col gap-4 
           md:flex-row md:gap-0">
       <div class="flex items-center gap-5">
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
