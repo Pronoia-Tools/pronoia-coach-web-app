@@ -4,7 +4,7 @@ import { storage } from "@/firebase/firebase";
 
 export const loadImageLibrary = async ({ commit },email) => {
   // let response = await PronoiaAPI.get('/image');
-  console.log(commit)
+  // console.log(commit)
   // if (!response) return;
   // commit("setImages", response.data);
 
@@ -18,13 +18,13 @@ export const loadImageLibrary = async ({ commit },email) => {
   let urls = await Promise.all(
     itemsRef.items.map(async itemRef => {
       // All the items under listRef.
-      console.log({itemRef})
+      // console.log({itemRef})
       const imageURL = await itemRef.getDownloadURL()
-      console.log(imageURL)
+      // console.log(imageURL)
       return imageURL
     })
   )
-  console.log(urls)
+  // console.log(urls)
   commit("setImages", urls);
   return urls;
 }
