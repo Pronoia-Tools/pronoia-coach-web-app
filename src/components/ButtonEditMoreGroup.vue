@@ -1,30 +1,25 @@
 <template>
-  <div class="relative" @blur="toogleOpen" tabindex="0" ref="dropdown">
     <!-- Button -->
-    <div @click="toogleOpen" class="cursor-pointer rounded-full hover:bg-gray-400 transition w-6 h-6 p-5 flex items-center justify-center">
-      <FontAwesomeIcon :icon="myEllipsisV"></FontAwesomeIcon>
-    </div>
+    <button @click="toogleOpen" class="bg-myPurple text-white cursor-pointer hover:bg-gray-400 transition w-16 h-10 rounded-md">
+      More...
+    </button>
     <!-- MODAL -->
     <transition name="slide-fade">
-      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -right-0 p-1 my-1  w-40 border border-black bg-white hover:bg-gray-50" >
+      <div v-show="isOpen" class=" rounded shadow-2xl p-1 w-40 my-1 border border-black bg-white hover:bg-gray-50" >
         <div class="flex flex-col">
           <slot></slot>
         </div>
       </div>
     </transition>
-  </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+
 export default {
   components:{
-    FontAwesomeIcon
   },
   data(){
     return{
-      myEllipsisV:faEllipsisV,
       isOpen:false
     }
   },

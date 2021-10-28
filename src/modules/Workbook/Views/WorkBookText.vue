@@ -76,9 +76,8 @@
         <div id="editor" class="h-3/4 flex flex-col">
 
           <!-- Menu Bar -->
-          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
-            
-            <div>
+          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
+              
               <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
                 {{ $t('workbook.workbookText.save') }}
               </ButoomCustomVue>
@@ -162,12 +161,14 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-              <button @click="editor.commands.setQuestion({unit_id: unitSelected})">
-                Q
-              </button>
+              <div>
+                <ButtonEditMoreGroup>
+                  <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected})">
+                    Questions ?
+                  </ButtonAppVue>
+                </ButtonEditMoreGroup>
+              </div>
 
-            </div>
-            
           </div>
 
           <!--Editor --> 
@@ -245,8 +246,15 @@ import Question from "../../Question/Helpers/QuestionExtensionEditor"
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
+import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
+import ButtonAppVue from '../../../components/ButtonApp.vue';
+
+
+
 export default {
   components: {
+    ButtonEditMoreGroup,
+    ButtonAppVue,
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
