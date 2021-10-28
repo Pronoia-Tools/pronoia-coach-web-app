@@ -10,20 +10,16 @@
         <!-- <FontAwesomeIcon :icon="Backward" class="text-3xl"/> -->
         <ButtonGroupVue>
           <ButtonAppVue @click="goToEditor">
-            <FontAwesomeIcon :icon="myFileAlt"></FontAwesomeIcon>
             <span>{{ $t('workbook.workbook.edit') }}</span>
           </ButtonAppVue>
-          <ButtonAppVue class="bg-myPurple" v-if="idWorkBook==='new'" @click="saveNewWorkbook">
-            <FontAwesomeIcon :icon="mySave"></FontAwesomeIcon>
+          <ButtonAppVue v-if="idWorkBook==='new'" @click="saveNewWorkbook">
             <span>{{ $t('workbook.workbook.save') }}</span>
           </ButtonAppVue>
           <template v-else>
-            <ButtonAppVue class="bg-myPurple" @click="updateCurrentWorkbook">
-              <FontAwesomeIcon :icon="myEdit"></FontAwesomeIcon>
+            <ButtonAppVue @click="updateCurrentWorkbook">
               <span>{{ $t('workbook.workbook.saveChanges') }}</span>
             </ButtonAppVue>
-            <ButtonAppVue class="bg-myRedAlert" @click="deleteCurrentWorkbook">
-              <FontAwesomeIcon :icon="myTrash"></FontAwesomeIcon>
+            <ButtonAppVue @click="deleteCurrentWorkbook">
               <span>{{ $t('workbook.workbook.delete') }}</span>
             </ButtonAppVue>
           </template>
