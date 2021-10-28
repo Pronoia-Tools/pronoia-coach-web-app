@@ -223,7 +223,7 @@ export default {
         },
         () => {
           storage
-            .ref("images")
+            .ref(`Galery/${this.user.email}`)
             .child(`${this.file.name}_${dateSaved}`)
             .getDownloadURL()
             .then(url => {
