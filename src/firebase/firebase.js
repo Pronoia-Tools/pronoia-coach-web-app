@@ -13,13 +13,13 @@ import "firebase/compat/storage";
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBriu0YdHPwvlAcvDYc56mL5umAmmbVdmc",
-  authDomain: "pronoia-test-1aeb6.firebaseapp.com",
-  projectId: "pronoia-test-1aeb6",
-  storageBucket: "pronoia-test-1aeb6.appspot.com",
-  messagingSenderId: "708314955027",
-  appId: "1:708314955027:web:ceca3710741075f1cfeee6",
-  measurementId: "G-9RSPL2CTJ8"
+  apiKey: process.env.VUE_APP_FIREBASE_APIKEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.VUE_APP_FIREBASE_APPID,
+  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENTID
 };
 
 firebase.initializeApp(firebaseConfig);
