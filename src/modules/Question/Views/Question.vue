@@ -16,11 +16,12 @@
         <!-- <FontAwesomeIcon class="cursor-pointer mr-1" :icon="myTrash" /> -->
       </div>
       <div v-if="question">
-          <div class="flex justify-start items-center text-xl gap-2">
+          <!-- <div class="flex justify-start items-center text-xl gap-2">
               <label v-bind:id="`Question-${question.id}`">Question:</label>
-              <input v-if="editable" type="text" class="border border-gray-500 pl-1 pr-1 rounded" v-model="question.question">
+              <textarea v-if="editable" type="text" class="border border-gray-500 pl-1 pr-1 rounded w-full" v-model="question.question"></textarea>
               <span v-else class="border border-gray-500 bg-gray-200 rounded pl-1 pr-1 text-left">{{question.question}}</span>
-          </div>
+          </div> -->
+          <TextEditor :contentHandler="contentHandler" :editorChangedHandler="editorChangedHandler"></TextEditor>
           <!-- <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.edition') }}:</label>
               <div class="flex gap-2 w-full">
@@ -48,12 +49,15 @@
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEdit, faEye, faTrash, faSave } from '@fortawesome/free-solid-svg-icons'
+
+import TextEditor from "../../TextEditor/Views/TextEditor.vue"
 import PronoiaAPI from "../../../api/PronoiaAPI";
 
 export default {
   components: {
     NodeViewWrapper,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    TextEditor
   },
   data(){
     return{
@@ -72,6 +76,16 @@ export default {
   methods: {
     toggleEditable() {
       this.editable = !this.editable
+      this.updateAttributes({
+        isOpen: this.editable
+      })
+    },
+    contentHandler() {
+      console.log("llamada")
+      return this.question.question
+    },
+    editorChangedHandler() {
+
     },
     async handleSave() {
       let response = await PronoiaAPI.put('/unit/'+this.node.attrs.unit_id+'/question/'+this.node.attrs.id, this.question);
@@ -97,6 +111,8 @@ export default {
         id: this.question.id
       })
     }
+    console.log(this.node.attrs.isOpen)
+    this.editable = this.node.attrs.isOpen
   }
 }
 </script>

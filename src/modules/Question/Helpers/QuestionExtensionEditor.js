@@ -18,7 +18,10 @@ export default Node.create({
       },
       unit_id: {
         default: 0,
-      }
+      },
+      isOpen: {
+        default: false,
+      },
     }
   },
 
