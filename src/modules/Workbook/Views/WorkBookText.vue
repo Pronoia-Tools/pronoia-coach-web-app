@@ -5,7 +5,7 @@
     <div id="container" class="flex">
 
       <!-- SIDEBAR -->
-      <div id="sidebar" class="h-full" v-if="openSideBar">
+      <div id="sidebar" class="h-full transition-all duration-500 flex-shrink-0"  :class="isSidebarOpen" v-if="openSideBar">
 
         <!-- GO BACk -->
         <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
@@ -14,27 +14,28 @@
         </div>
 
         <!-- TABLE OF CONTENTS -->
-        <div class="transition-all border border-black h-full w-64">
+  
+        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleTableContent">
             <span>Table of Content</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openTableContent"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
-          <div v-if="workBook && openTableContent" class="h-full text-black text-left">
+          <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
         </div>
 
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-64">
-          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" :class="isSidebarOpen" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
 
-          <div v-show="openImageLibrary" class=" overflow-hidden transition-all">
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32">
+          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" :class="isSidebarOpen">
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" :class="isSidebarOpen">
               <img 
                 v-for="(image, index) in imageLibrary" 
                 :key="index" 
@@ -64,25 +65,41 @@
         
       </div>
 
+      <button @click="toggleSideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10">
+        <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
+        <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
+        <!-- <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/> -->
+      
+      </button>  
+
+      <!-- <button class="mr-1 h-10 my-1 px-4 py-2 border-b border-black flex justify-between items-center p-2" @click="toggleSideBar">
+        <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft"></FontAwesomeIcon>
+        <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
+      </button>
+
+      <div class="flex-grow relative">    
+      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
+      <router-view></router-view> -->
+    <!-- </div> -->
       <!-- MAIN -->
-      <div id="content" class="h-screen flex flex-col pl-10 pr-10">
+      <div id="content" class="h-screen flex flex-col px-2">
         
         
         <div id="editor" class="h-3/4 flex flex-col">
 
           <!-- Menu Bar -->
-          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
-            
-            <div>
-              <ButoomCustomVue @click="toggleSideBar" class="mr-1">
-                <FontAwesomeIcon v-if="openSideBar" :icon="myChevronLeft"></FontAwesomeIcon>
-                <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
-              </ButoomCustomVue>  
-
-              <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
+          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
+                   <div class="flex items-center gap-5">
+                     <ButtonGroupVue>
+              <ButtonAppVue @click="updateCurrentWorkbookHanlder">
                 {{ $t('workbook.workbookText.save') }}
-              </ButoomCustomVue>
+              </ButtonAppVue>
+</ButtonGroupVue>
 
+
+</div>
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -162,12 +179,14 @@
               <button @click="editor.chain().focus().setHorizontalRule().run()">
                 ___
               </button>
-              <button @click="editor.commands.setQuestion({unit_id: unitSelected})">
-                Q
-              </button>
+              <div>
+                <ButtonGroupVue customText="More">
+                  <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected})">
+                    Questions ?
+                  </ButtonAppVue>
+                </ButtonGroupVue>
+              </div>
 
-            </div>
-            
           </div>
 
           <!--Editor --> 
@@ -245,12 +264,20 @@ import Question from "../../Question/Helpers/QuestionExtensionEditor"
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
+// import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
+import ButtonAppVue from '../../../components/ButtonApp.vue';
+import ButtonGroupVue from '../../../components/ButtonGroup.vue';
+
+
 export default {
   components: {
+    // ButtonEditMoreGroup,
+    ButtonAppVue,
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
     ButoomCustomVue,
+    ButtonGroupVue,
     // QuestionsListVue,
     // WorkbookStructure,
   },
@@ -286,6 +313,7 @@ export default {
       myAngleUp:faAngleUp,
       
       // Menus state
+      sidebarOpen:false,
       openSideBar: true,
       openTableContent: true,
       openImageLibrary: true,
@@ -304,11 +332,14 @@ export default {
       saveInterval:null,
     }
   },
-  computed:{
+computed:{
     ...mapGetters("image", ["getImages"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
+    },
+    isSidebarOpen(){
+      return this.sidebarOpen?"text-transparent invisible w-1":" w-64 visible"
     },
     getContentTable(){
       var titles = [];
@@ -374,7 +405,7 @@ export default {
       "loadImageLibrary",
       "uploadImages"]),
     toggleSideBar() {
-      this.openSideBar = !this.openSideBar
+      this.sidebarOpen = !this.sidebarOpen
     },
     toggleTableContent() {
       this.openTableContent = !this.openTableContent
