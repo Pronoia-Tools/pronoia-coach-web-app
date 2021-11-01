@@ -27,7 +27,7 @@
         </div>
 
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
+        <!-- <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" :class="isSidebarOpen" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
@@ -49,7 +49,7 @@
 
           </div>
             
-        </div>
+        </div> -->
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -180,7 +180,7 @@
                 ___
               </button>
               <div>
-                <ButtonGroupVue customText="More">
+                <ButtonGroupVue customText="Add">
                   <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected})">
                     Questions ?
                   </ButtonAppVue>
@@ -255,7 +255,7 @@ import Iframe from "../Helpers/iframe"
 import Heading from "../Helpers/heading"
 
 import Swal from "sweetalert2"
-import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -276,7 +276,7 @@ export default {
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
-    ButoomCustomVue,
+    // ButoomCustomVue,
     ButtonGroupVue,
     // QuestionsListVue,
     // WorkbookStructure,
