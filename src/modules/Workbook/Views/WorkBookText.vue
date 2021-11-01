@@ -64,24 +64,42 @@
         </div> -->
         
       </div>
-      <ButoomCustomVue @click="toggleSideBar" class="mr-1 h-10 my-1">
+
+      <button @click="toggleSideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10">
+        <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
+        <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
+        <!-- <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/> -->
+      
+      </button>  
+
+      <!-- <button class="mr-1 h-10 my-1 px-4 py-2 border-b border-black flex justify-between items-center p-2" @click="toggleSideBar">
         <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft"></FontAwesomeIcon>
         <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
-      </ButoomCustomVue>  
+      </button>
 
+      <div class="flex-grow relative">    
+      <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
+      <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
+      <router-view></router-view> -->
+    <!-- </div> -->
       <!-- MAIN -->
-      <div id="content" class="h-screen flex flex-col pl-10 pr-10">
+      <div id="content" class="h-screen flex flex-col px-2">
         
         
         <div id="editor" class="h-3/4 flex flex-col">
 
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
-              
-              <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
+                   <div class="flex items-center gap-5">
+                     <ButtonGroupVue>
+              <ButtonAppVue @click="updateCurrentWorkbookHanlder">
                 {{ $t('workbook.workbookText.save') }}
-              </ButoomCustomVue>
+              </ButtonAppVue>
+</ButtonGroupVue>
 
+
+</div>
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -162,11 +180,11 @@
                 ___
               </button>
               <div>
-                <ButtonEditMoreGroup>
+                <ButtonGroupVue customText="More">
                   <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected})">
                     Questions ?
                   </ButtonAppVue>
-                </ButtonEditMoreGroup>
+                </ButtonGroupVue>
               </div>
 
           </div>
@@ -246,19 +264,20 @@ import Question from "../../Question/Helpers/QuestionExtensionEditor"
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
 
-import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
+// import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
 import ButtonAppVue from '../../../components/ButtonApp.vue';
-
+import ButtonGroupVue from '../../../components/ButtonGroup.vue';
 
 
 export default {
   components: {
-    ButtonEditMoreGroup,
+    // ButtonEditMoreGroup,
     ButtonAppVue,
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
     ButoomCustomVue,
+    ButtonGroupVue,
     // QuestionsListVue,
     // WorkbookStructure,
   },
