@@ -438,25 +438,25 @@ computed:{
         inputPlaceholder: this.$t('workbook.workbookText.alerts.addImage.inputPlaceholder')
       })
       if (url) {
-          const { value: width } = await Swal.fire({
-          title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
-          input: 'radio',
-          inputOptions: {
-            "full":"full",
-            "1/2":"1/2",
-            "1/3":"1/3",
-            "1/4":"1/4",
-          },
-          inputValidator: (value) => {
-            if (!value) {
-              return this.$t('workbook.workbookText.alerts.addImage.widthImage.validatorMessage')
-            }
-          }
-        })
-        if (width) {
+        //   const { value: width } = await Swal.fire({
+        //   title: this.$t('workbook.workbookText.alerts.addImage.widthImage.title'),
+        //   input: 'radio',
+        //   inputOptions: {
+        //     "full":"full",
+        //     "1/2":"1/2",
+        //     "1/3":"1/3",
+        //     "1/4":"1/4",
+        //   },
+        //   inputValidator: (value) => {
+        //     if (!value) {
+        //       return this.$t('workbook.workbookText.alerts.addImage.widthImage.validatorMessage')
+        //     }
+        //   }
+        // })
+        // if (width) {
           // Swal.fire({ html: `You selected: ${width}` })
-          this.editor.chain().focus().setImage({ src: url,class:`w-${width}` }).run()
-        }
+          this.editor.chain().focus().setImage({ src: url }).run()
+        // }
       }
     },
     async addVideo() {
