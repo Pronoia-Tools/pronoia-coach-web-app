@@ -26,6 +26,10 @@
           </div>
         </div>
 
+        <ButoomCustomVue v-if="preview" @click="toogglePreview" class="mt-1 ml-1">
+          {{ $t('workbook.workbookText.exitPreview') }}
+        </ButoomCustomVue>
+
         <!-- IMAGE LIBRARY -->
         <!-- <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" :class="isSidebarOpen" @click="toggleImageLibrary">
@@ -87,7 +91,7 @@
       <div id="content" class="h-screen flex flex-col px-2">
         
         
-        <div id="editor" class="h-3/4 flex flex-col">
+        <div id="editor" class="h-full flex flex-col">
 
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
@@ -330,6 +334,7 @@ export default {
 
       //helpers
       saveInterval:null,
+      preview:false
     }
   },
 computed:{
@@ -416,7 +421,9 @@ computed:{
     toggleUnitLibrary() {
       this.openUnitLibrary = !this.openUnitLibrary
     },
-
+    toogglePreview(){
+      this.preview = !this.preview
+    },
     gotoSection(section){
       if (section.type === "horizontalRule") {
         // console.log(section)

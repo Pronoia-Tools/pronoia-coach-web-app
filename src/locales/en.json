@@ -144,6 +144,8 @@
       }
     },
     "workbookText":{
+      "preview":"Preview",
+      "exitPreview":"Exit preview",
       "bookDetails":"Book detail",
       "addSection":"Add section",
       "save":"Save",
