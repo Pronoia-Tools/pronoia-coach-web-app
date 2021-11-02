@@ -74,7 +74,7 @@ export default {
     object-fit: fill;
   }
   border: 2px solid transparent;
-
+  transition: border 0.3s ease-in-out;
   &:hover{
     border: 2px solid rgb(160, 160, 160);
   }
@@ -85,11 +85,11 @@ export default {
     top: 5px;
     right: 5px;
     opacity: 0;
-    transition: all 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
     font-size: 1rem;
     border-radius: 0.5rem;
     
-    &button{
+    button{
       &:hover{
         background: rgba(0, 0, 0, .5);
         border-radius: 0.5rem;
@@ -104,11 +104,11 @@ export default {
   }
 }
 ::-webkit-resizer {
-    border: 2px solid black;
-    background-image: url("https://cdn-icons.flaticon.com/png/512/241/premium/241876.png?token=exp=1635828808~hmac=1ccf9d9d1b7a7850ebe1fa08bf728f14");
-    background-position: center;
-    background-repeat: no-repeat; 
-    background-size: cover; 
+    // border: 2px solid black;
+    background-image: url("http://i.imgur.com/hQZDwHs.png");
+    // background-position: center;
+    // background-repeat: no-repeat; 
+    // background-size: cover; 
 
     /*size does not work*/  
     display:block;  
