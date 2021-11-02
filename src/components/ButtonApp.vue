@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded text-center hover:bg-opacity-70 cursor-pointer flex flex-col items-center py-2 shadow" :class="childclass">
+  <div class="z-10  text-center hover:bg-gray-200 cursor-pointer flex flex-row items-center justify-center py-2 m-0.5" :class="childclass">
     <slot></slot>
   </div>
 </template>
