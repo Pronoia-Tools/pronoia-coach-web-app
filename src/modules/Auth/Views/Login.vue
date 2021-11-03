@@ -78,16 +78,18 @@ export default {
       //   e.signDashboard = false;
       // }
       let jsonUserData = { email: values.email, password: values.password };
-      await this.login(jsonUserData);
-      if (this.isAuthenticated) {
-        // localStorage.setItem("user",JSON.stringify(response));
-        this.$router.push({name:"no-workbook"});
-      }else{
+      try {
+        await this.login(jsonUserData);
+        if (this.isAuthenticated) {
+          // localStorage.setItem("user",JSON.stringify(response));
+          this.$router.push({name:"no-workbook"});
+        }  
+      } catch (error) {
         Swall.fire({
-          title:this.$t("swallAlertGeneral.error"),
-          text:this.$t("swallAlertGeneral.try-again"),
-          icon:"error"
-        });
+          icon:"error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text:error.response.data.message
+        })
       }
       // if (loged === 400) Swal.fire("This email is not registered", "", "error");
       // if (loged === 401) Swal.fire("Incorrect password", "", "error");
