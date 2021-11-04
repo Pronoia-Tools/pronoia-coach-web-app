@@ -6,7 +6,7 @@ export const getUserAuth = (state) =>{
     isAuthenticated:state.isAuthenticated
   }
 
-  return {...userData}
+  return userData
 }
 
 // export const getWorkBookByTitle = (state) => (search="",language="",status="") => {

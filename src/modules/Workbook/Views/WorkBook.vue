@@ -40,14 +40,21 @@
       <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
-        <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative">
-          <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false">
+        <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative border">
+          <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false" accept="image/*">
           
-          <img v-if="workBook.image" :class="`h-full ${localImage?'hidden':'visible'}`" :src="workBook.image" alt="cover book">
+          <img v-if="workBook.image" :class="`h-full object-contain ${localImage?'hidden':'visible'}`" :src="workBook.image" alt="cover book">
           
-          <img v-if="localImage" class="h-full" :src="localImage" alt="Local image">
+          <img v-if="localImage" class="h-full object-contain" :src="localImage" alt="Local image">
           
-          <button class="absolute w-10 h-10 -bottom-4 -right-1 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
+          <button class="absolute w-10 h-10 -bottom-4 -right-5 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
+          <div class="absolute w-full h-5 top-0 left-0">
+            <!-- <div v-if="file" max="100" class="w-full bg-myPurple h-4" :value="porcentage"></div> -->
+            <div v-if="file" class="w-full bg-myPurple h-5 relative flex items-center justify-center rounded-full overflow-hidden">
+              <span class="relative z-20">{{porcentage}}%</span>
+              <div class="h-full bg-myLightGreen text-center absolute top-0 left-0 z-10" :style="{ width: porcentage + '%' }"></div>
+            </div>
+          </div>
         </div>
                 
         <div class=" text-right col-span-12 md:col-span-8 row-span-6 h-96 flex flex-col gap-4">
@@ -163,6 +170,7 @@ import {Toast} from '@/components/Toast.js'
 import ButtonGroupVue from '../../../components/ButtonGroup.vue';
 import ButtonAppVue from '../../../components/ButtonApp.vue';
 
+import { storage } from "@/firebase/firebase";
 export default {
   components:{
     // ButoomCustomVue,
@@ -191,7 +199,9 @@ export default {
       workBook:null,
 
       localImage:null,
-      file:null
+      file:null,
+      porcentage:0,
+      uploadedImageurl:null
     }
   },
   computed:{
@@ -201,6 +211,36 @@ export default {
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
+    handleUpload(){
+      const dateSaved = new Date().getTime()
+      const uploadTask = storage.ref(`Galery/${this.user.email}/${this.file.name}_${dateSaved}`).put(this.file);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.porcentage = progress
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref(`Galery/${this.user.email}/`)
+            .child(`${this.file.name}_${dateSaved}`)
+            .getDownloadURL()
+            .then(url => {
+              console.log(url);
+              this.uploadedImageurl = url
+
+              if (this.idWorkBook !== "new") {
+                this.updateCurrentWorkbook()
+              }
+            });
+        }
+      );
+    },
     async goToEditor(){
       if (this.idWorkBook === "new") {
         if (this.file) {
@@ -227,7 +267,6 @@ export default {
     },
     loadWorkBook(){
       let workBookSelected
-
       if (this.idWorkBook==="new") {
         workBookSelected = {
           title:"",
@@ -260,10 +299,10 @@ export default {
       })
       Swal.showLoading()
 
-      if (this.file) {
-        const image = await uploadImageWorkbook(this.file)
-        this.workBook.image = image
-        console.log({image})
+      if (this.uploadedImageurl) {
+        // const image = await this.handleUpload()
+        this.workBook.image = this.uploadedImageurl
+        // console.log({image})
       }
       let newWorkbook = await this.saveWorkbook(this.workBook);
       Toast.fire({
@@ -281,11 +320,10 @@ export default {
       Swal.showLoading()
       
       // upload image
-      console.log(this.file)
-      if (this.file) {
-        const image = await uploadImageWorkbook(this.file)
-        this.workBook.image = image
-        console.log({image})
+      if (this.uploadedImageurl) {
+        // const image = await this.handleUpload()
+        this.workBook.image = this.uploadedImageurl
+        // console.log({image})
       }
 
       await this.updateWorkbook(this.workBook)
@@ -331,6 +369,8 @@ export default {
       const fr =  new FileReader()
       fr.onload = ()=> this.localImage = fr.result
       fr.readAsDataURL(image) 
+
+      this.handleUpload()
     },
   },
   created(){
@@ -341,6 +381,9 @@ export default {
         this.loadWorkBook()
         this.file = null
         this.localImage=null
+        this.porcentage = 0
+        this.uploadedImageurl = null
+        
     }
   }
 };

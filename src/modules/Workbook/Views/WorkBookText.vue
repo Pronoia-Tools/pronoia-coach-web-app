@@ -43,9 +43,9 @@
               <img 
                 v-for="(image, index) in imageLibrary" 
                 :key="index" 
-                :src="image.url" alt="image workbook" 
-                class=" w-16 h-16 border border-myLightBlue"
-                @click="clipboard(image.url)"
+                :src="image" alt="Galery image" 
+                class=" w-16 h-16 border border-myLightBlue object-cover"
+                @click="clipboard(image)"
               >
             </div>
             <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
@@ -261,9 +261,10 @@ import Heading from "../Helpers/heading"
 import Swal from "sweetalert2"
 // import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
+import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
 
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
@@ -339,6 +340,7 @@ export default {
   },
 computed:{
     ...mapGetters("image", ["getImages"]),
+    ...mapGetters("auth", ["getUserAuth"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
@@ -409,6 +411,8 @@ computed:{
     ...mapActions("image",[
       "loadImageLibrary",
       "uploadImages"]),
+    ...mapMutations("image",[
+      "setImages"]),
     toggleSideBar() {
       this.sidebarOpen = !this.sidebarOpen
     },
@@ -478,7 +482,7 @@ computed:{
       }
     },
     async onSelectedImage(event){
-      const images = event.target.files
+      const files = event.target.files
       
       new Swal({
         title: this.$t('swallAlertGeneral.wait'),
@@ -486,20 +490,42 @@ computed:{
       })
       Swal.showLoading()
       // console.log({images})
-      const res = await this.uploadImages(images)
-      console.log(res)
+      // const res = await this.uploadImages(images)
+      // console.log(res)
       // console.log({res})
-      if(res){
+
+      
+    // 1. If no file, return
+      if (files.length === 0) return [];
+
+      // 2. Create an array to store all download URLs
+      let fileUrls = [];
+
+      // 3. Loop over all the files
+      for (var i = 0; i < files.length; i++) {
+          // 3A. Get a file to upload
+          const file = files[i];
+
+          // 3B. handleFileUploadOnFirebaseStorage function is in above section
+          const downloadFileResponse = await handleFileUploadOnFirebaseStorage({email:this.getUserAuth.user.email,file:file});
+          
+          // 3C. Push the download url to URLs array
+          fileUrls.push(downloadFileResponse);
+      }
+      this.setImages(fileUrls)
+      // console.log(  );
+
+      // if(res){
         Toast.fire({
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved')
         })
-      }else{
-        Toast.fire({
-          icon: 'error',
-          text: this.$t('swallAlertGeneral.error')
-        })
-      }
+      // }else{
+      //   Toast.fire({
+      //     icon: 'error',
+      //     text: this.$t('swallAlertGeneral.error')
+      //   })
+      // }
       // this.loadWorkBook(this.idWorkBook)
     },
 
@@ -712,7 +738,7 @@ computed:{
     },
     loadData() {
       if (this.getImages.length === 0) {
-        this.loadImageLibrary()
+        this.loadImageLibrary(this.getUserAuth.user.email)
       }
     },
   },

@@ -1,5 +1,5 @@
 import PronoiaAPI from "../../../api/PronoiaAPI"
-
+import { storage } from "@/firebase/firebase";
 
 export const uploadImageWorkbook = async (file) => {
   if (!file) return
@@ -15,6 +15,19 @@ export const uploadImageWorkbook = async (file) => {
     return null
   }
 }
+
+export const handleFileUploadOnFirebaseStorage = async ({email,file}) => {
+  // 1. If no file, return
+  if (file === "") return "";
+  
+  const dateSaved = new Date().getTime()
+
+  // 2. Put the file into bucketName
+  const uploadTask = await storage.ref(`/Galery/${email}/${file.name}_${dateSaved}`).put(file);
+  
+  // 3. Get download URL and return it as 
+  return uploadTask.ref.getDownloadURL().then((fileURL) => fileURL);
+};
 
 // export const uploadImagesEditor = async (workbook,files) => {
 //   if (!files) return
