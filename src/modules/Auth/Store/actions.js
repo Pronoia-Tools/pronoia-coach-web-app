@@ -25,17 +25,13 @@ export const signUp = async ({commit}, data) => {
 }
 
 export const login = async ({ commit }, data) => {
-  try {
+  
     let response = await PronoiaAPI.post('/auth/login', data)
     // console.log({"[[ACTIONS {{login}} ]]":response})
     if(response.data && response.data.token)
       window.localStorage.setItem(process.env.VUE_APP_API_BASE, response.data.token)
     commit("login", response.data)
-    return response.data
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+    return true
 }
 
 export const logout = async ({ commit }) => {
