@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full flex flex-col items-center">
-    <h2 class="text-subtitle">My profile</h2>
-    <div class="w-full py-10">
+  <div class="w-full flex flex-col px-10 text-gray-500">
+    <h2 class=" text-lgText">My profile</h2>
+    <div class="w-full py-2">
       <Form
-        class="text-gray-500 px-10 flex flex-col items-center gap-2"
+        class="flex flex-col items-center gap-2"
         @submit="submitSignUp"
         :initial-values="formValues"
       >
@@ -42,19 +42,9 @@
           <ErrorMessage class="text-red-400" name="email"></ErrorMessage>
         </div>
 
-        <div class="field w-full">
-          <label class="block" for="password">{{$t("sign-up.password")}}</label>
-          <Field
-            class="w-full px-2 py-1 border rounded border-gray-400"
-            type="password"
-            name="password"
-            rules="required"
-          />
-          <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
-        </div>
         
         <div class="field w-full">
-          <label class="block" for="country">{{$t("sign-up.country")}} <span class=" text-gray-300">(Your current country is {{userData.user.country}})</span></label>
+          <label class="block" for="country">{{$t("sign-up.country")}} <span class=" text-gray-300" v-if="userData">(Your current country is {{userData.user.country}})</span></label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             name="country"
@@ -72,6 +62,56 @@
           </Field>
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
+
+
+
+        <span class=" text-myPurple underline cursor-pointer" @click="toogleShowPasswordsForm">Change password</span>
+        <!-- CHANGE PASSWORD -->
+        <transition name="fade">
+
+          <div class="w-full" v-if="showPasswordsForm">
+            <h2 class=" text-lgText">Change password</h2>
+            <!-- CURRENT PASSWORD -->
+            <div class="field w-full">
+              <label class="block" for="password">{{$t("sign-up.password")}}</label>
+              <Field
+                class="w-full px-2 py-1 border rounded border-gray-400"
+                type="password"
+                name="currentPassword"
+                rules="required"
+              />
+              <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
+            </div>
+            <!-- NEW PASSWORD -->
+            <div class="field w-full">
+              <label class="block" for="password">{{$t("sign-up.password")}}</label>
+              <Field
+                class="w-full px-2 py-1 border rounded border-gray-400"
+                type="password"
+                name="password"
+                rules="required"
+              />
+              <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
+            </div>
+            <!-- CONFIRM PASSWORD -->
+            <div class="field w-full">
+              <label class="block" for="passwordConfirm"
+                >{{$t("sign-up.password-confirmation")}}</label
+              >
+              <Field
+                class="w-full px-2 py-1 border rounded border-gray-400"
+                type="password"
+                name="passwordConfirm"
+                rules="required|confirmed:password"
+              />
+              <ErrorMessage
+                class="text-red-400"
+                name="passwordConfirm"
+              ></ErrorMessage>
+            </div>
+          </div>
+        </transition>
+
 
         <div>
           <button class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</button>
@@ -97,7 +137,8 @@ export default {
     return{
       countryList:countries,
       formValues:null,
-      userData:null
+      userData:null,
+      showPasswordsForm:false
     }
   },
   computed: {
@@ -110,9 +151,11 @@ export default {
         firstName:this.userData.user.firstName,
         LastName:this.userData.user.lastName,
         email:this.userData.user.email,
-        password:"",
       };
       this.formValues = formValues
+    },
+    toogleShowPasswordsForm(){
+      this.showPasswordsForm = !this.showPasswordsForm
     },
     // ...mapActions("auth",["signUp"]),
     
@@ -121,9 +164,11 @@ export default {
         firstname: data.firstName,
         lastname: data.LastName,
         email: data.email,
-        password: data.password,
         country: data.country,
-        notify:data.notifyme
+
+        currentPassword: data.password,
+        password: data.password,
+        passwordConfirm: data.password,
       };
       console.log(revisedData)
     },
@@ -133,3 +178,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
