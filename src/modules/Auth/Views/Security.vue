@@ -46,7 +46,7 @@
         ></ErrorMessage>
       </div>
       
-      <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Settings'}">Settings</router-link>
+      <!-- <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Settings'}">Settings</router-link> -->
         
       <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
       

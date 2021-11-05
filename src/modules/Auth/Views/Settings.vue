@@ -63,7 +63,7 @@
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-        <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Security'}">Change password</router-link>
+        <!-- <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Security'}">Change password</router-link> -->
         
         <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
       

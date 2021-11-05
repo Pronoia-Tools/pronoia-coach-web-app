@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import workBookRouter from "../modules/Workbook/Router/index";
-import store from "@/store"
+import settingsRouter from "../modules/Auth/Router/index";
+// import store from "@/store"
 // import Home from "../views/Home.vue";
 
 const routes = [
@@ -9,36 +10,6 @@ const routes = [
     redirect: '/login',
     name: "Home",
     // component: Home,
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../modules/Auth/Views/Settings.vue"),
-    beforeEnter:(to,from,next)=>{
-      if(store.state.auth.isAuthenticated){
-        next()
-      }else{
-        next({name:"login"})
-      }
-    },
-  },
-  {
-    path: "/security",
-    name: "Security",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../modules/Auth/Views/Security.vue"),
-    beforeEnter:(to,from,next)=>{
-      if(store.state.auth.isAuthenticated){
-        next()
-      }else{
-        next({name:"login"})
-      }
-    },
   },
   {
     path: "/signup",
@@ -72,6 +43,10 @@ const routes = [
   {
     path: "/workbook",
     ...workBookRouter,
+  },
+  {
+    path: "/settings",
+    ...settingsRouter,
   },
   {
     path: "/workbook/:idWorkBook/edit",

@@ -38,7 +38,7 @@
               <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
               </li> -->
-              <router-link to="/settings">{{ $t(`navbar.settings`) }}</router-link> 
+              <router-link :to="{name:'Profile'}">{{ $t(`navbar.settings`) }}</router-link> 
               <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>
