@@ -9,7 +9,7 @@
     >
       <!-- CURRENT PASSWORD -->
       <div class="field w-full">
-        <label class="block" for="password">{{$t("sign-up.password")}}</label>
+        <label class="block" for="password">{{ $t("settings.security.oldPassword") }}</label>
         <Field
           class="w-full px-2 py-1 border rounded border-gray-400"
           type="password"
@@ -20,7 +20,7 @@
       </div>
       <!-- NEW PASSWORD -->
       <div class="field w-full">
-        <label class="block" for="password">{{$t("sign-up.password")}}</label>
+        <label class="block" for="password">{{ $t("settings.security.password") }}</label>
         <Field
           class="w-full px-2 py-1 border rounded border-gray-400"
           type="password"
@@ -31,8 +31,7 @@
       </div>
       <!-- CONFIRM PASSWORD -->
       <div class="field w-full">
-        <label class="block" for="passwordConfirm"
-          >{{$t("sign-up.password-confirmation")}}</label
+        <label class="block" for="passwordConfirm">{{ $t("settings.security.password-confirmation") }}</label
         >
         <Field
           class="w-full px-2 py-1 border rounded border-gray-400"
@@ -48,7 +47,7 @@
       
       <!-- <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Settings'}">Settings</router-link> -->
         
-      <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
+      <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("input.save")}}</ButtonCustomVue>
       
     </Form>
   </div>

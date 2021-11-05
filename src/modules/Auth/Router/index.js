@@ -18,7 +18,7 @@ export default {
       // route level code-splitting
       // this generates a separate chunk (Profile.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "Profile" */ "../Views/Settings.vue"),
+      component: () => import(/* webpackChunkName: "Profile" */ "../Views/Profile.vue"),
     },
     {
       path: "security",

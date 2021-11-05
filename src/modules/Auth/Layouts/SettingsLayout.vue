@@ -3,8 +3,8 @@
     <!-- SIDEBAR -->
     <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0 flex-col" :class="isSidebarOpen">
       <div class="flex flex-col px-5 py-1 gap-2">
-        <router-link to="/settings/profile">Perfil</router-link>
-        <router-link to="/settings/security">Contraseña</router-link>
+        <router-link to="/settings/profile">{{$t("settings.settingsLayout.profile")}}</router-link>
+        <router-link to="/settings/security">{{$t("settings.settingsLayout.security")}}</router-link>
       </div>
     </div>
     <div class="flex-grow relative">    

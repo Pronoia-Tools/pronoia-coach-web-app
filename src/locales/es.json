@@ -1,4 +1,24 @@
 {
+  "settings":{
+    "settingsLayout":{
+      "profile":"Perfil",
+      "security":"Seguridad"
+    },
+    "profile":{
+      "myProfile":"Miu perfil",
+      "first-name":"Primer nombre",	
+      "last-name":"Apellidos",	
+      "email":"Email",	
+      "country":"Pais"
+
+    },
+    "security":{
+      "oldPassword":"Antigua contraseña",
+      "password":"Nueva contraseña",
+      "password-confirmation":"Confirma nueva contraseña"
+    }
+
+  },
   "restorePassword":{
     "emailText":"Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer la contraseña",
     "emailSent":"Revise su correo electrónico para encontrar un enlace para restablecer su contraseña. Si no aparece en unos minutos, revise su carpeta de spam"
@@ -6,7 +26,8 @@
   "input":{	
     "send":"Enviar",
     "select":"Seleccionar",	
-    "submit":"Enviar"	
+    "submit":"Enviar",
+    "save":"Guardar"
   },	
   "languages":{	
     "spanish":"Español",	

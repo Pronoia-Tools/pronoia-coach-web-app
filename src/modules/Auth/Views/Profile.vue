@@ -9,7 +9,7 @@
       >
         <div class=" grid grid-cols-2 gap-4 w-full">
           <div class="field">
-            <label class="block" for="fistName">{{$t("sign-up.first-name")}}</label>
+            <label class="block" for="fistName">{{$t("settings.profile.first-name")}}</label>
             <Field
               class="w-full px-2 py-1 border rounded border-gray-400"
               type="text"
@@ -20,7 +20,7 @@
           </div>
 
           <div class="field">
-            <label class="block" for="LastName">{{$t("sign-up.last-name")}}</label>
+            <label class="block" for="LastName">{{$t("settings.profile.last-name")}}</label>
             <Field
               class="w-full px-2 py-1 border rounded border-gray-400"
               type="text"
@@ -32,7 +32,7 @@
         </div>
 
         <div class="field w-full">
-          <label class="block" for="email">{{$t("sign-up.email")}}</label>
+          <label class="block" for="email">{{$t("settings.profile.email")}}</label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             type="email"
@@ -44,7 +44,7 @@
 
         
         <div class="field w-full">
-          <label class="block" for="country">{{$t("sign-up.country")}} <span class=" text-gray-300" v-if="userData">(Your current country is {{userData.user.country}})</span></label>
+          <label class="block" for="country">{{$t("settings.profile.country")}} <span class=" text-gray-300" v-if="userData">({{$t("settings.profile.yourCountry")}} {{userData.user.country}})</span></label>
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             name="country"
@@ -65,7 +65,7 @@
 
         <!-- <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Security'}">Change password</router-link> -->
         
-        <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
+        <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("input.save")}}</ButtonCustomVue>
       
 
       </Form>
