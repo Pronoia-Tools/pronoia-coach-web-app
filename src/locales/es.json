@@ -144,6 +144,9 @@
       }
     },
     "workbookText":{
+      "preview":"vista previa",
+      "contentTable":"Tabla de contenidos",
+      "exitPreview":"Salir vista previa",
       "bookDetails":"Detalles del libro",
       "addSection":"Añadir sección",
       "save":"Guardar",

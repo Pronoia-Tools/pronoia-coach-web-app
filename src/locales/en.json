@@ -145,6 +145,7 @@
     },
     "workbookText":{
       "preview":"Preview",
+      "contentTable":"Table of Contents",
       "exitPreview":"Exit preview",
       "bookDetails":"Book detail",
       "addSection":"Add section",

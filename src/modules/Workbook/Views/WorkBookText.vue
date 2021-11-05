@@ -17,7 +17,7 @@
   
         <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleTableContent">
-            <span>Table of Content</span>
+            <span>{{ $t('workbook.workbookText.contentTable') }}</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openTableContent"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
