@@ -11,7 +11,7 @@
     >
       <font-awesome-icon :icon="myTimes" class=" self-end m-5 text-xl md:hidden" @click="toggleOpenMovileMenu"/>
       <nav class="flex gap-4 flex-col text-center m-4
-                   md:flex-row md:m-1">
+                  md:flex-row md:m-1">
         <!-- <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link> -->
         <router-link to="/workbook">{{ $t(`navbar.workBookFactory`) }}</router-link>
         <!-- <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
@@ -37,8 +37,8 @@
             <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
               <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
-              </li>
-              <router-link to="/">{{ $t(`navbar.settings`) }}</router-link> -->
+              </li> -->
+              <router-link :to="{name:'Profile'}">{{ $t(`navbar.settings`) }}</router-link> 
               <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>

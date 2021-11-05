@@ -1,4 +1,25 @@
 {
+  "settings":{
+    "settingsLayout":{
+      "profile":"Profile",
+      "security":"Security"
+    },
+    "profile":{
+      "myProfile":"My perfil",
+      "first-name":"First name",
+      "last-name":"Last name",
+      "email":"Email",
+      "country":"Country",
+      "yourCountry":"Your current country is"
+
+    },
+    "security":{
+      "oldPassword":"Old password",
+      "password":"New password",
+      "password-confirmation":"New password confirmation"
+    }
+
+  },
   "restorePassword":{
     "emailText":"Enter your email address and we will send you a password reset link",
     "emailSent":"Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder."
@@ -6,7 +27,8 @@
   "input":{
     "send":"Send",
     "select":"Select",
-    "submit":"Submit"
+    "submit":"Submit",
+    "save":"Save"
   },
   "languages":{
     "spanish":"Spanish",

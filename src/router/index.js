@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import workBookRouter from "../modules/Workbook/Router/index";
+import settingsRouter from "../modules/Auth/Router/index";
+// import store from "@/store"
 // import Home from "../views/Home.vue";
 
 const routes = [
@@ -8,15 +10,6 @@ const routes = [
     redirect: '/login',
     name: "Home",
     // component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
     path: "/signup",
@@ -50,6 +43,10 @@ const routes = [
   {
     path: "/workbook",
     ...workBookRouter,
+  },
+  {
+    path: "/settings",
+    ...settingsRouter,
   },
   {
     path: "/workbook/:idWorkBook/edit",
