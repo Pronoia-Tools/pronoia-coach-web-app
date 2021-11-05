@@ -56,3 +56,9 @@ export const updateUser = async ({ commit },userData) => {
   }
   return true
 }
+
+export const updatePassword = async ({ commit },userData) => {
+  let {data} = await PronoiaAPI.put('/auth/password', userData)
+  commit("updatePassword", data)
+  return true
+}

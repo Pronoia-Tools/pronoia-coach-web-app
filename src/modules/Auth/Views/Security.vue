@@ -1,11 +1,12 @@
 <template>
   <!-- CHANGE PASSWORD -->
+  <div class="w-full flex flex-col px-10 text-gray-500">
+    <h2 class=" text-lgText">Change password</h2>
     <Form
         class="flex flex-col items-center gap-2"
         @submit="submitSignUp"
         :initial-values="formValues"
     >
-      <h2 class=" text-lgText">Change password</h2>
       <!-- CURRENT PASSWORD -->
       <div class="field w-full">
         <label class="block" for="password">{{$t("sign-up.password")}}</label>
@@ -50,14 +51,15 @@
       <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
       
     </Form>
+  </div>
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate"
-// import Swall from "sweetalert2";
-// import {Toast} from "@/components/Toast.js"
+import Swall from "sweetalert2";
+import {Toast} from "@/components/Toast.js"
 import ButtonCustomVue from "@/components/ButoomCustom.vue"
-import { mapGetters } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 
 export default {
   components: {
@@ -70,28 +72,28 @@ export default {
     ...mapGetters("auth", ["getUserAuth"]),
   },
   methods:{
+    ...mapActions("auth",["updatePassword"]),
     async submitSignUp(data){
       let revisedData = {
         email:this.getUserAuth.user.email,
         currentPassword: data.currentPassword,
         newPassword: data.passwordConfirm,
       };
-      console.log(revisedData)
-      // try {
-      //   const res = await this.updateUser(revisedData);
-      //   if (res) {
-      //     Toast.fire({
-      //       text:this.$t("swallAlertGeneral.updated"),
-      //       icon:"success"
-      //     });
-      //   }
-      // } catch (error) {
-      //   Swall.fire({
-      //     icon:"error",
-      //     title: `${this.$t("swallAlertGeneral.error")}`,
-      //     text:error.response.data.message
-      //   })
-      // }
+      try {
+        const res = await this.updatePassword(revisedData);
+        if (res) {
+          Toast.fire({
+            text:this.$t("swallAlertGeneral.updated"),
+            icon:"success"
+          });
+        }
+      } catch (error) {
+        Swall.fire({
+          icon:"error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text:error.response.data.message
+        })
+      }
     },
   }
 }

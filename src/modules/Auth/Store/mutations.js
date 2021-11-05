@@ -27,3 +27,7 @@ export const updateUser = (state,userData) => {
   console.log({"[[Mutations {{updateUser}}]]":userData})
   state.user = userData.user
 }
+
+export const updatePassword = (state,response) => {
+  console.log({"[[Mutations {{updatePassword}}]]":response})
+}
