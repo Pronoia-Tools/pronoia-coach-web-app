@@ -10,11 +10,11 @@
     <!-- <span class="label">Vue Component</span> -->
 
     <div class="content">
-      <div class="col-span-2 flex gap-4 justify-end flex-wrap">
+      <!-- <div class="col-span-2 flex gap-4 justify-end flex-wrap">
         <FontAwesomeIcon v-if="!editable" class="cursor-pointer" :icon="myEdit" @click="toggleEditable" />
         <FontAwesomeIcon v-else class="cursor-pointer" :icon="mySave" @click="handleSave" />
-        <!-- <FontAwesomeIcon class="cursor-pointer mr-1" :icon="myTrash" /> -->
-      </div>
+        <FontAwesomeIcon class="cursor-pointer mr-1" :icon="myTrash" /> -->
+      <!-- </div> --> 
       <div v-if="question">
           <!-- <div class="flex justify-start items-center text-xl gap-2">
               <label v-bind:id="`Question-${question.id}`">Question:</label>
@@ -47,7 +47,7 @@
 
 <script>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEdit, faEye, faTrash, faSave } from '@fortawesome/free-solid-svg-icons'
 
 import TextEditor from "../../TextEditor/Views/TextEditor.vue"
@@ -56,7 +56,7 @@ import PronoiaAPI from "../../../api/PronoiaAPI";
 export default {
   components: {
     NodeViewWrapper,
-    FontAwesomeIcon,
+    // FontAwesomeIcon,
     TextEditor
   },
   data(){
@@ -82,9 +82,12 @@ export default {
     },
     contentHandler() {
       console.log("llamada")
-      return this.question.question
+      return JSON.parse(this.question.question).content
     },
-    editorChangedHandler() {
+    async editorChangedHandler(data) {
+      console.log("editorChangedHandler", data)
+      const response = await PronoiaAPI.put('/unit/'+this.node.attrs.unit_id+'/question/'+this.node.attrs.id, {question: data});
+      console.log("response", response)
 
     },
     async handleSave() {

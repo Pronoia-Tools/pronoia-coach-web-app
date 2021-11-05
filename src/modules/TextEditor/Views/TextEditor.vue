@@ -1,14 +1,19 @@
 <template>
-    <div id="editor" class="h-3/4 flex flex-col">
+    <div id="editor" class="flex flex-col">
 
         <!-- Menu Bar -->
-        <div v-if="editor && editable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+        <div v-if="editor && editable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
         
-        <div>
-            <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
-            {{ $t('workbook.workbookText.save') }}
-            </ButoomCustomVue>
 
+            <div class="flex items-center gap-5">
+                     <!-- <ButtonGroupVue> -->
+              <ButtonAppVue @click="updateContent">
+                {{ $t('workbook.workbookText.save') }}
+              </ButtonAppVue>
+<!-- </ButtonGroupVue> -->
+
+
+</div>
             <button @click="editor.chain().focus().undo().run()">
             <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
             </button>
@@ -88,13 +93,13 @@
             <button @click="editor.chain().focus().setHorizontalRule().run()">
             ___
             </button>
-            <button @click="editor.commands.setQuestion({unit_id: unitSelected, isOpen: true})">
+            <!-- <button @click="editor.commands.setQuestion({unit_id: unitSelected, isOpen: true})">
             Q
-            </button>
+            </button> -->
 
         </div>
         
-        </div>
+        <!-- </div> -->
 
         <!--Editor --> 
         <div class="flex-grow overflow-auto z-0">
@@ -154,11 +159,14 @@ import Iframe from "../Helpers/iframe"
 import Heading from "../Helpers/heading"
 
 import Swal from "sweetalert2"
-import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters } from 'vuex'
 
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
+
+import ButtonAppVue from '../../../components/ButtonApp.vue';
+// import ButtonGroupVue from '../../../components/ButtonGroup.vue';
 
 // import QuestionsListVue from '../Components/QuestionsList.vue'
 // import WorkbookStructure from '../Components/WorkbookStructure.vue'
@@ -168,7 +176,9 @@ export default {
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
-    ButoomCustomVue,
+    // ButoomCustomVue,
+    ButtonAppVue,
+    // ButtonGroupVue
     // QuestionsListVue,
     // WorkbookStructure,
   },
@@ -279,6 +289,9 @@ export default {
       })
       // console.log(this.editor.getJSON())
       // console.log(this.workBook)
+    },
+    updateContent() {
+      this.editorChangedHandler(this.editor.getJSON())
     },
     async loadData() {
         let contents = await this.contentHandler()
