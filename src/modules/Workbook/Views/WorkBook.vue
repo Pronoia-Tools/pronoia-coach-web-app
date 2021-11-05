@@ -64,7 +64,7 @@
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.by') }}:</label>
-              <span class="border border-gray-500 bg-gray-200 rounded px-2 py-2 w-full text-left">{{workBook.author.firstName + workBook.author.lastName}}</span>
+              <span class="border border-gray-500 bg-gray-200 rounded px-2 py-2 w-full text-left">{{workBook.author.firstName + " " + workBook.author.lastName}}</span>
               <!-- <input type="text" placeholder="Add text" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.author" > -->
           </div>
           <div class="flex justify-center items-center text-xl gap-2">

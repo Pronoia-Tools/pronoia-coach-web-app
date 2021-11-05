@@ -324,7 +324,7 @@ export default {
       // Menus state
       sidebarOpen:false,
       openSideBar: true,
-      openSideBarGalery: true,
+      openSideBarGalery: false,
       openTableContent: true,
       openImageLibrary: true,
       openUnitLibrary: true,

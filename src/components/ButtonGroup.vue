@@ -9,7 +9,7 @@
     </div>
     <!-- MODAL -->
     <transition name="slide-fade">
-      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -left-0 p-1 my-1  w-40 border border-black bg-white hover:bg-gray-50" >
+      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -left-0 p-1 my-1  w-40 border border-black bg-white hover:bg-gray-50 z-10" >
         <div class="flex flex-col">
           <slot></slot>
         </div>
