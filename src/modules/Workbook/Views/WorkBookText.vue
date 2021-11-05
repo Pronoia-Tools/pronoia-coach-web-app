@@ -30,30 +30,7 @@
           {{ $t('workbook.workbookText.exitPreview') }}
         </ButoomCustomVue>
 
-        <!-- IMAGE LIBRARY -->
-        <!-- <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
-          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" :class="isSidebarOpen" @click="toggleImageLibrary">
-            <span>Image Library</span>
-            <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
-            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
-          </div>
-
-          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" :class="isSidebarOpen">
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" :class="isSidebarOpen">
-              <img 
-                v-for="(image, index) in imageLibrary" 
-                :key="index" 
-                :src="image" alt="Galery image" 
-                class=" w-16 h-16 border border-myLightBlue object-cover"
-                @click="clipboard(image)"
-              >
-            </div>
-            <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
-            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
-
-          </div>
-            
-        </div> -->
+        
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -68,7 +45,6 @@
         </div> -->
         
       </div>
-
       <button @click="toggleSideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10">
         <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-r z-50"></FontAwesomeIcon>
@@ -76,7 +52,6 @@
       <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/> -->
       
       </button>  
-
       <!-- <button class="mr-1 h-10 my-1 px-4 py-2 border-b border-black flex justify-between items-center p-2" @click="toggleSideBar">
         <FontAwesomeIcon v-if="!sidebarOpen" :icon="myChevronLeft"></FontAwesomeIcon>
         <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
@@ -237,7 +212,36 @@
 
         <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
       </div>
+      <button @click="toggleGalerySideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10">
+        <FontAwesomeIcon v-if="openSideBarGalery" :icon="myChevronLeft" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
+        <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
+      </button>
 
+      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
+        <!-- IMAGE LIBRARY -->
+        <div class="transition-all border border-black h-full w-full">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+            <span>Image Library</span>
+            <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
+            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
+          </div>
+
+          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" >
+              <img 
+                v-for="(image, index) in imageLibrary" 
+                :key="index" 
+                :src="image" alt="Galery image" 
+                class=" w-16 h-16 border border-myLightBlue object-cover"
+                @click="clipboard(image)"
+              >
+            </div>
+            <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
+            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
+
+          </div>  
+        </div>
+      </div>
     </div>
 
   </div>
@@ -259,7 +263,7 @@ import Iframe from "../Helpers/iframe"
 import Heading from "../Helpers/heading"
 
 import Swal from "sweetalert2"
-// import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
@@ -281,7 +285,7 @@ export default {
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
-    // ButoomCustomVue,
+    ButoomCustomVue,
     ButtonGroupVue,
     // QuestionsListVue,
     // WorkbookStructure,
@@ -320,6 +324,7 @@ export default {
       // Menus state
       sidebarOpen:false,
       openSideBar: true,
+      openSideBarGalery: true,
       openTableContent: true,
       openImageLibrary: true,
       openUnitLibrary: true,
@@ -347,6 +352,9 @@ computed:{
     },
     isSidebarOpen(){
       return this.sidebarOpen?"text-transparent invisible w-1":" w-64 visible"
+    },
+    isSidebarGaleryOpen(){
+      return this.openSideBarGalery?"text-transparent w-0":" text-black w-64 "
     },
     getContentTable(){
       var titles = [];
@@ -415,6 +423,9 @@ computed:{
       "setImages"]),
     toggleSideBar() {
       this.sidebarOpen = !this.sidebarOpen
+    },
+    toggleGalerySideBar() {
+      this.openSideBarGalery = !this.openSideBarGalery
     },
     toggleTableContent() {
       this.openTableContent = !this.openTableContent
