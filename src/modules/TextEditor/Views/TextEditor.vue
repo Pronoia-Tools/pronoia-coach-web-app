@@ -2,7 +2,7 @@
     <div id="editor" class="h-3/4 flex flex-col">
 
         <!-- Menu Bar -->
-        <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
+        <div v-if="editor && editable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 justify-between px-2 py-1 z-40" :class="fixed">
         
         <div>
             <ButoomCustomVue @click="updateCurrentWorkbookHanlder" class="mr-1">
@@ -173,6 +173,10 @@ export default {
     // WorkbookStructure,
   },
   props: {
+    editable: {
+      type: Boolean,
+      default: true,
+    },
     contentHandler: {
         type: Function,
         required: true,

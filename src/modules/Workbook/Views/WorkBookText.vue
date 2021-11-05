@@ -160,7 +160,7 @@
               </button>
               <div>
                 <ButtonGroupVue customText="Add">
-                  <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected})">
+                  <ButtonAppVue @click="editor.commands.setQuestion({unit_id: unitSelected, isOpen: true})">
                     Questions ?
                   </ButtonAppVue>
                 </ButtonGroupVue>
