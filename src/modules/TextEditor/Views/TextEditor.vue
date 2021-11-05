@@ -2,7 +2,7 @@
     <div id="editor" class="flex flex-col">
 
         <!-- Menu Bar -->
-        <div v-if="editor && editable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
+        <div v-if="editor && this.myeditable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
         
 
             <div class="flex items-center gap-5">
@@ -98,11 +98,19 @@
             </button> -->
 
         </div>
+        <div v-else>
+          <ButtonAppVue @click="toggelEditable">
+                Edit
+              </ButtonAppVue>
+            <div v-if="editor" class="editor-container">
+                <div class="editor-content" v-html="editor.getHTML()"></div>
+            </div>
+        </div>
         
         <!-- </div> -->
 
         <!--Editor --> 
-        <div class="flex-grow overflow-auto z-0">
+        <div v-if="this.myeditable" class="flex-grow overflow-auto z-0">
 
         <!-- FLOATING MENU --> 
         <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -239,6 +247,7 @@ export default {
 
       //helpers
       saveInterval:null,
+      myeditable: false,
     }
   },
   computed:{
@@ -292,11 +301,16 @@ export default {
     },
     updateContent() {
       this.editorChangedHandler(this.editor.getJSON())
+      this.toggelEditable()
+    },
+    toggelEditable() {
+      this.myeditable = !this.myeditable;
     },
     async loadData() {
         let contents = await this.contentHandler()
         this.editor.commands.clearContent()
         this.editor.commands.setContent(contents)
+        this.myeditable = this.editable
     },
   },
   // Mounted loads workbook
