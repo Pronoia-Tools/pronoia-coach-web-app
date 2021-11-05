@@ -24,10 +24,10 @@
             <Field
               class="w-full px-2 py-1 border rounded border-gray-400"
               type="text"
-              name="LastName"
+              name="lastName"
               rules="required"
             />
-            <ErrorMessage class="text-red-400" name="LastName"></ErrorMessage>
+            <ErrorMessage class="text-red-400" name="lastName"></ErrorMessage>
           </div>
         </div>
 
@@ -48,13 +48,13 @@
           <Field
             class="w-full px-2 py-1 border rounded border-gray-400"
             name="country"
-            rules="required"
             as="select"
           >
-            <option value="" disabled selected>{{$t("input.select")}}</option>
+            <option value="" selected>{{$t("input.select")}}</option>
             <option v-for="country in countryList" 
             :key="country.countryCode" 
-            :value="country.name">
+            :value="country.name"
+            :selected="value && value.includes(country.name)">
             {{country.name}}
             </option>
             <!-- <option value="Mexico">{{$t("countries.mexico")}}</option>
@@ -63,59 +63,10 @@
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-
-
-        <span class=" text-myPurple underline cursor-pointer" @click="toogleShowPasswordsForm">Change password</span>
-        <!-- CHANGE PASSWORD -->
-        <transition name="fade">
-
-          <div class="w-full" v-if="showPasswordsForm">
-            <h2 class=" text-lgText">Change password</h2>
-            <!-- CURRENT PASSWORD -->
-            <div class="field w-full">
-              <label class="block" for="password">{{$t("sign-up.password")}}</label>
-              <Field
-                class="w-full px-2 py-1 border rounded border-gray-400"
-                type="password"
-                name="currentPassword"
-                rules="required"
-              />
-              <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
-            </div>
-            <!-- NEW PASSWORD -->
-            <div class="field w-full">
-              <label class="block" for="password">{{$t("sign-up.password")}}</label>
-              <Field
-                class="w-full px-2 py-1 border rounded border-gray-400"
-                type="password"
-                name="password"
-                rules="required"
-              />
-              <ErrorMessage class="text-red-400" name="password"></ErrorMessage>
-            </div>
-            <!-- CONFIRM PASSWORD -->
-            <div class="field w-full">
-              <label class="block" for="passwordConfirm"
-                >{{$t("sign-up.password-confirmation")}}</label
-              >
-              <Field
-                class="w-full px-2 py-1 border rounded border-gray-400"
-                type="password"
-                name="passwordConfirm"
-                rules="required|confirmed:password"
-              />
-              <ErrorMessage
-                class="text-red-400"
-                name="passwordConfirm"
-              ></ErrorMessage>
-            </div>
-          </div>
-        </transition>
-
-
-        <div>
-          <button class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</button>
-        </div>
+        <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Security'}">Change password</router-link>
+        
+        <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</ButtonCustomVue>
+      
 
       </Form>
     </div>
@@ -124,21 +75,24 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate"
-import { mapGetters } from 'vuex';
-// import Swall from "sweetalert2";
+import { mapGetters,mapActions } from 'vuex';
+import Swall from "sweetalert2";
 import countries from "@/assets/countryList.json"
+import {Toast} from "@/components/Toast.js"
+import ButtonCustomVue from "@/components/ButoomCustom.vue"
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+    ButtonCustomVue
   },
   data(){
     return{
       countryList:countries,
       formValues:null,
       userData:null,
-      showPasswordsForm:false
+      // showPasswordsForm:false
     }
   },
   computed: {
@@ -149,28 +103,43 @@ export default {
       this.userData = await this.getUserAuth
       const formValues = {
         firstName:this.userData.user.firstName,
-        LastName:this.userData.user.lastName,
+        lastName:this.userData.user.lastName,
         email:this.userData.user.email,
+        country:this.userData.user.country
       };
       this.formValues = formValues
     },
     toogleShowPasswordsForm(){
       this.showPasswordsForm = !this.showPasswordsForm
     },
-    // ...mapActions("auth",["signUp"]),
+    ...mapActions("auth",["updateUser"]),
     
     async submitSignUp(data){
       let revisedData = {
         firstname: data.firstName,
-        lastname: data.LastName,
-        email: data.email,
+        lastname: data.lastName,
+        currentEmail:this.userData.user.email,
+        newEmail: data.email,
         country: data.country,
-
-        currentPassword: data.password,
-        password: data.password,
-        passwordConfirm: data.password,
+        // currentPassword: data.currentPassword,
+        // newPassword: data.passwordConfirm,
       };
-      console.log(revisedData)
+      try {
+        // console.log(revisedData)
+        const res = await this.updateUser(revisedData);
+        if (res) {
+          Toast.fire({
+            text:this.$t("swallAlertGeneral.updated"),
+            icon:"success"
+          });
+        }
+      } catch (error) {
+        Swall.fire({
+          icon:"error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text:error.response.data.message
+        })
+      }
     },
   },
   mounted(){
@@ -180,7 +149,7 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -188,5 +157,5 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 </style>

@@ -42,7 +42,17 @@ export const logout = async ({ commit }) => {
   let response = await PronoiaAPI.post('/auth/logout', {})
   window.localStorage.removeItem(process.env.VUE_APP_API_BASE)
   commit("logout", response.data)
-  router.push({name:"Home"});
+  router.push({name:"login"});
   return true
 
+}
+export const updateUser = async ({ commit },userData) => {
+  let {data} = await PronoiaAPI.put('/auth/user', userData)
+  if (data.needReauthenticate) {
+    commit("logout", data)
+    router.push({name:"login"});
+  }else{
+    commit("updateUser", data)
+  }
+  return true
 }

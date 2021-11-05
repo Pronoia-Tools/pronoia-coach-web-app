@@ -22,3 +22,8 @@ export const logout = (state) => {
   state.token = ""
   state.isAuthenticated = false
 }
+
+export const updateUser = (state,userData) => {
+  console.log({"[[Mutations {{updateUser}}]]":userData})
+  state.user = userData.user
+}
