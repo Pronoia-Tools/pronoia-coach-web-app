@@ -7,6 +7,8 @@ export default Node.create({
 
   group: 'block',
 
+  // content: 'inline*',
+
   draggable: true,
 
   atom: true,
@@ -18,7 +20,10 @@ export default Node.create({
       },
       unit_id: {
         default: 0,
-      }
+      },
+      isOpen: {
+        default: false,
+      },
     }
   },
 
