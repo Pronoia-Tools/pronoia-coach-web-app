@@ -69,16 +69,19 @@
         <div id="editor" class="h-full flex flex-col">
 
           <!-- Menu Bar -->
-          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
-                   <div class="flex items-center gap-5">
-                     <ButtonGroupVue>
-              <ButtonAppVue @click="updateCurrentWorkbookHanlder">
-                {{ $t('workbook.workbookText.save') }}
-              </ButtonAppVue>
-</ButtonGroupVue>
+          <div v-if="editor && !preview" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
+              <div class="flex items-center gap-5">
+              <ButtonGroupVue>
+                <ButtonAppVue @click="updateCurrentWorkbookHanlder">
+                  {{ $t('workbook.workbookText.save') }}
+                </ButtonAppVue>
+                <ButtonAppVue @click="toogglePreview">
+                  {{ $t('workbook.workbookText.preview') }}
+                </ButtonAppVue>
+              </ButtonGroupVue>
 
 
-</div>
+            </div>
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -217,7 +220,7 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
+      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen" v-if="!preview">
         <!-- IMAGE LIBRARY -->
         <div class="transition-all border border-black h-full w-full">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
