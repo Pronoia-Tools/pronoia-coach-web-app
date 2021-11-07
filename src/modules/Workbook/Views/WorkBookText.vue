@@ -541,6 +541,9 @@ computed:{
     },
 
     // Saving
+    handleQuestionSave(){
+      console.log("questionsave")
+    },
     editorChanged(){
       
       if (this.saveInterval) {

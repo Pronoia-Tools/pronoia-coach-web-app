@@ -193,7 +193,7 @@ export default {
   props: {
     editable: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     contentHandler: {
         type: Function,

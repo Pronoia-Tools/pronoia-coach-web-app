@@ -76,9 +76,9 @@ export default {
   methods: {
     toggleEditable() {
       this.editable = !this.editable
-      this.updateAttributes({
-        isOpen: this.editable
-      })
+      // this.updateAttributes({
+      //   isOpen: this.editable
+      // })
     },
     contentHandler() {
       console.log("llamada")
@@ -101,9 +101,11 @@ export default {
     if(this.node.attrs.id !== 0) {
       //Existing question
       response = await PronoiaAPI.get('/unit/'+this.node.attrs.unit_id+'/question/'+this.node.attrs.id );
+      // this.editable = false
     } else {
       //new question
       response = await PronoiaAPI.post('/unit/'+this.node.attrs.unit_id+'/question', {question: "New Question"});
+      // this.editable = true
     }
 
     if (!response) return;
@@ -115,7 +117,7 @@ export default {
       })
     }
     console.log(this.node.attrs.isOpen)
-    this.editable = this.node.attrs.isOpen
+    // this.editable = this.node.attrs.isOpen
   }
 }
 </script>
