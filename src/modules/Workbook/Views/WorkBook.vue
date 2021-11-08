@@ -79,12 +79,17 @@
                   <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
                   <option value="Spanish">{{$t("languages.spanish")}}</option>
                   <option value="English">{{$t("languages.english")}}</option>
+                  <option value="Italian">{{$t("languages.italian")}}</option>
+                  <option value="German">{{$t("languages.german")}}</option>
                 </select>
               </div>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.published') }}:</label>
-              <label class=" w-full text-left" for="author">{{workBook.status}}</label>
+              <label for="author" v-bind:class="[workBook.status!='Editable' ? 'w-full text-left' : '']">{{workBook.status}}</label>
+              <span v-if="workBook.status=='Editable'" v-bind:class="[workBook.status=='Editable' ? 'w-full text-left' : '']" title="Workbooks are editable as long as they have not been published to the Pronoia Marketplace. If you need to make changes to a published workbook, please make a new edition and submit it for consideration for inclusion into the Pronoia Marketplace.">
+                <FontAwesomeIcon :icon="InfoCircle"></FontAwesomeIcon>
+              </span>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>

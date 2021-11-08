@@ -31,7 +31,9 @@
   },	
   "languages":{	
     "spanish":"Español",	
-    "english":"Ingles"	
+    "english":"Ingles",
+    "italian":"Italiano",
+    "german":"Alemán"	
   },	
   "countries":{	
     "mexico":"México",	

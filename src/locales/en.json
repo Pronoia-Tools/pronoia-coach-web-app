@@ -32,7 +32,9 @@
   },
   "languages":{
     "spanish":"Spanish",
-    "english":"English"
+    "english":"English",
+    "italian":"Italian",
+    "german":"German"
   },
   "countries":{
     "mexico":"México",
@@ -146,7 +148,7 @@
       "price": "Price",
       "currency": "Currency",
       "tags": "Tags",
-      "describePlaceHolder": "Describe yourself here...",
+      "describePlaceHolder": "Workbook description",
 
       "save": "Save",
       "saveChanges": "Update",
