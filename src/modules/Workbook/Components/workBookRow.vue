@@ -8,9 +8,15 @@
     <span class="col-span-1 hidden md:block">{{workbookDetails.price}}$</span>
     <span class="col-span-1 hidden md:block">{{workbookDetails.status}}</span>
     <div class="col-span-2 flex gap-4 justify-center flex-wrap">
-      <font-awesome-icon class="cursor-pointer" :icon="myEdit" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:workbookDetails.id}})"/>
-      <font-awesome-icon class="cursor-pointer" :icon="myEye"  @click="$router.push({name:'workbook',params:{idWorkBook:workbookDetails.id}})"/>
-      <font-awesome-icon class="cursor-pointer" :icon="myTrash" @click="deleteCurrentWorkbook" />
+      <span title="Edit Workbook">
+        <font-awesome-icon class="cursor-pointer" :icon="myEdit" @click="$router.push({name:'workbook-rich-text',params:{idWorkBook:workbookDetails.id}})"/>
+      </span>
+      <span title="View Workbook">
+        <font-awesome-icon class="cursor-pointer" :icon="myEye"  @click="$router.push({name:'workbook',params:{idWorkBook:workbookDetails.id}})"/>
+      </span>
+      <span title="Archive Workbook">
+        <font-awesome-icon class="cursor-pointer" :icon="myTrash" @click="deleteCurrentWorkbook" />      
+      </span>
     </div>
   </div>
 </template>
