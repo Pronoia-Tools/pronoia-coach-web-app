@@ -226,13 +226,13 @@
 
           <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
             <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" >
-              <img 
-                v-for="(image, index) in imageLibrary" 
-                :key="index" 
+              <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  text="I am  button" class=" w-16 h-16 border border-myLightBlue object-cover">
+              <img   
                 :src="image" alt="Galery image" 
-                class=" w-16 h-16 border border-myLightBlue object-cover"
                 @click="clipboard(image)"
               >
+
+              </ToolTipVue>
             </div>
             <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
             <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
@@ -269,6 +269,7 @@ import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import DropZone from "@/components/DropZone.vue";
 
+
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
 import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
 
@@ -278,6 +279,7 @@ import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
 // import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
 import ButtonAppVue from '../../../components/ButtonApp.vue';
 import ButtonGroupVue from '../../../components/ButtonGroup.vue';
+import ToolTipVue from '../../../components/ToolTip.vue'
 
 
 export default {
@@ -289,7 +291,8 @@ export default {
     // FloatingMenu,
     ButoomCustomVue,
     ButtonGroupVue,
-    DropZone
+    DropZone,
+    ToolTipVue
     // QuestionsListVue,
     // WorkbookStructure,
   },
@@ -453,6 +456,7 @@ computed:{
         icon: 'success',
         text: 'Copied into the clipboard '
       })
+      this.editor.chain().focus().setImage({ src: image }).run()
       navigator.clipboard.writeText(image)
     },
     async addImage() {

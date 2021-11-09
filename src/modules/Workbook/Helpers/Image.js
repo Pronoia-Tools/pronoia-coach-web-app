@@ -14,7 +14,7 @@ export default Node.create({
     addAttributes() {
         return {
             src: {
-                default: "https://static.remove.bg/remove-bg-web/194d453110e760e94498dbb94c5cfb329903342c/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png",
+                default: "",
             },
             width:{
                 default:100
