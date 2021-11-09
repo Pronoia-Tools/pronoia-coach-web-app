@@ -226,16 +226,15 @@
 
           <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
             <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" >
-              <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  text="I am  button" class=" w-16 h-16 border border-myLightBlue object-cover">
+              <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
               <img   
                 :src="image" alt="Galery image" 
                 @click="clipboard(image)"
               >
-
               </ToolTipVue>
             </div>
             <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
-            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
+            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">{{$t('workbook.workbookText.addImages')}}</ButoomCustomVue>
 
           </div>  
         </div>

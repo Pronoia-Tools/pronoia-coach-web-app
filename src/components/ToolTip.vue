@@ -29,6 +29,9 @@ export default {
 .tooltip-container { 
   position: relative;
   display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tooltip-container:hover .tooltip{
@@ -40,10 +43,10 @@ export default {
   color: #ffffff;
   text-align: center;
   padding: 5px 0;
-  border-radius: 2px;
+  border-radius: 5px;
 
   width: 120px;
-  bottom: 100%;
+  top:  100%;
   left: 50%;
   margin-left: -60px;
 
@@ -54,17 +57,7 @@ export default {
   z-index: 1;
 
   background: #000000;
+  font-size: smaller;
 }
 
-.text::after {
-  content: " ";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #000000 transparent transparent transparent;
-
-}
 </style>
