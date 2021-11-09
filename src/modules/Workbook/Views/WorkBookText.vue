@@ -225,7 +225,7 @@
           </div>
 
           <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" >
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32 overflow-x-hidden" >
               <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
               <img   
                 :src="image" alt="Galery image" 
