@@ -1,11 +1,11 @@
 <template>
-	<div></div>
-	<input type="text" @keypress.enter="">
+	<div>TESTEO</div>
+	<div v-for="tag in tags" v-bind:key="tag">{{ tag }}</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-mapGetters
+
 export default {
   props: {
 			idWorkBook: {
@@ -14,19 +14,28 @@ export default {
 			}
 		},
 	computed:{
-		...mapGetters("workBook", ["getWorkBookById"]),
+		...mapGetters("workBook"["getWorkBookById","getAllTags"]),
 	},
 	data() {
 			return {
-				workbookSelected: null
+				workbookSelected: null,
+				tags:null
 			};
 		},
 	methods:{
 		filterWorkBook(){
 			this.workbookSelected = this.getWorkBookById(this.idWorkBook)
+		},
+		getTags(){
+			this.tags = this.getAllTags
 		}
+	},
+	mounted() {
+		this.getTags
+		this.filterWorkBook
 	}
 }
+
 </script>
 
 <style>

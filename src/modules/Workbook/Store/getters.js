@@ -12,7 +12,7 @@ export const getLastWorkBook = (state) => () => {
   return state.lastWorkBook;
 };
 
-export const getAllTags = (state) => () => {
+export const getAllTags = (state) => {
   return state.tags;
 };
 
