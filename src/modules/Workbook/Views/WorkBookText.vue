@@ -70,15 +70,13 @@
 
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
-                   <div class="flex items-center gap-5">
-                     <ButtonGroupVue>
+            <div class="flex items-center gap-5">
+            <ButtonGroupVue>
               <ButtonAppVue @click="updateCurrentWorkbookHanlder">
                 {{ $t('workbook.workbookText.save') }}
               </ButtonAppVue>
-</ButtonGroupVue>
-
-
-</div>
+            </ButtonGroupVue>
+          </div>
               <button @click="editor.chain().focus().undo().run()">
                 <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
               </button>
@@ -241,6 +239,9 @@
 
           </div>  
         </div>
+
+        
+        <DropZone @drop.prevent="onDropedImages" />
       </div>
     </div>
 
@@ -266,6 +267,7 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import DropZone from "@/components/DropZone.vue";
 
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
 import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
@@ -287,6 +289,7 @@ export default {
     // FloatingMenu,
     ButoomCustomVue,
     ButtonGroupVue,
+    DropZone
     // QuestionsListVue,
     // WorkbookStructure,
   },
@@ -494,7 +497,6 @@ computed:{
     },
     async onSelectedImage(event){
       const files = event.target.files
-      
       new Swal({
         title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
@@ -538,6 +540,33 @@ computed:{
       //   })
       // }
       // this.loadWorkBook(this.idWorkBook)
+    },
+    async onDropedImages(e){
+      const files = e.dataTransfer.files
+      console.log(e.dataTransfer.files)
+      new Swal({
+        title: this.$t('swallAlertGeneral.wait'),
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+      // 1. If no file, return
+      if (files.length === 0) return [];
+      // 2. Create an array to store all download URLs
+      let fileUrls = [];
+      // 3. Loop over all the files
+      for (var i = 0; i < files.length; i++) {
+          // 3A. Get a file to upload
+          const file = files[i];
+          // 3B. handleFileUploadOnFirebaseStorage function is in above section
+          const downloadFileResponse = await handleFileUploadOnFirebaseStorage({email:this.getUserAuth.user.email,file:file});
+          // 3C. Push the download url to URLs array
+          fileUrls.push(downloadFileResponse);
+      }
+      this.setImages(fileUrls)
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.saved')
+      })
     },
 
     // Saving
