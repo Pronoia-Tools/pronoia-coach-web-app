@@ -82,21 +82,19 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" ></FontAwesomeIcon>
       </button>
 
-      <div class="flex-grow relative">    
+      <div class="flex-grow relative">
       <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
       <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
       <router-view></router-view> -->
     <!-- </div> -->
       <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col px-2">
-        
-        
         <div id="editor" class="h-full flex flex-col">
 
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
-                   <div class="flex items-center gap-5">
-                     <ButtonGroupVue>
+            <div class="flex items-center gap-5">
+              <ButtonGroupVue>
               <ButtonAppVue @click="updateCurrentWorkbookHanlder">
                 {{ $t('workbook.workbookText.save') }}
               </ButtonAppVue>
@@ -193,10 +191,10 @@
 
           </div>
 
-          <!--Editor --> 
+          <!--Editor -->
           <div class="flex-grow overflow-auto z-0">
 
-            <!-- FLOATING MENU --> 
+            <!-- FLOATING MENU -->
             <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
               <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
                 H1
@@ -229,10 +227,7 @@
 
             <!-- EDITOR ITSELF -->
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
-            
           </div>
-
-          
         </div>
 
         <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
@@ -313,9 +308,8 @@ export default {
       myAlignJustify:faAlignJustify,
       myFilm:faFilm,
       myArrowLeft:faArrowLeft,
-      myAngleDown:faAngleDown,      
+      myAngleDown:faAngleDown,
       myAngleUp:faAngleUp,
-      
       // Menus state
       sidebarOpen:false,
       openSideBar: true,
@@ -352,7 +346,6 @@ computed:{
 
       if(this.workBook.units.length<=this.unitSelectedIndex) return titles
 
-      
       let unit = this.workBook.units[this.unitSelectedIndex]
       if(unit.contents && unit.contents.content) {
         unit.contents.content.forEach(elementEditor => {
@@ -368,7 +361,6 @@ computed:{
               case 3:
                   content.classes = "pl-10 font-semibold"
                 break;
-            
               default:
                   content.classes = "pl-14 font-medium"
                 break;
@@ -393,17 +385,16 @@ computed:{
       // questions.content = `questions`
       // titles.push(questions);
 
-      
       return titles;
     },
   },
   methods:{
     ...mapActions("workBook",[
-      "loadWorkBookUnits", 
-      "updateWorkbookUnit", 
+      "loadWorkBookUnits",
+      "updateWorkbookUnit",
       "updateWorkbookStructure",
       "createWorkBookUnit",
-      //non used 
+      //non used
       "updateWorkbookSection",
       "updateWorkbookAddSection"]),
     ...mapActions("image",[
@@ -479,7 +470,7 @@ computed:{
     },
     async onSelectedImage(event){
       const images = event.target.files
-      
+
       new Swal({
         title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
@@ -505,13 +496,11 @@ computed:{
 
     // Saving
     editorChanged(){
-      
       if (this.saveInterval) {
         clearInterval(this.saveInterval)
       }
-      // autosave every 1.5 min after the user stop typing 
+      // autosave every 1.5 min after the user stop typing
       this.saveInterval = setTimeout(() => this.updateCurrentWorkbook() , 90000);
-      
     },
     async updateCurrentWorkbook() {
       this.workBook.units[this.unitSelectedIndex].contents = this.editor.getJSON();
@@ -587,8 +576,7 @@ computed:{
           }
           newUnit = await this.createWorkBookUnit([this.workBook, unit])
           this.workBook.units.push(newUnit)
-          newNode.id = newUnit.id    
-          
+          newNode.id = newUnit.id
         }
 
         if(!node) {
@@ -605,11 +593,11 @@ computed:{
         await this.updateWorkbookStructure([this.workBook, this.treeData])
 
         if(type === 'content') {
-          this.unitSelected = newUnit.id   
+          this.unitSelected = newUnit.id
           this.unitSelectedIndex = this.workBook.units.findIndex(x => x.id === this.unitSelected)
         }
 
-        // 
+        //
       }
     },
     async treeEditNode(node) {
@@ -667,19 +655,16 @@ computed:{
             if(node.type === 'content' && this.unitSelected === node.id) {
               await this.updateCurrentWorkbook()
               // select another one
-              // this.unitSelected = newUnit.id   
+              // this.unitSelected = newUnit.id
               // this.unitSelectedIndex = this.workBook.units.findIndex(x => x.id === this.unitSelected)
             }
-            
           }
-        } 
+        }
       })
-      
     },
-
     // Load Data methods
     async loadWorkBook(){
-      let workBookSelected = await this.getWorkBookById(this.idWorkBook) 
+      let workBookSelected = await this.getWorkBookById(this.idWorkBook)
       if (!workBookSelected){
         this.$router.push({name:"no-workbook"})
       }
@@ -688,9 +673,7 @@ computed:{
         console.log('no units loaded')
         workBookSelected = await this.loadWorkBookUnits(workBookSelected)
       }
-
       this.editor.commands.clearContent()
-
       this.workBook = workBookSelected
       if (this.editor && this.workBook) {
         if(this.workBook.structure && this.workBook.structure.tree) {
@@ -700,7 +683,7 @@ computed:{
         }
         if (this.unitSelected === 0) {
           this.unitSelectedIndex = 0;
-          this.unitSelected = this.workBook.units[this.unitSelectedIndex].id       
+          this.unitSelected = this.workBook.units[this.unitSelectedIndex].id
         }
         // console.log(this.workBook)
         // console.log(this.workBook.units)
@@ -740,7 +723,7 @@ computed:{
   },
   // Loads data - Image Library
   created(){
-    this.loadData() 
+    this.loadData()
   },
   watch:{
     idWorkBook(){
@@ -765,17 +748,16 @@ computed:{
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #2D9BF0; 
+  background: #2D9BF0;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #1e679e; 
+  background: #1e679e;
 }
 button{
   // background: blue;
@@ -787,7 +769,6 @@ button{
 
 /* Basic editor styles */
 .ProseMirror {
-  
   padding: 0 1rem;
   min-height: 100vh !important;
   // background: red;
@@ -828,7 +809,6 @@ button{
   h5,
   h6 {
     line-height: 1.1;
-    
   }
 
   code {

@@ -12,6 +12,10 @@ export const getLastWorkBook = (state) => () => {
   return state.lastWorkBook;
 };
 
+export const getAllTags = (state) => () => {
+  return state.tags;
+};
+
 
 export const getLoading = (state) => {
   // console.log(id)

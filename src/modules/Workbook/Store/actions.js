@@ -1,5 +1,17 @@
 import PronoiaAPI from "../../../api/PronoiaAPI";
 
+
+export const loadTags = async ({ commit }, workbook) => {
+
+  let response = await PronoiaAPI.get('/workbook/'+workbook.id+'/tags');
+
+  if (!response) return;
+  commit("setTags", response.data);
+
+  return response.data;
+
+};
+
 export const loadWorkbooks = async ({ commit }) => {
 
   let response = await PronoiaAPI.get('/workbook');

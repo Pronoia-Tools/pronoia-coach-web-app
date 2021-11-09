@@ -9,6 +9,11 @@ export const empty = (state) => {
   return state
 }
 
+export const setTags = (state, tags) => {
+  state.tags = [...state.tags, ...tags]
+  state.loading = false
+}
+
 export const setWorkbooks = (state, workbooks) => {
   state.workbooks = [...state.workbooks, ...workbooks]
   state.loading = false
