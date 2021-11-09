@@ -81,7 +81,7 @@
   "workbook":{
     "workbookLayout":{
       "sales":"Ventas",
-      "eWorkbooks":"eWorkbooks",
+      "eWorkbooks":"Workbooks",
       "customers":"clientes",
       "createWorkbook":"Crear workbook"
     },
