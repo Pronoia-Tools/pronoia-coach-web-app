@@ -31,7 +31,9 @@
   },	
   "languages":{	
     "spanish":"Español",	
-    "english":"Ingles"	
+    "english":"Ingles",
+    "italian":"Italiano",
+    "german":"Alemán"	
   },	
   "countries":{	
     "mexico":"México",	
@@ -79,7 +81,7 @@
   "workbook":{
     "workbookLayout":{
       "sales":"Ventas",
-      "eWorkbooks":"eWorkbooks",
+      "eWorkbooks":"Workbooks",
       "customers":"clientes",
       "createWorkbook":"Crear workbook"
     },

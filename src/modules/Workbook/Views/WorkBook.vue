@@ -33,11 +33,10 @@
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.submit') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
       </div>   -->
-    </div>
-
     <!-- WORKBOOK DETAILS v2 -->
-    <div>
       <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
+    </div>
+    <div>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative border">
@@ -79,12 +78,17 @@
                   <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
                   <option value="Spanish">{{$t("languages.spanish")}}</option>
                   <option value="English">{{$t("languages.english")}}</option>
+                  <option value="Italian">{{$t("languages.italian")}}</option>
+                  <option value="German">{{$t("languages.german")}}</option>
                 </select>
               </div>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.published') }}:</label>
-              <label class=" w-full text-left" for="author">{{workBook.status}}</label>
+              <label for="author" v-bind:class="[workBook.status!='Editable' ? 'w-full text-left' : '']">{{workBook.status}}</label>
+              <span v-if="workBook.status=='Editable'" v-bind:class="[workBook.status=='Editable' ? 'w-full text-left' : '']" title="Workbooks are editable as long as they have not been published to the Pronoia Marketplace. If you need to make changes to a published workbook, please make a new edition and submit it for consideration for inclusion into the Pronoia Marketplace.">
+                <FontAwesomeIcon :icon="InfoCircle"></FontAwesomeIcon>
+              </span>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>
