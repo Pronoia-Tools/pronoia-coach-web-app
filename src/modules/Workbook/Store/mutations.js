@@ -10,7 +10,8 @@ export const empty = (state) => {
 }
 
 export const setTags = (state, tags) => {
-  state.tags = [...state.tags, ...tags]
+  console.log('aca tmb estoy llegnado')
+  state.tags = [...tags]
   state.loading = false
 }
 
