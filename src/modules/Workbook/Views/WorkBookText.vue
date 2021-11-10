@@ -230,20 +230,22 @@
           </div>
 
           <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32" >
-              <img 
-                v-for="(image, index) in imageLibrary" 
-                :key="index" 
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32 overflow-x-hidden" >
+              <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
+              <img   
                 :src="image" alt="Galery image" 
-                class=" w-16 h-16 border border-myLightBlue object-cover"
                 @click="clipboard(image)"
               >
+              </ToolTipVue>
             </div>
             <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
-            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">Add images</ButoomCustomVue>
+            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">{{$t('workbook.workbookText.addImages')}}</ButoomCustomVue>
 
           </div>  
         </div>
+
+        
+        <DropZone @drop.prevent="onDropedImages" />
       </div>
     </div>
 
@@ -269,6 +271,8 @@ import Swal from "sweetalert2"
 import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import DropZone from "@/components/DropZone.vue";
+
 
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
 import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
@@ -279,6 +283,7 @@ import { handleFileUploadOnFirebaseStorage } from '../Helpers/uploadImage'
 // import ButtonEditMoreGroup from '../../../components/ButtonEditMoreGroup.vue';
 import ButtonAppVue from '../../../components/ButtonApp.vue';
 import ButtonGroupVue from '../../../components/ButtonGroup.vue';
+import ToolTipVue from '../../../components/ToolTip.vue'
 
 
 export default {
@@ -290,6 +295,8 @@ export default {
     // FloatingMenu,
     ButoomCustomVue,
     ButtonGroupVue,
+    DropZone,
+    ToolTipVue
     // QuestionsListVue,
     // WorkbookStructure,
   },
@@ -453,6 +460,7 @@ computed:{
         icon: 'success',
         text: 'Copied into the clipboard '
       })
+      this.editor.chain().focus().setImage({ src: image }).run()
       navigator.clipboard.writeText(image)
     },
     async addImage() {
@@ -497,7 +505,6 @@ computed:{
     },
     async onSelectedImage(event){
       const files = event.target.files
-      
       new Swal({
         title: this.$t('swallAlertGeneral.wait'),
         allowOutsideClick:false
@@ -541,6 +548,33 @@ computed:{
       //   })
       // }
       // this.loadWorkBook(this.idWorkBook)
+    },
+    async onDropedImages(e){
+      const files = e.dataTransfer.files
+      console.log(e.dataTransfer.files)
+      new Swal({
+        title: this.$t('swallAlertGeneral.wait'),
+        allowOutsideClick:false
+      })
+      Swal.showLoading()
+      // 1. If no file, return
+      if (files.length === 0) return [];
+      // 2. Create an array to store all download URLs
+      let fileUrls = [];
+      // 3. Loop over all the files
+      for (var i = 0; i < files.length; i++) {
+          // 3A. Get a file to upload
+          const file = files[i];
+          // 3B. handleFileUploadOnFirebaseStorage function is in above section
+          const downloadFileResponse = await handleFileUploadOnFirebaseStorage({email:this.getUserAuth.user.email,file:file});
+          // 3C. Push the download url to URLs array
+          fileUrls.push(downloadFileResponse);
+      }
+      this.setImages(fileUrls)
+      Toast.fire({
+        icon: 'success',
+        text: this.$t('swallAlertGeneral.saved')
+      })
     },
 
     // Saving

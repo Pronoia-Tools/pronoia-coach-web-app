@@ -1,4 +1,7 @@
 {
+  "DropZone":{
+    "DragDrop":"Drag or Drop File"
+  },
   "settings":{
     "settingsLayout":{
       "profile":"Profile",
@@ -178,6 +181,8 @@
       "questions":"Questions",
       "noQuestions":"There's no questions for this section",
       "add":"Add",
+      "addToEditor":"Add to editor",
+      "addImages":"Add images",
 
       "alerts":{
         "addQuestion":{
