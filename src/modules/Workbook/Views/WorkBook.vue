@@ -72,7 +72,7 @@
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.edition">
                   <option value="1" selected>1st</option>
                   <option value="2">2nd</option>
-                  <option value="3">3ed</option>
+                  <option value="3">3rd</option>
                 </select>
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.language">
                   <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
