@@ -49,7 +49,7 @@
           <button class="absolute w-10 h-10 -bottom-4 -right-5 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
           <div class="absolute w-full h-5 top-0 left-0">
             <!-- <div v-if="file" max="100" class="w-full bg-myPurple h-4" :value="porcentage"></div> -->
-            <div v-if="porcentage<100" class="w-full bg-myPurple h-5 relative flex items-center justify-center rounded-full overflow-hidden">
+            <div v-if="file && porcentage<100" class="w-full bg-myPurple h-5 relative flex items-center justify-center rounded-full overflow-hidden">
               <span class="relative z-20">{{porcentage}}%</span>
               <div class="h-full bg-myLightGreen text-center absolute top-0 left-0 z-10" :style="{ width: porcentage + '%' }"></div>
             </div>
