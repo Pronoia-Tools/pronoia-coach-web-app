@@ -257,7 +257,7 @@ export default {
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved'),
         })
-          this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
+        this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
         
       }else{
           await this.updateCurrentWorkbook()
@@ -273,7 +273,7 @@ export default {
       let workBookSelected
       if (this.idWorkBook==="new") {
         workBookSelected = {
-          title:"",
+          title:"New Workbook Title",
           image:"",
           published:new Date(),
           edition:1,
@@ -285,6 +285,11 @@ export default {
           tags:"",
           description: '',
         }
+        this.saveWorkbook(workBookSelected);
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.saved'),
+        })
       }else{
         console.log("getWorkBookById",this.idWorkBook)
         workBookSelected = this.getWorkBookById(this.idWorkBook) 
