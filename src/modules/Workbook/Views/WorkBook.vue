@@ -205,7 +205,7 @@
 						<label class="w-32" for="author"
 							>{{ $t("workbook.workbook.tags") }}:</label
 						>
-						<Tags :idWorkBook="idWorkBook" :workbook="workbook" />
+						<Tags :idWorkBook="idWorkBook" :tagsWorkbook="workBook.tags" :workbook="workbook" />
 					</div>
 				</div>
 

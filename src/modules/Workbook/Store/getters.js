@@ -16,7 +16,6 @@ export const getAllTags = (state) => {
   return state.tags;
 };
 
-
 export const getLoading = (state) => {
   // console.log(id)
   const loading = state.loading;
