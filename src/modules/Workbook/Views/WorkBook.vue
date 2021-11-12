@@ -273,7 +273,7 @@ export default {
       let workBookSelected
       if (this.idWorkBook==="new") {
         workBookSelected = {
-          title:"",
+          title:"New Workbook Title",
           image:"",
           published:new Date(),
           edition:1,
