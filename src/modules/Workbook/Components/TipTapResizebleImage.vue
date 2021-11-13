@@ -7,6 +7,12 @@
         <button @click="changeJustyfy('start')"><FontAwesomeIcon :icon="myAlignLeft" ></FontAwesomeIcon></button>
         <button @click="changeJustyfy('center')"><FontAwesomeIcon :icon="myAlignCenter" ></FontAwesomeIcon></button>
         <button @click="changeJustyfy('end')"><FontAwesomeIcon :icon="myAlignRight" ></FontAwesomeIcon></button>
+        <div
+          class="drag-handle"
+          contenteditable="false"
+          draggable="true"
+          data-drag-handle
+        />
       </div>
       </div>
     </div>
@@ -54,6 +60,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .vue-component-resizeble-image {
   border-radius: 0.5rem;
   margin: 1rem 0;
@@ -78,6 +85,7 @@ export default {
   &:hover{
     border: 2px solid rgb(160, 160, 160);
   }
+  
   .justyfy-buttons{
     background: rgba(0, 0, 0, .8);
     color: white;
@@ -89,12 +97,28 @@ export default {
     font-size: 1rem;
     border-radius: 0.5rem;
     
+    display: flex;
+    justify-content: center;
+    align-items: center;
     button{
       &:hover{
         background: rgba(0, 0, 0, .5);
         border-radius: 0.5rem;
       }
     }
+    .drag-handle {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    top: 5px;
+    left: 5px;
+    cursor: grab;
+    border: 5px dashed transparent;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16"><path style="fill:white; " d="M4 14c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM2 6C.9 6 0 6.9 0 8s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
   }
   &:hover{
     border: 2px solid rgb(160, 160, 160);

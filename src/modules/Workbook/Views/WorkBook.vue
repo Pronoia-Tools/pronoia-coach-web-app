@@ -33,11 +33,10 @@
         <ButoomCustomVue transparent="true">{{ $t('workbook.workbook.submit') }}</ButoomCustomVue>
         <FontAwesomeIcon class="text-3xl" :icon="InfoCircle"/>
       </div>   -->
-    </div>
-
     <!-- WORKBOOK DETAILS v2 -->
-    <div>
       <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
+    </div>
+    <div>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
         <div class="col-span-12 md:col-span-4 row-span-6 h-96 flex justify-center relative border">
@@ -50,7 +49,7 @@
           <button class="absolute w-10 h-10 -bottom-4 -right-5 bg-black text-white rounded-full" @click="$refs.imageSelector.click()"><FontAwesomeIcon :icon="myPlus" /></button>
           <div class="absolute w-full h-5 top-0 left-0">
             <!-- <div v-if="file" max="100" class="w-full bg-myPurple h-4" :value="porcentage"></div> -->
-            <div v-if="file" class="w-full bg-myPurple h-5 relative flex items-center justify-center rounded-full overflow-hidden">
+            <div v-if="file && porcentage<100" class="w-full bg-myPurple h-5 relative flex items-center justify-center rounded-full overflow-hidden">
               <span class="relative z-20">{{porcentage}}%</span>
               <div class="h-full bg-myLightGreen text-center absolute top-0 left-0 z-10" :style="{ width: porcentage + '%' }"></div>
             </div>
@@ -73,18 +72,23 @@
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.edition">
                   <option value="1" selected>1st</option>
                   <option value="2">2nd</option>
-                  <option value="3">3ed</option>
+                  <option value="3">3rd</option>
                 </select>
                 <select name="Language" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.language">
                   <option value="" selected >{{ $t('workbook.workbook.language') }}</option>
                   <option value="Spanish">{{$t("languages.spanish")}}</option>
                   <option value="English">{{$t("languages.english")}}</option>
+                  <option value="Italian">{{$t("languages.italian")}}</option>
+                  <option value="German">{{$t("languages.german")}}</option>
                 </select>
               </div>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.published') }}:</label>
-              <label class=" w-full text-left" for="author">{{workBook.status}}</label>
+              <label for="author" v-bind:class="[workBook.status!='Editable' ? 'w-full text-left' : '']">{{workBook.status}}</label>
+              <span v-if="workBook.status=='Editable'" v-bind:class="[workBook.status=='Editable' ? 'w-full text-left' : '']" title="Workbooks are editable as long as they have not been published to the Pronoia Marketplace. If you need to make changes to a published workbook, please make a new edition and submit it for consideration for inclusion into the Pronoia Marketplace.">
+                <FontAwesomeIcon :icon="InfoCircle"></FontAwesomeIcon>
+              </span>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>
@@ -253,7 +257,7 @@ export default {
           icon: 'success',
           text: this.$t('swallAlertGeneral.saved'),
         })
-          this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
+        this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
         
       }else{
           await this.updateCurrentWorkbook()
@@ -269,7 +273,7 @@ export default {
       let workBookSelected
       if (this.idWorkBook==="new") {
         workBookSelected = {
-          title:"",
+          title:"New Workbook Title",
           image:"",
           published:new Date(),
           edition:1,
@@ -281,6 +285,11 @@ export default {
           tags:"",
           description: '',
         }
+        this.saveWorkbook(workBookSelected);
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.saved'),
+        })
       }else{
         console.log("getWorkBookById",this.idWorkBook)
         workBookSelected = this.getWorkBookById(this.idWorkBook) 

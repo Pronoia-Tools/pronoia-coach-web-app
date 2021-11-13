@@ -10,6 +10,9 @@
     "info":"Lock-in your first year of the full Pronoia Cloud suite with this exclusive pre-launch pricing. $35 today locks in your first year at that rate. After the launch Pronoia Cloud will be $50/month",
     "subscribe":"Subscribe!!"
   },
+  "DropZone":{
+    "DragDrop":"Drag or Drop File"
+  },
   "settings":{
     "settingsLayout":{
       "profile":"Profile",
@@ -44,7 +47,9 @@
   },
   "languages":{
     "spanish":"Spanish",
-    "english":"English"
+    "english":"English",
+    "italian":"Italian",
+    "german":"German"
   },
   "countries":{
     "mexico":"México",
@@ -92,7 +97,7 @@
   "workbook":{
     "workbookLayout":{
       "sales":"sales",
-      "eWorkbooks":"eWorkbooks",
+      "eWorkbooks":"Workbooks",
       "customers":"Customers",
       "createWorkbook":"Create New Workbook"
     },
@@ -158,7 +163,7 @@
       "price": "Price",
       "currency": "Currency",
       "tags": "Tags",
-      "describePlaceHolder": "Describe yourself here...",
+      "describePlaceHolder": "Workbook description",
 
       "save": "Save",
       "saveChanges": "Update",
@@ -188,6 +193,8 @@
       "questions":"Questions",
       "noQuestions":"There's no questions for this section",
       "add":"Add",
+      "addToEditor":"Add to editor",
+      "addImages":"Add images",
 
       "alerts":{
         "addQuestion":{
@@ -215,7 +222,7 @@
   },
   "navbar":{
     "yourLibrary":"Your Library",
-    "workBookFactory":"Workbook Factory",
+    "workBookFactory":"Creation Station",
     "coachDashboard":"Coach's Dashboard",
     "marketplace":"Marketplace",
 

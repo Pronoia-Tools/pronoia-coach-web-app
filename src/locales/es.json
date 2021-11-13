@@ -10,6 +10,9 @@
     "info":"Asegure su primer año de la suite Pronoia Cloud completa con este precio exclusivo previo al lanzamiento. $ 35 hoy se bloquea en su primer año a esa tarifa. Después del lanzamiento, Pronoia Cloud costará $ 50/mes",
     "subscribe":"Suscribete!!"
   },
+  "DropZone":{
+    "DragDrop":"arrastrar o soltar archivo"
+  },
   "settings":{
     "settingsLayout":{
       "profile":"Perfil",
@@ -43,7 +46,9 @@
   },	
   "languages":{	
     "spanish":"Español",	
-    "english":"Ingles"	
+    "english":"Ingles",
+    "italian":"Italiano",
+    "german":"Alemán"	
   },	
   "countries":{	
     "mexico":"México",	
@@ -91,7 +96,7 @@
   "workbook":{
     "workbookLayout":{
       "sales":"Ventas",
-      "eWorkbooks":"eWorkbooks",
+      "eWorkbooks":"Workbooks",
       "customers":"clientes",
       "createWorkbook":"Crear workbook"
     },
@@ -187,6 +192,8 @@
       "questions":"Preguntas",
       "noQuestions":"No hay preguntas para esta sección",
       "add":"Agregar",
+      "addToEditor":"Agregar al editor",
+      "addImages":"Agregar Imagenes",
 
       "alerts":{
         "addQuestion":{
