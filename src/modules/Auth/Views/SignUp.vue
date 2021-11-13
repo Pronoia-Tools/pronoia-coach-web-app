@@ -101,10 +101,11 @@
         </div>
 
         <router-link to="/login" class="underline text-purple-900">{{$t("sign-up.already-have-acount")}}</router-link>
-
+        <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">Join the whitelist</ButoomCustomVue>
       </Form>
     </div>
   </div>
+  <PaymentModalVue :showModal="showModalPayment" @toogleShowModal="toogleShowModalPayment"></PaymentModalVue>
 </template>
 
 <script>
@@ -112,15 +113,21 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
 import countries from "@/assets/countryList.json"
+import PaymentModalVue from '../../../components/PaymentModal.vue';
+import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+    PaymentModalVue,
+    ButoomCustomVue,
   },
   data(){
     return{
-      countryList:countries
+      countryList:countries,
+      showModalPayment:false
     }
   },
   computed: {
@@ -128,7 +135,9 @@ export default {
   },
   methods:{
     ...mapActions("auth",["signUp"]),
-    
+    toogleShowModalPayment(){
+      this.showModalPayment =!this.showModalPayment
+    },
     async submitSignUp(data){
       let revisedData = {
         firstname: data.firstName,

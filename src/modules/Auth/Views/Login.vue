@@ -43,15 +43,17 @@
     </Form>
 
     <!-- Remind Passowrd -->
-    <div class="flex flex-col text-center">
+    <div class="flex flex-col justify-center items-center text-center my-5">
       <router-link class="text-blue-800 underline my-2" to="/signup"
         >{{$t("login.register")}}</router-link
       >
       <router-link class="text-blue-800 underline my-2" to="/restore"
         >{{$t("login.forgot-password")}}</router-link
       >
+      <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">Join the whitelist</ButoomCustomVue>
     </div>
   </div>
+  <PaymentModalVue :showModal="showModalPayment" @toogleShowModal="toogleShowModalPayment"></PaymentModalVue>
 </template>
 
 <script>
@@ -59,18 +61,23 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
+import PaymentModalVue from '../../../components/PaymentModal.vue';
+import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 
 export default {
   name: "Login",
-  components: { Form, Field, ErrorMessage },
+  components: { Form, Field, ErrorMessage, PaymentModalVue, ButoomCustomVue },
   data() {
-    return { usuario: "", password: "" };
+    return { usuario: "", password: "", showModalPayment:false };
   },
   computed: {
     ...mapState("auth", ["isAuthenticated"]),
   },
   methods: {
     ...mapActions("auth", ["login"]),
+    toogleShowModalPayment(){
+      this.showModalPayment =!this.showModalPayment
+    },
     async submitLogin(values) {
       // console.log(values);
       // e.preventDefault();

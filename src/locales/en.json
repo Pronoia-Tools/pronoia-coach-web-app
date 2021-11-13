@@ -1,4 +1,15 @@
 {
+  "paymentModal":{
+    "header":"Pre-Launch pricing for Pronoia Cloud \"Exclusive Pre-launch Pricing!\" ",
+    "newsLetter":"Sign up for newsletter",
+    "listingBadge":"Listing Badge",
+    "silverBadge":"$25 Silver Co-Creator Badge",
+    "goldBadge":"$40 Gold Co-Creator Badge",
+    "diamondBadge":"$50 Diamond Co-Creator Badge",
+    "exclusive":"Lock in exclusive pre-launch pricing for the first year of the Pronoia Cloud suite. Only $35!",
+    "info":"Lock-in your first year of the full Pronoia Cloud suite with this exclusive pre-launch pricing. $35 today locks in your first year at that rate. After the launch Pronoia Cloud will be $50/month",
+    "subscribe":"Subscribe!!"
+  },
   "settings":{
     "settingsLayout":{
       "profile":"Profile",
