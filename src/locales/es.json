@@ -38,7 +38,8 @@
     "send":"Enviar",
     "select":"Seleccionar",	
     "submit":"Enviar",
-    "save":"Guardar"
+    "save":"Guardar",
+    "joinWhitelist":"Ingresa a la whitelist"
   },	
   "languages":{	
     "spanish":"Español",	

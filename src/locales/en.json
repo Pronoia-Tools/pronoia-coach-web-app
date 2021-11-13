@@ -39,7 +39,8 @@
     "send":"Send",
     "select":"Select",
     "submit":"Submit",
-    "save":"Save"
+    "save":"Save",
+    "joinWhitelist":"Join the whitelist"
   },
   "languages":{
     "spanish":"Spanish",

@@ -50,7 +50,7 @@
       <router-link class="text-blue-800 underline my-2" to="/restore"
         >{{$t("login.forgot-password")}}</router-link
       >
-      <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">Join the whitelist</ButoomCustomVue>
+      <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue>
     </div>
   </div>
   <PaymentModalVue :showModal="showModalPayment" @toogleShowModal="toogleShowModalPayment"></PaymentModalVue>

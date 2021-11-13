@@ -101,7 +101,7 @@
         </div>
 
         <router-link to="/login" class="underline text-purple-900">{{$t("sign-up.already-have-acount")}}</router-link>
-        <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">Join the whitelist</ButoomCustomVue>
+        <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue>
       </Form>
     </div>
   </div>
