@@ -1,10 +1,13 @@
 <template>
-	<div class="bg-gray-500 w-2/4 h-4/4 text-center rounded-xl text-white" v-for="tag in tagsWorkbook " v-bind:key="tag">{{ tag.name }}</div>
-	<input @keydown.enter='addNewTag()' v-bind="tag" type="text">
+	<div class="flex flex-col w-full">
+		<div class="flex flex-row flex-wrap">
+			<p class="bg-gray-500 w-1/4 h-4/4 m-1 text-center rounded-xl text-white"  v-for="tag in tagsWorkbook " v-bind:key="tag">{{ tag.name }}</p>
+		</div>
 
-	<div>
-		ALL TAGS 
-		<div class="bg-gray-500 w-2/4 h-4/4 text-center rounded-xl text-white" v-for="tag in allTags " v-bind:key="tag">{{ tag.name }}</div>
+		<div class="flex flex-row flex-wrap">
+			<input @change='onChange()' v-model="tagNew" type="text">
+			<p class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" @click="addNewTag(tagAll)" v-for="tagAll in filteredTags " v-bind:key="tagAll">{{ tagAll.name }}</p>
+		</div>
 	</div>
 </template>
 
@@ -29,8 +32,9 @@ export default {
 	data() {
 			return {
 				workbookSelected: null,
-				tag:null,
+				tagNew:null,
 				allTags:null,
+				filteredTags:null,
 			};
 		},
 	methods:{
@@ -41,13 +45,17 @@ export default {
 			this.workbookSelected = this.getWorkBookById(this.idWorkBook)
 			console.log(this.workbookSelected)
 		},
-		addNewTag(){
-			this.setTagsOnWorkbook(this.idWorkBook,this.tag)
+		onChange(){
+			this.filteredTags = this.allTags.filter(e => e.name.toLowerCase() === this.tagNew.toLowerCase())
 		},
 		getTags(){
 			this.allTags = this.getAllTags
 			console.log(this.allTags)
-		}
+		},
+		addNewTag(tagObj){
+			console.log(tagObj)
+			/* this.setTagsOnWorkbook(this.idWorkBook,tagObj) */
+		},
 	},
 	async mounted() {
 		this.filterWorkBook()

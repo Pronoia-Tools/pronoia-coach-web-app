@@ -212,7 +212,8 @@
 				<textarea
 					class="
             col-span-12
-            h-40
+						row-start-8
+						h-40
             p-4
             placeholder-black
             mt-4

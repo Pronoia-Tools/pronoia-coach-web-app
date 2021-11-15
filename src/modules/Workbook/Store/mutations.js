@@ -15,13 +15,10 @@ export const setTags = (state, tags) => {
   state.loading = false
 }
 
-export const setTagsOnWorkbook = (state,idWorkBook,tag) => {
+export const setTagsOnWorkbook = (state,idWorkBook,tagNew) => {
     const newWorkbookList = state.workbooks.map(eWorkbook => {
       if (eWorkbook.id === idWorkBook) {
-        eWorkbook.tags.push(tag)
-        return eWorkbook
-      }else{
-        return eWorkbook
+        eWorkbook.tags.push(tagNew)
       }
     })
     state.workbooks = newWorkbookList
