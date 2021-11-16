@@ -5,8 +5,8 @@
 		</div>
 
 		<div class="flex flex-row flex-wrap">
-			<input @change='onChange()' v-model="tagNew" type="text">
-			<p class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" @click="addNewTag(tagAll)" v-for="tagAll in filteredTags " v-bind:key="tagAll">{{ tagAll.name }}</p>
+			<input @keydown.enter="onChange()" v-model="tagNew" type="text">
+			<p class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" v-for="tagAll in filteredTags " v-bind:key="tagAll">{{ tagAll.name }}</p>
 		</div>
 	</div>
 </template>
@@ -46,6 +46,7 @@ export default {
 			console.log(this.workbookSelected)
 		},
 		onChange(){
+			console.log(this.allTags)
 			this.filteredTags = this.allTags.filter(e => e.name.toLowerCase() === this.tagNew.toLowerCase())
 		},
 		getTags(){
