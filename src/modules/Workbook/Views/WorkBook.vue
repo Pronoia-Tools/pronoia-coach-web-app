@@ -421,7 +421,6 @@
 				Swal.showLoading();
 
 				// upload image
-				console.log(this.file);
 				if (this.file) {
 					const image = await uploadImageWorkbook(this.file);
 					this.workBook.image = image;

@@ -3,10 +3,11 @@
 		<div class="flex flex-row flex-wrap">
 			<p class="bg-gray-500 w-1/4 h-4/4 m-1 text-center rounded-xl text-white"  v-for="tag in tagsWorkbook " v-bind:key="tag">{{ tag.name }}</p>
 		</div>
+		
 
 		<div class="flex flex-row flex-wrap">
 			<input @keydown.enter="onChange()" v-model="tagNew" type="text">
-			<p class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" v-for="tagAll in filteredTags " v-bind:key="tagAll">{{ tagAll.name }}</p>
+			<p class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white"  v-for="oneTag in filteredTags " @click="addNewTag(oneTag)" v-bind:key="oneTag">{{ oneTag.name }}</p>
 		</div>
 	</div>
 </template>
@@ -27,7 +28,6 @@ export default {
 		},
 	computed:{
 		...mapGetters("workBook",["getWorkBookById","getAllTags"]),
-		...mapMutations("workBook",["setTagsOnWorkbook"])
 	},
 	data() {
 			return {
@@ -38,6 +38,7 @@ export default {
 			};
 		},
 	methods:{
+		...mapMutations("workBook",["setTagsOnWorkbook"]),
 		...mapActions("workBook", [
 				"loadTags",
 			]),
@@ -46,16 +47,15 @@ export default {
 			console.log(this.workbookSelected)
 		},
 		onChange(){
-			console.log(this.allTags)
 			this.filteredTags = this.allTags.filter(e => e.name.toLowerCase() === this.tagNew.toLowerCase())
 		},
 		getTags(){
 			this.allTags = this.getAllTags
-			console.log(this.allTags)
+
 		},
 		addNewTag(tagObj){
 			console.log(tagObj)
-			/* this.setTagsOnWorkbook(this.idWorkBook,tagObj) */
+			this.setTagsOnWorkbook({idWorkBook:this.idWorkBook,tagNew:tagObj})
 		},
 	},
 	async mounted() {
