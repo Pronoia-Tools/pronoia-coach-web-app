@@ -809,6 +809,7 @@ computed:{
         Question
       ],
       content: ``,
+      editable:true
     });
     this.loadWorkBook()
   },
@@ -825,6 +826,11 @@ computed:{
     },
     unitSelected(){
         this.loadWorkBook()
+    },
+    preview(value){
+      console.log(value)
+      this.editor.setOptions({editable : !value})
+      this.editor.commands.focus()
     }
   }
 }

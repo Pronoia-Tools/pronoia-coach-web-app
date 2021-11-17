@@ -13,6 +13,8 @@ export default Node.create({
 
   atom: true,
 
+  contenteditable: false,
+
   addAttributes() {
     return {
       id: {
@@ -24,6 +26,10 @@ export default Node.create({
       isOpen: {
         default: false,
       },
+      contenteditable: {
+        default: false,
+      },
+
     }
   },
 
