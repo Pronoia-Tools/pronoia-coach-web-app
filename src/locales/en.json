@@ -57,7 +57,8 @@
     },
     "error":"Ups... Something went wrong",
     "try-again":"Try again",
-    "wait":"We are working on it!"
+    "wait":"We are working on it!",
+    "required":"Please complete required fields"
   },
   "login":{
     "email":"Email",

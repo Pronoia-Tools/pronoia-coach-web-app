@@ -36,6 +36,14 @@
     <!-- WORKBOOK DETAILS v2 -->
       <h2 class=" text-subtitle font-semibold">{{ $t('workbook.workbook.information') }}</h2>
     </div>
+    <div class="flex justify-center items-center text-xl gap-2">
+      <p v-if="errors.length" class="text-red-700 text-base">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors" :key="error.id">{{ error }}</li>
+        </ul><br>
+      </p>
+    </div>
     <div>
       <div class="grid grid-cols-12 px-4 gap-y-4">
         <!-- image -->
@@ -91,7 +99,7 @@
               </span>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>
+              <label class=" w-32" for="author" >{{ $t('workbook.workbook.price') }}:</label>
               <div class="flex gap-2 w-full">
                 <input type="number" placeholder="19.99" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.price">
           
@@ -192,6 +200,7 @@ export default {
   data(){
     return{
       // ICONS
+      errors: [],
       Backward:faArrowLeft,
       InfoCircle:faInfoCircle,
       myPlus:faPlus,
@@ -321,26 +330,48 @@ export default {
       this.$router.push({path: '/workbook/'+newWorkbook.id})
       
     },
+
     async updateCurrentWorkbook(){
-      new Swal({
-        title: this.$t("swallAlertGeneral.wait"),
-        allowOutsideClick:false
-      })
-      Swal.showLoading()
+      this.errors = [];
+      if (this.workBook.language == '') {
+        this.errors.push('Select a language.');
+      }
       
-      // upload image
-      if (this.uploadedImageurl) {
-        // const image = await this.handleUpload()
-        this.workBook.image = this.uploadedImageurl
-        // console.log({image})
+      if (this.workBook.price < 5 && !isNaN(parseFloat(this.workBook.price))) {
+        this.errors.push('The price should not be under 5.');
       }
 
-      await this.updateWorkbook(this.workBook)
+      if (!isNaN(parseFloat(this.workBook.price)) && this.workBook.currency == '') {
+        this.errors.push('Select a currency.');
+      }
+      
+      console.log(this.errors)
+      if (this.errors.length ==  0) {
+        new Swal({
+          title: this.$t("swallAlertGeneral.wait"),
+          allowOutsideClick:false
+        })
+        Swal.showLoading()
+        // upload image
+        if (this.uploadedImageurl) {
+          // const image = await this.handleUpload()
+          this.workBook.image = this.uploadedImageurl
+          // console.log({image})
+        }
 
-      Toast.fire({
-        icon: 'success',
-        text: this.$t('swallAlertGeneral.updated'),
-      })
+        await this.updateWorkbook(this.workBook)
+        Toast.fire({
+          icon: 'success',
+          text: this.$t('swallAlertGeneral.updated'),
+        })
+
+      } else {
+        Toast.fire({
+          icon: 'error',
+          text: this.$t('swallAlertGeneral.required'),
+        })
+      }
+      
     },
     deleteCurrentWorkbook(){
       Swal.fire({
