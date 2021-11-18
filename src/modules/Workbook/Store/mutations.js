@@ -26,6 +26,16 @@ export const setTagsOnWorkbook = (state,{idWorkBook,tagNew}) => {
     state.workbooks = newWorkbookList
 }
 
+export const quitTagsOnWorkbook = (state,{idWorkBook,tagDelete}) => {
+  const newWorkbookList = state.workbooks.map(eWorkbook => {
+    if (eWorkbook.id == idWorkBook) {
+      eWorkbook.tags = eWorkbook.tags.filter(tagD => tagD.name !== tagDelete.name);
+    }
+    return eWorkbook
+  })
+  state.workbooks = newWorkbookList
+}
+
 export const setWorkbooks = (state, workbooks) => {
   state.workbooks = [...state.workbooks, ...workbooks]
   state.loading = false

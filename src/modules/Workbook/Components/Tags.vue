@@ -1,9 +1,9 @@
 <template>
 	<div class="flex flex-col w-full">
 		<div class="flex flex-row flex-wrap">
-			<p class="bg-gray-500 w-1/4 h-4/4 m-1 text-center rounded-xl text-white"  v-for="tag in tagsWorkbook " v-bind:key="tag">{{ tag.name }}</p>
+			<p class="bg-gray-500 w-1/4 h-4/4 m-1 text-center rounded-xl text-white"  v-for="tag in tagsWorkbook " @click="deleteTag(tag)" v-bind:key="tag">{{ tag.name }}</p>
 		</div>
-		
+
 
 		<div class="flex flex-row flex-wrap">
 			<input @keydown.enter="onChange()" v-model="tagNew" type="text">
@@ -38,7 +38,7 @@ export default {
 			};
 		},
 	methods:{
-		...mapMutations("workBook",["setTagsOnWorkbook"]),
+		...mapMutations("workBook",["setTagsOnWorkbook", "quitTagsOnWorkbook"]),
 		...mapActions("workBook", [
 				"loadTags",
 			]),
@@ -56,6 +56,9 @@ export default {
 		addNewTag(tagObj){
 			console.log(tagObj)
 			this.setTagsOnWorkbook({idWorkBook:this.idWorkBook,tagNew:tagObj})
+		},
+		deleteTag(tagObj2){
+			this.quitTagsOnWorkbook({idWorkBook:this.idWorkBook,tagDelete:tagObj2})
 		},
 	},
 	async mounted() {
