@@ -76,7 +76,7 @@ export default {
     this.editor.destroy()
   },
   watch: {
-    isAuthenticated (state, oldState) {
+    isAuthenticated (state) {
       // console.log({state})
       // console.log("-*----------------")
       // console.log({oldState})
