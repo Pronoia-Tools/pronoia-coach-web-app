@@ -35,7 +35,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters("workBook",["getWorkBookById"]),
+    ...mapGetters("workBook",["getWorkBookById","getLoading"]),
     ...mapGetters("auth",["getUserAuth"]),
     isAuthenticated() {
       return this.getUserAuth.user
