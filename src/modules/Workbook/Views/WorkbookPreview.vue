@@ -33,16 +33,17 @@ export default {
     }
   },
   computed:{
-    ...mapGetters("workBook",["getWorkBookById"]),    
+    ...mapGetters("workBook",["getWorkBookById"]),
+    ...mapGetters("auth",["getUserAuth"]),
+    isAuthenticated() {
+      return this.getUserAuth.user
+    }
   },
   methods:{
     ...mapActions("workBook", ["loadWorkbooks"]),
     async loadWorkbook(){
-      this.editor.commands.clearContent()
       await this.loadWorkbooks();
-      console.log(this.idWorkBook)
       this.workbook = this.getWorkBookById(this.idWorkBook)  
-      console.log(this.workbook.units[0].contents)
       this.editor.commands.setContent(this.workbook.units[0].contents.content)
     }
   },
@@ -65,12 +66,23 @@ export default {
       content: "",
       editable:false
     })
-    this.loadWorkbook()
   },
 
   beforeUnmount() {
     this.editor.destroy()
   },
+  watch: {
+    isAuthenticated (state, oldState) {
+      // Our fancy notification (2).
+      console.log({state})
+      console.log("-*----------------")
+      console.log(oldState)
+      if (state) {
+        this.loadWorkbook()
+      }
+    }
+  }
+
 }
 </script>
 
