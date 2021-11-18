@@ -1,8 +1,13 @@
 import PronoiaAPI from "../../../api/PronoiaAPI";
 
 export const loadWorkbooks = async ({ commit }) => {
-
-  let response = await PronoiaAPI.get('/workbook');
+  let response
+  try {
+    response = await PronoiaAPI.get('/workbook');
+    
+  } catch (error) {
+    console.log(error)
+  }
 
   if (!response) return;
   commit("setWorkbooks", response.data);
