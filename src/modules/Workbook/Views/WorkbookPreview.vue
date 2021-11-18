@@ -39,7 +39,7 @@ export default {
   methods:{
     async loadWorkbook(){
       this.editor.commands.clearContent()
-      await this.loadWorkbooks;
+      await this.loadWorkbooks();
       console.log(this.idWorkBook)
       this.workbook = this.getWorkBookById(this.idWorkBook)  
       console.log(this.workbook.units[0].contents)
