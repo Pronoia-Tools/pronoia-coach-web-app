@@ -1,6 +1,5 @@
 <template>
   <div class="w-full min-h-full">
-    {{isAuthenticated}}
     <SpinerVue v-if="getLoading"></SpinerVue>
     <editor-content :editor="editor" />
   </div>
@@ -78,10 +77,9 @@ export default {
   },
   watch: {
     isAuthenticated (state, oldState) {
-      // Our fancy notification (2).
-      console.log({state})
-      console.log("-*----------------")
-      console.log({oldState})
+      // console.log({state})
+      // console.log("-*----------------")
+      // console.log({oldState})
       if (state) {
         this.loadWorkbook()
       }
