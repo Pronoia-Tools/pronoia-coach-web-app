@@ -99,7 +99,7 @@
               </span>
           </div>
           <div class="flex justify-center items-center text-xl gap-2">
-              <label class=" w-32" for="author" >{{ $t('workbook.workbook.price') }}:</label>
+              <label class=" w-32" for="author">{{ $t('workbook.workbook.price') }}:</label>
               <div class="flex gap-2 w-full">
                 <input type="number" placeholder="19.99" class="border border-gray-500 rounded px-2 py-2 w-full" v-model="workBook.price">
           
