@@ -1,6 +1,7 @@
 <template>
   <div class="w-full min-h-full">
-
+    {{isAuthenticated}}
+    <SpinerVue v-if="getLoading"></SpinerVue>
     <editor-content :editor="editor" />
   </div>
 </template>
@@ -16,10 +17,11 @@ import Iframe from "../Helpers/iframe"
 import Heading from "../Helpers/heading"
 import Question from "../../Question/Helpers/QuestionExtensionEditor"
 import { mapGetters, mapActions } from 'vuex'
+import SpinerVue from '../../../components/Spiner.vue'
 
 export default {
   components: {
-    EditorContent,
+    EditorContent,SpinerVue
   },
   props:{
     idWorkBook: {
@@ -66,6 +68,9 @@ export default {
       content: "",
       editable:false
     })
+    if (this.isAuthenticated) {
+        this.loadWorkbook()
+    }
   },
 
   beforeUnmount() {
@@ -76,7 +81,7 @@ export default {
       // Our fancy notification (2).
       console.log({state})
       console.log("-*----------------")
-      console.log(oldState)
+      console.log({oldState})
       if (state) {
         this.loadWorkbook()
       }
