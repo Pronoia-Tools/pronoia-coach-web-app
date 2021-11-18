@@ -1,6 +1,7 @@
 <template>
   <node-view-wrapper class="draggable-item">
     <div
+      v-if="editor.view.editable"
       class="drag-handle"
       contenteditable="false"
       draggable="true"
@@ -21,7 +22,7 @@
               <textarea v-if="editable" type="text" class="border border-gray-500 pl-1 pr-1 rounded w-full" v-model="question.question"></textarea>
               <span v-else class="border border-gray-500 bg-gray-200 rounded pl-1 pr-1 text-left">{{question.question}}</span>
           </div> -->
-          <TextEditor :contentHandler="contentHandler" :editorChangedHandler="editorChangedHandler"></TextEditor>
+          <TextEditor :editableParent="editor.view.editable" :contentHandler="contentHandler" :editorChangedHandler="editorChangedHandler"></TextEditor>
           <!-- <div class="flex justify-center items-center text-xl gap-2">
               <label class=" w-32" for="author">{{ $t('workbook.workbook.edition') }}:</label>
               <div class="flex gap-2 w-full">
