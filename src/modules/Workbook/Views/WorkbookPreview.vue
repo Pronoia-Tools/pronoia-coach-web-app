@@ -34,9 +34,9 @@ export default {
   },
   computed:{
     ...mapGetters("workBook",["getWorkBookById"]),    
-    ...mapActions("workBook", ["loadWorkbooks"]),
   },
   methods:{
+    ...mapActions("workBook", ["loadWorkbooks"]),
     async loadWorkbook(){
       this.editor.commands.clearContent()
       await this.loadWorkbooks();
