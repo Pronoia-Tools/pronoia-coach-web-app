@@ -172,7 +172,7 @@
           </div>
 
           <!--Editor --> 
-          <div class="flex-grow overflow-auto z-0">
+          <div id="editor-text" class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
             <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -974,5 +974,14 @@ button{
     height: 100%;
   }
 }
+}
+
+
+#editor-text{
+
+&::-webkit-scrollbar {
+  width: 0px;
+}
+
 }
 </style>
