@@ -11,7 +11,9 @@
 		</div>
 
 		<div class="flex flex-row flex-wrap">
-			<input @keydown.enter="onChange()" v-model="tagNew" type="text" />
+			
+			<input @keydown="onChange" v-model="tagNew" type="text" />
+			
 			<div
 				class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white"
 				v-for="oneTag in filteredTags"
@@ -22,9 +24,10 @@
 				{{ oneTag.name }}
 
 				</div>
-				<div class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" @click="addNewTag({name:tagNew})" v-if="flag === true">
+				<div v-if="flag === true" class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" @click="addNewTag({name:tagNew})">
 					{{ tagNew }}
 				</div>
+
 		</div>
 	</div>
 </template>
@@ -60,13 +63,11 @@
 			...mapActions("workBook", ["loadTags"]),
 			onChange() {
 				this.filteredTags = this.allTags.filter(
-					(e) => e.name.toLowerCase() === this.tagNew.toLowerCase(),
+					(e) => e.name.includes(this.tagNew.toLowerCase()),
 				);
+				console.log(this.filteredTags)
 				if (this.filteredTags.length === 0) {
 					this.flag = true
-				}
-				if (this.filteredTags.length !== 0) {
-					this.flag = false
 				}
 			},
 			getTags() {
@@ -74,6 +75,9 @@
 			},
 			addNewTag(tagObj) {
 				this.setTagsOnWorkbook({ idWorkBook: this.idWorkBook, tagNew: tagObj });
+				this.tagNew = ""
+				this.filteredTags = []
+				this.flag = false
 			},
 			deleteTag(tagObj2) {
 				this.quitTagsOnWorkbook({

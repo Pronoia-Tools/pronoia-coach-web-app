@@ -208,7 +208,12 @@
 						<Tags :idWorkBook="idWorkBook" :tagsWorkbook="workBook.tags" />
 					</div>
 				</div>
-
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
 				<textarea
 					class="
             col-span-12
