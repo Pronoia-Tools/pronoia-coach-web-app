@@ -18,13 +18,12 @@
 				@click="addNewTag(oneTag)"
 				v-bind:key="oneTag"
 				>
-				<div v-if="oneTag.length !== 0">
 
 				{{ oneTag.name }}
+
 				</div>
-				<div class="text-black" v-else>
-					test
-				</div>
+				<div class="bg-gray-500 m-1 w-1/4 h-4/4 text-center rounded-xl text-white" @click="addNewTag({name:tagNew})" v-if="flag === true">
+					{{ tagNew }}
 				</div>
 		</div>
 	</div>
@@ -53,6 +52,7 @@
 				tagNew: null,
 				allTags: null,
 				filteredTags: null,
+				flag: null,
 			};
 		},
 		methods: {
@@ -62,6 +62,12 @@
 				this.filteredTags = this.allTags.filter(
 					(e) => e.name.toLowerCase() === this.tagNew.toLowerCase(),
 				);
+				if (this.filteredTags.length === 0) {
+					this.flag = true
+				}
+				if (this.filteredTags.length !== 0) {
+					this.flag = false
+				}
 			},
 			getTags() {
 				this.allTags = this.getAllTags;

@@ -17,6 +17,7 @@ export const setTags = (state, tags) => {
 export const setTagsOnWorkbook = (state,{idWorkBook,tagNew}) => {
     const newWorkbookList = state.workbooks.map(eWorkbook => {
       if (eWorkbook.id == idWorkBook) {
+        tagNew.name = tagNew.name.charAt(0).toUpperCase() + tagNew.name.slice(1);
         eWorkbook.tags.push(tagNew)
       }
       return eWorkbook
