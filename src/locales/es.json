@@ -1,4 +1,15 @@
 {
+  "paymentModal":{
+    "header":"Precio previo al lanzamiento de Pronoia Cloud \" ¡Precio exclusivo previo al lanzamiento! \" ",
+    "newsLetter":"Regístrate a nuestro newsletter",
+    "listingBadge":"Insignia de listado",
+    "silverBadge":"$25 Insignia de co-creador de plata",
+    "goldBadge":"$40 Insignia de co-creador de oro",
+    "diamondBadge":"$50 Insignia de co-creador de diamante",
+    "exclusive":"Fije un precio exclusivo previo al lanzamiento para el primer año de la suite Pronoia Cloud. ¡Solo $ 35!",
+    "info":"Asegure su primer año de la suite Pronoia Cloud completa con este precio exclusivo previo al lanzamiento. $ 35 hoy se bloquea en su primer año a esa tarifa. Después del lanzamiento, Pronoia Cloud costará $ 50/mes",
+    "subscribe":"Suscribete!!"
+  },
   "DropZone":{
     "DragDrop":"arrastrar o soltar archivo"
   },
@@ -30,7 +41,8 @@
     "send":"Enviar",
     "select":"Seleccionar",	
     "submit":"Enviar",
-    "save":"Guardar"
+    "save":"Guardar",
+    "joinWhitelist":"Ingresa a la whitelist"
   },	
   "languages":{	
     "spanish":"Español",	
@@ -56,7 +68,8 @@
     },
     "error":"Ups... Algo salió mal",
     "try-again":"Intenta nuevamente",
-    "wait":"Estamos trabajando en ello!"
+    "wait":"Estamos trabajando en ello!",
+    "required":"Porfavor, complete los campos requeridos"
   },
   "login":{	
     "email":"Email",	

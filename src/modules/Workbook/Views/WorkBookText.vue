@@ -757,7 +757,7 @@ computed:{
         this.$router.push({name:"no-workbook"})
       }
 
-      if (!workBookSelected.units) {
+      if (!workBookSelected.units || workBookSelected.units.length < 1) {
         console.log('no units loaded')
         workBookSelected = await this.loadWorkBookUnits(workBookSelected)
       }
