@@ -36,7 +36,8 @@ export const saveWorkbook = async ({ commit }, workbook) => {
 
 export const updateWorkbook = async ({ commit }, workbook) => {
   let response = await PronoiaAPI.put('/workbook/'+workbook.id, workbook );
-
+ 
+  console.log(workbook,response)
   if (!response) return;
   commit("updateWorkbook", response.data);
 

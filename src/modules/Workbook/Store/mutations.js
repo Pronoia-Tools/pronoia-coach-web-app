@@ -43,6 +43,7 @@ export const saveWorkbook = (state, workbook) => {
 }
 
 export const updateWorkbook = (state, workbook) => {
+  console.log(workbook)
   const newWorkbookList = state.workbooks.map(eWorkbook => {
     if (eWorkbook.id === workbook.id) {
       return workbook
@@ -79,7 +80,7 @@ export const updateWorkbookAddSection = (state,{idWorkBook}) => {
   const newWorkbookList = state.workbooks.map(eWorkbook => {
     if (eWorkbook.id === idWorkBook) {
       const newWorkbook = {...eWorkbook}
-      newWorkbook.sections[eWorkbook.sections.length] = { 
+      newWorkbook.sections[eWorkbook.sections.length] = {
         type:"doc",
         content:[],
         questions:[]
