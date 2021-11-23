@@ -100,9 +100,9 @@
             <div v-if="editor" class="editor-container">
                 <div class="editor-content" v-html="editor.getHTML()"></div>
             </div>
-            <ButtonAppVue @click="toggelEditable" class="px-3">
-              <FontAwesomeIcon :icon="myEdit"></FontAwesomeIcon>
-            </ButtonAppVue>
+            <ButoomCustomVue @click="toggelEditable" class="px-3">
+              <FontAwesomeIcon :icon="myAngleDown"></FontAwesomeIcon>
+            </ButoomCustomVue>
         </div>
         
         <!-- </div> -->
@@ -152,7 +152,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {faEdit,faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 // import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import { Editor, EditorContent } from '@tiptap/vue-3'
@@ -165,7 +165,7 @@ import Iframe from "../Helpers/iframe"
 import Heading from "../Helpers/heading"
 
 import Swal from "sweetalert2"
-// import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+import ButoomCustomVue from '../../../components/ButoomCustom.vue'
 import {Toast} from '@/components/Toast.js'
 import { mapGetters } from 'vuex'
 
@@ -182,7 +182,7 @@ export default {
     EditorContent,
     FontAwesomeIcon,
     // FloatingMenu,
-    // ButoomCustomVue,
+    ButoomCustomVue,
     ButtonAppVue,
     // ButtonGroupVue
     // QuestionsListVue,
@@ -206,7 +206,6 @@ export default {
   data() {
     return {
       // Icons
-      myEdit:faEdit,
       myBold:faBold,
       myItalic:faItalic,
       myUnderline:faUnderline,
@@ -490,8 +489,6 @@ button{
 
   .ProseMirror{
     min-height: 6rem;
-    
-    background: crimson;
   }
 }
 </style>
