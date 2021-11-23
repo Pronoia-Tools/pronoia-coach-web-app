@@ -2,18 +2,16 @@
     <div id="editor" class="flex flex-col">
 
         <!-- Menu Bar -->
-        <div v-if="editor && this.myeditable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
+        <div v-if="editor && this.myeditable" class="flex gap-2 flex-wrap border-t border-b border-border px-2 py-1 z-40" :class="fixed">
         
 
             <div class="flex items-center gap-5">
-                     <!-- <ButtonGroupVue> -->
+              <!-- <ButtonGroupVue> -->
               <ButtonAppVue @click="updateContent">
                 {{ $t('workbook.workbookText.save') }}
               </ButtonAppVue>
-<!-- </ButtonGroupVue> -->
-
-
-</div>
+              <!-- </ButtonGroupVue> -->
+            </div>
             <button @click="editor.chain().focus().undo().run()">
             <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
             </button>
@@ -98,19 +96,19 @@
             </button> -->
 
         </div>
-        <div v-else>
-          <ButtonAppVue @click="toggelEditable">
-                Edit
-              </ButtonAppVue>
+        <div v-else class="flex justify-between items-center">
             <div v-if="editor" class="editor-container">
                 <div class="editor-content" v-html="editor.getHTML()"></div>
             </div>
+            <ButtonAppVue @click="toggelEditable" class="px-3">
+              <FontAwesomeIcon :icon="myEdit"></FontAwesomeIcon>
+            </ButtonAppVue>
         </div>
         
         <!-- </div> -->
 
         <!--Editor --> 
-        <div v-if="this.myeditable" class="flex-grow overflow-auto z-0">
+        <div v-if="this.myeditable" class="overflow-auto z-0">
 
         <!-- FLOATING MENU --> 
         <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -144,7 +142,7 @@
         </floating-menu> -->
 
         <!-- EDITOR ITSELF -->
-        <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
+        <editor-content id="editor-text" :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
         
         </div>
 
@@ -154,7 +152,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faEdit,faAngleDown,faAngleUp,faBold,faItalic,faUnderline,faStrikethrough,faQuoteLeft,faCode,faListOl,faList,faUndo,faRedo,faImage,faChevronLeft,faChevronRight,faAlignLeft,faAlignRight,faAlignCenter,faAlignJustify,faFilm,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 // import { Editor, EditorContent, FloatingMenu } from '@tiptap/vue-3'
 import { Editor, EditorContent } from '@tiptap/vue-3'
@@ -208,6 +206,7 @@ export default {
   data() {
     return {
       // Icons
+      myEdit:faEdit,
       myBold:faBold,
       myItalic:faItalic,
       myUnderline:faUnderline,
@@ -378,7 +377,7 @@ button{
 .ProseMirror {
   
   padding: 0 1rem;
-  min-height: 100vh !important;
+  // min-height: 100vh !important;
   // background: red;
   border: none;
   &:focus{
@@ -486,5 +485,13 @@ button{
     height: 100%;
   }
 }
+}
+#editor-text{
+
+  .ProseMirror{
+    min-height: 6rem;
+    
+    background: crimson;
+  }
 }
 </style>
