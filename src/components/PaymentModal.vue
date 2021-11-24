@@ -114,7 +114,7 @@ export default {
     loadStripe(){
       console.log("loadStripe")
       /* global Stripe */
-      this.stripe = Stripe("pk_test_51Ju4wWKTV5DU12HUddJeaGeGvKA8BMMwYFIWSY3opzLFQBNXyuxv0w0uQhlbqygwvl8byHTrooYTaSjSST1qsxfV00B9F4kc1m");
+      this.stripe = Stripe(process.env.VUE_APP_STRIPE);
     },
   },
   mounted(){  

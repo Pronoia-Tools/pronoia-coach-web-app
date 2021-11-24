@@ -74,7 +74,7 @@ export default {
     return { usuario: "", password: "", showModalPayment:false };
   },
   computed: {
-    ...mapState("auth", ["isAuthenticated"]),
+    ...mapState("auth", ["isAuthenticated", "user"]),
   },
   methods: {
     ...mapActions("auth", ["login"]),
@@ -92,7 +92,12 @@ export default {
         await this.login(jsonUserData);
         if (this.isAuthenticated) {
           // localStorage.setItem("user",JSON.stringify(response));
-          this.$router.push({name:"no-workbook"});
+          if(this.user.authorized){
+            this.$router.push({name:"no-workbook"});
+          } else {
+            this.$router.push("/settings/profile");
+          }
+          
         }  
       } catch (error) {
         Swall.fire({

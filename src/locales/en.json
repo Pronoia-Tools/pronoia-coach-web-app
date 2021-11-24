@@ -88,7 +88,12 @@
     "country":"Country",
     "checkBox":"Add me to the coaching dashboard waitlist",
     "submit":"Submit",
-    "already-have-acount":"I already have an account"
+    "already-have-acount":"I already have an account",
+    "newsletter_checkbox": "Sign up for newsletter",
+    "listing_badge": "Listing Badge",
+    "pre_launch": "Lock in exclusive pre-launch pricing for the first year of the Pronoia Cloud Suite. Only $35!",
+    "pre_launch_info": "Lock-in your first year of the full Pronoia Cloud suite with this exclusive pre-launch pricing. $35 today locks in your first year at that rate. After the launch Pronoia Cloud will be $50/month"
+
   },
   "feedbackButton":{
     "report-type":"Type of report",

@@ -85,7 +85,52 @@
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
-        <div class="flex justify-center items-center gap-3 my-4">
+        <div class="field w-full">
+          <label class="block" for="listing_badge">{{$t("sign-up.listing_badge")}}</label>
+          <Field
+            class="w-full px-2 py-1 border rounded border-gray-400"
+            name="listing_badge"
+            rules="required"
+            as="select"
+          >
+            <option value="" disabled>{{$t("input.select")}}</option>
+            <option v-for="badge in badgeList" :key="badge.id" :value="badge.name">{{badge.name}}</option>
+            <!-- <option value="Mexico">{{$t("countries.mexico")}}</option>
+            <option value="USA">{{$t("countries.usa")}}</option> -->
+          </Field>
+          <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
+        </div>
+
+        <div class="flex flex-col justify-start">
+
+      <div class="flex justify-start items-center gap-3 my-4">
+          <Field
+            type="checkbox"
+            name="newsletter"
+            class="block"
+            :value="true"
+          />
+          <label class="block text-blue-500" for="cbox2"
+            >{{$t("sign-up.newsletter_checkbox")}}</label
+          >
+        </div>
+
+        <div class="flex justify-start items-start gap-3 my-4">
+          <Field
+            type="checkbox"
+            name="pre_launch"
+            class="block"
+            :value="true"
+          />
+          <label class="block text-blue-500" for="cbox2"
+            >{{$t("sign-up.pre_launch")}}</label
+          >
+          <span title="Lock-in your first year of the full Pronoia Cloud suite with this exclusive pre-launch pricing. $35 today locks in your first year at that rate. After the launch Pronoia Cloud will be $50/month">
+                <FontAwesomeIcon :icon="InfoCircle"></FontAwesomeIcon>
+              </span>
+        </div>
+        
+        <!-- <div class="flex justify-start items-center gap-3 my-4">
           <Field
             type="checkbox"
             name="notifyme"
@@ -95,6 +140,7 @@
           <label class="block text-blue-500" for="cbox2"
             >{{$t("sign-up.checkBox")}}</label
           >
+        </div> -->
         </div>
         <div>
           <button class="p-2 bg-purple-900 text-white" >{{$t("sign-up.submit")}}</button>
@@ -109,10 +155,14 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
 import { Form, Field, ErrorMessage } from "vee-validate"
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
 import countries from "@/assets/countryList.json"
+import badges from "../../../utils/badgeList"
 import PaymentModalVue from '../../../components/PaymentModal.vue';
 // import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 
@@ -122,19 +172,22 @@ export default {
     Field,
     ErrorMessage,
     PaymentModalVue,
+    FontAwesomeIcon,
     // ButoomCustomVue,
   },
   data(){
     return{
       countryList:countries,
-      showModalPayment:false
+      badgeList: badges,
+      showModalPayment:false,
+      InfoCircle:faInfoCircle,
     }
   },
   computed: {
     ...mapState("auth", ["isAuthenticated"]),
   },
   methods:{
-    ...mapActions("auth",["signUp"]),
+    ...mapActions("auth",["signUp", "logout"]),
     toogleShowModalPayment(){
       this.showModalPayment =!this.showModalPayment
     },
@@ -145,15 +198,73 @@ export default {
         email: data.email,
         password: data.password,
         country: data.country,
-        notify:data.notifyme
+        notify:data.notifyme,
+        listing_badge: data.listing_badge,
+        newsletter: data.newsletter,
+        pre_launch: data.pre_launch,
       };
       if (!revisedData.notify) {
         revisedData.notify=false
       }
+      if (!revisedData.pre_launch) {
+        revisedData.pre_launch=false
+      }
+      if (!revisedData.newsletter) {
+        revisedData.newsletter=false
+      }
+      console.log(revisedData)
       try {
-        await this.signUp(revisedData);
+        const response = await this.signUp(revisedData);
         if (this.isAuthenticated) {
-          this.$router.push({name:"WorkBookLayout"});
+          console.log("success")
+          console.log(response)
+          console.log(response.data)
+          // console.log(response.data.data)
+          // console.log(response.data.data.token)
+          // console.log(response.data.data.user)
+          
+          // search in data.badgeList for object with name revisedData.listing_badge
+          // let badge = this.badgeList.find(badge => badge.name === revisedData.listing_badge);
+          // const listItems = []
+
+          //   if (badge.stripe_price !== "") {
+          //     listItems.push({
+          //       price: badge.stripe_price,
+          //       quantity: 1,
+          //     });
+          //   }
+           
+          //   if (revisedData.pre_launch) {
+          //     listItems.push({
+          //       price: process.env.VUE_APP_STRIPE_PRE_LAUNCH,
+          //       quantity:1
+          //     })
+          //   }
+          //   console.log(listItems)
+          //   console.log("pre payment")
+          //   if (listItems.length > 0) {
+          //     this.stripe.redirectToCheckout({
+          //       successUrl: `${window.location.origin}/success_payment`,
+          //       cancelUrl: `${window.location.origin}/cancel_payment`,
+          //       lineItems: [
+          //         ...listItems
+          //       ],
+          //       mode: "payment"
+          //     });
+          //   } else {
+          //     this.logout();
+          //   }
+          // this.showModalPayment =!this.showModalPayment;
+          // this.$router.push({name:"WorkBookLayout"});
+          console.log('dsasd')
+          if (response.data.stripe_session) {
+            console.log("stripe session")
+            this.stripe.redirectToCheckout({
+              sessionId: response.data.stripe_session.id
+            });
+          } else {
+            this.logout();
+          }
         } else {
           Swall.fire({
             title:this.$t("swallAlertGeneral.error"),
@@ -170,6 +281,15 @@ export default {
         })
       }
     },
-  }
+    loadStripe(){
+      console.log("loadStripe")
+      /* global Stripe */
+      this.stripe = Stripe(process.env.VUE_APP_STRIPE);
+    },
+    
+  },
+  mounted(){  
+    this.loadStripe()
+  },
 }
 </script>
