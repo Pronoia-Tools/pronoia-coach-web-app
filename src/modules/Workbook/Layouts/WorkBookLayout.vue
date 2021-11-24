@@ -19,7 +19,8 @@
             class="flex justify-center items-center p-2 border border-transparent hover:border-gray-500 transition-all"
             @click="$router.push({name:'workbook',params:{idWorkBook:workbook.id}})"
         >
-          {{workbook.title}}
+          <router-link :to="{name:'workbook',params:{idWorkBook:workbook.id}}">{{workbook.title}}</router-link>
+          <!-- {{workbook.title}} -->
         </div>
         <div 
           v-show="dropdownWorkbooks" 
