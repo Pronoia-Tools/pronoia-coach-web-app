@@ -72,7 +72,7 @@ export default {
   },
   methods:{
     ...mapActions("auth",["updatePassword"]),
-    async submitSignUp(data){
+    async submitSignUp(data,{ resetForm }){
       let revisedData = {
         email:this.getUserAuth.user.email,
         currentPassword: data.currentPassword,
@@ -86,12 +86,15 @@ export default {
             icon:"success"
           });
         }
+        resetForm();
+
       } catch (error) {
         Swall.fire({
           icon:"error",
           title: `${this.$t("swallAlertGeneral.error")}`,
           text:error.response.data.message
         })
+        resetForm();
       }
     },
   }
