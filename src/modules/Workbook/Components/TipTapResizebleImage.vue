@@ -1,9 +1,9 @@
 <template>
   <node-view-wrapper class="vue-component-resizeble-image" :style="{justifyContent:node.attrs.justify}">
-    <div class="image-container" v-resize="changeSize" :style="{width:`${node.attrs.width}px`}">
+    <div v-if="editor" class="image-container" v-resize="changeSize" :style="{width:`${node.attrs.width}px`, resize:editor.view.editable?'horizontal':'none' }">
       <div class="image-content relative">
-      <img :src="node.attrs.src" >
-      <div class="justyfy-buttons">
+      <img :src="node.attrs.src">
+      <div class="justyfy-buttons"  v-if="editor && editor.view.editable">
         <button @click="changeJustyfy('start')"><FontAwesomeIcon :icon="myAlignLeft" ></FontAwesomeIcon></button>
         <button @click="changeJustyfy('center')"><FontAwesomeIcon :icon="myAlignCenter" ></FontAwesomeIcon></button>
         <button @click="changeJustyfy('end')"><FontAwesomeIcon :icon="myAlignRight" ></FontAwesomeIcon></button>
@@ -47,6 +47,7 @@ export default {
     },
     saveSize({width}){
       // console.log(width,height)
+      console.log(this.editor)
       this.node.attrs.width = width
     },
     changeSize({ width, height }) {
@@ -70,7 +71,6 @@ export default {
 }
 .image-container{
   position: relative;
-  resize: horizontal;
   overflow: auto;
   min-width: 100px;
 }

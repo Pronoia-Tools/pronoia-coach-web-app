@@ -24,13 +24,7 @@
           <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
-        </div>
-
-        <ButoomCustomVue v-if="preview" @click="toogglePreview" class="mt-1 ml-1">
-          {{ $t('workbook.workbookText.exitPreview') }}
-        </ButoomCustomVue>
-
-        
+        </div>        
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -69,7 +63,7 @@
         <div id="editor" class="h-full flex flex-col">
 
           <!-- Menu Bar -->
-          <div v-if="editor && !preview" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
+          <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
               <div class="flex items-center gap-5">
               <ButtonGroupVue>
                 <ButtonAppVue @click="updateCurrentWorkbookHanlder">
@@ -220,7 +214,7 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen" v-if="!preview">
+      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
         <!-- IMAGE LIBRARY -->
         <div class="transition-all border border-black h-full w-full">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
@@ -350,7 +344,6 @@ export default {
 
       //helpers
       saveInterval:null,
-      preview:false
     }
   },
 computed:{
@@ -446,8 +439,11 @@ computed:{
     toggleUnitLibrary() {
       this.openUnitLibrary = !this.openUnitLibrary
     },
-    toogglePreview(){
-      this.preview = !this.preview
+    async toogglePreview(){
+      await this.updateCurrentWorkbook()
+      let route = this.$router.resolve({ name:"workbook-rich-text-preview" });
+      window.open(route.href);
+      // this.preview = !this.preview
     },
     gotoSection(section){
       if (section.type === "horizontalRule") {
@@ -809,6 +805,7 @@ computed:{
         Question
       ],
       content: ``,
+      editable:true
     });
     this.loadWorkBook()
   },
@@ -825,7 +822,7 @@ computed:{
     },
     unitSelected(){
         this.loadWorkBook()
-    }
+    },
   }
 }
 </script>

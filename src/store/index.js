@@ -13,6 +13,7 @@ export default createStore({
   plugins: [
     createPersistedState({
       key: 'vuex',
+      storage: window.localStorage,
       reducer (state) {
         console.log(state)
         if(state.auth.isAuthenticated === false) { 
@@ -22,9 +23,9 @@ export default createStore({
       },
 
       paths:[
-        "workBook",
-        "auth",
-        "image",
+        'workBook',
+        'auth',
+        'image',
       ]
     })
   ]

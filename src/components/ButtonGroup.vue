@@ -1,5 +1,5 @@
 <template>
-  <div class="relative" @blur="toogleOpen" tabindex="0" ref="dropdown">
+  <div class="relative" @blur="closeMenu" tabindex="0" ref="dropdown">
     <!-- Button -->
     <div v-if="customText" @click="toogleOpen" class="cursor-pointer rounded hover:bg-gray-400 transition w-6 h-6 p-5 flex items-center justify-center">
       <span class="px-3"> {{ customText }} </span>
@@ -39,6 +39,9 @@ export default {
   methods:{
     toogleOpen(){
       this.isOpen = !this.isOpen
+    },
+    closeMenu(){
+      this.isOpen = false
     }
   }
 }

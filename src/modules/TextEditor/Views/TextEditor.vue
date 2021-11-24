@@ -1,19 +1,19 @@
 <template>
+    <!-- <div id="editor" class="flex flex-col" :style="{background:editableParent?'red':'blue'}"> -->
     <div id="editor" class="flex flex-col">
 
         <!-- Menu Bar -->
-        <div v-if="editor && this.myeditable" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
+        <div v-if="editor && this.myeditable && editableParent" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 px-2 py-1 z-40" :class="fixed">
         
 
             <div class="flex items-center gap-5">
-                     <!-- <ButtonGroupVue> -->
+              <!-- <ButtonGroupVue> -->
               <ButtonAppVue @click="updateContent">
                 {{ $t('workbook.workbookText.save') }}
               </ButtonAppVue>
-<!-- </ButtonGroupVue> -->
+              <!-- </ButtonGroupVue> -->
+            </div>
 
-
-</div>
             <button @click="editor.chain().focus().undo().run()">
             <FontAwesomeIcon :icon="myUndo"></FontAwesomeIcon>
             </button>
@@ -99,12 +99,12 @@
 
         </div>
         <div v-else>
-          <ButtonAppVue @click="toggelEditable">
-                Edit
-              </ButtonAppVue>
-            <div v-if="editor" class="editor-container">
-                <div class="editor-content" v-html="editor.getHTML()"></div>
-            </div>
+          <ButtonAppVue @click="toggelEditable" v-if="editableParent">
+            Edit
+          </ButtonAppVue>
+          <div v-if="editor" class="editor-container">
+              <div class="editor-content" v-html="editor.getHTML()"></div>
+          </div>
         </div>
         
         <!-- </div> -->
@@ -202,6 +202,10 @@ export default {
     editorChangedHandler: {
         type: Function,
         required: true,
+    },
+    editableParent: {
+      type: Boolean,
+      default: true,
     },
 
   },
