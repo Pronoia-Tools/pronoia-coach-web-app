@@ -388,12 +388,20 @@ export default {
             allowOutsideClick:false
           })
           Swal.showLoading()
-          await this.deleteWorkbook(this.workBook)
-          Toast.fire({
-            icon: 'success',
-            text: this.$t('swallAlertGeneral.saved'),
-          })
-          this.$router.push({name:"no-workbook"})
+          try {
+            await this.deleteWorkbook(this.workBook)
+            Toast.fire({
+              icon: 'success',
+              text: this.$t('swallAlertGeneral.deleted'),
+            })
+            this.$router.push({name:"no-workbook"})  
+          } catch (error) {
+            Swal.fire({
+              icon:"error",
+              title: `${this.$t("swallAlertGeneral.error")}`,
+              text:error.response.data.message
+            }) 
+          }
         } 
       })
       

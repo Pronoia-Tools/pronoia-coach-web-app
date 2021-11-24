@@ -28,6 +28,7 @@ import { mapActions } from 'vuex';
 import Swal from 'sweetalert2'
 import moment from 'moment'
 
+import {Toast} from '@/components/Toast.js'
 
 export default {
   components:{
@@ -69,9 +70,20 @@ export default {
             allowOutsideClick:false
           })
           Swal.showLoading()
-          await this.deleteWorkbook(this.workbookDetails)
-          Swal.fire(this.$t("swallAlertGeneral.deleted"), "",'success')
-          this.$router.push({name:"no-workbook"})
+          try {
+            await this.deleteWorkbook(this.workbookDetails)
+            Toast.fire({
+              icon: 'success',
+              text: this.$t('swallAlertGeneral.deleted'),
+            })
+            this.$router.push({name:"no-workbook"})  
+          } catch (error) {
+            Swal.fire({
+              icon:"error",
+              title: `${this.$t("swallAlertGeneral.error")}`,
+              text:error.response.data.message
+            }) 
+          }
         } 
       })
       
