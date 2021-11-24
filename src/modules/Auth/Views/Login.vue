@@ -50,7 +50,7 @@
       <router-link class="text-blue-800 underline my-2" to="/restore"
         >{{$t("login.forgot-password")}}</router-link
       >
-      <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue>
+      <!-- <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue> -->
     </div>
   </div>
   <PaymentModalVue :showModal="showModalPayment" @toogleShowModal="toogleShowModalPayment"></PaymentModalVue>
@@ -62,11 +62,14 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
 import PaymentModalVue from '../../../components/PaymentModal.vue';
-import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 
 export default {
   name: "Login",
-  components: { Form, Field, ErrorMessage, PaymentModalVue, ButoomCustomVue },
+  components: { Form, Field, ErrorMessage, 
+  PaymentModalVue, 
+  // ButoomCustomVue 
+  },
   data() {
     return { usuario: "", password: "", showModalPayment:false };
   },

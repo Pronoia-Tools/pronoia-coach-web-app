@@ -101,7 +101,7 @@
         </div>
 
         <router-link to="/login" class="underline text-purple-900">{{$t("sign-up.already-have-acount")}}</router-link>
-        <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue>
+        <!-- <ButoomCustomVue class="bg-myOrange" @click="toogleShowModalPayment">{{$t("input.joinWhitelist")}}</ButoomCustomVue> -->
       </Form>
     </div>
   </div>
@@ -114,7 +114,7 @@ import { mapActions, mapState } from 'vuex';
 import Swall from "sweetalert2";
 import countries from "@/assets/countryList.json"
 import PaymentModalVue from '../../../components/PaymentModal.vue';
-import ButoomCustomVue from '../../../components/ButoomCustom.vue';
+// import ButoomCustomVue from '../../../components/ButoomCustom.vue';
 
 export default {
   components: {
@@ -122,7 +122,7 @@ export default {
     Field,
     ErrorMessage,
     PaymentModalVue,
-    ButoomCustomVue,
+    // ButoomCustomVue,
   },
   data(){
     return{
