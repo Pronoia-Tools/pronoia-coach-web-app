@@ -21,7 +21,7 @@ export const signUp = async ({commit}, data) => {
   if(response.data && response.data.token)
       window.localStorage.setItem(process.env.VUE_APP_API_BASE, response.data.token)
   commit("signUp", response.data)
-  return true
+  return response
 }
 
 export const login = async ({ commit }, data) => {
