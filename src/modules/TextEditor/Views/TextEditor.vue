@@ -348,33 +348,33 @@ export default {
 
 <style lang="scss">
 @use "sass:math";
-.index{
-  direction: rtl;
+// .index{
+//   direction: rtl;
 
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
+// }
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1; 
+// }
  
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #2D9BF0; 
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: #2D9BF0; 
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #1e679e; 
-}
-button{
-  // background: blue;
-  // width: 2.5rem;
-  padding: 0.5em;
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #1e679e; 
+// }
+// button{
+//   // background: blue;
+//   // width: 2.5rem;
+//   padding: 0.5em;
+// }
 
 
 
