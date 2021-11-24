@@ -5,9 +5,9 @@
     </div>
 
     <!-- LINKS -->
-    <div class="flex flex-col flex-grow justify-start items-center md:justify-around absolute top-0 w-1/2 h-screen transition-all duration-500 bg-black bg-opacity-75 text-white
+    <div  class="flex flex-col flex-grow justify-start items-center md:justify-around absolute top-0 w-1/2 h-screen transition-all duration-500 bg-black bg-opacity-75 text-white
                 md:relative md:h-auto md:w-auto md:flex-row  md:left-0 md:bg-white md:bg-opacity-0 md:text-black"
-        :class="isOpen" v-if="this.isAuthenticated"
+          :class="isOpen" v-if="this.isAuthenticated"
     >
       <font-awesome-icon :icon="myTimes" class=" self-end m-5 text-xl md:hidden" @click="toggleOpenMovileMenu"/>
       <nav class="flex gap-4 flex-col text-center m-4
@@ -26,23 +26,32 @@
     </div>
     <!-- USER -->
     <div class="flex gap-2 items-center">
+      
       <font-awesome-icon :icon="myBars" @click="toggleOpenMovileMenu" class="cursor-pointer md:hidden"/>
       
-      <div class="flex gap-2" v-if="this.isAuthenticated">
+      <div class="flex gap-2 justify-center items-center" v-if="this.isAuthenticated">
         <span>{{`${this.user.firstName} ${this.user.lastName}`}}</span>
-        <div class="cursor-pointer" @click="toggleOpenUserMenu">
+        <!-- <div class="cursor-pointer" @click="toggleOpenUserMenu">
           <font-awesome-icon :icon="myUser" />
           <font-awesome-icon :icon="myArrowDown"/>
           <transition name="slide-fade">
             <div v-show="openUserMenu" class="absolute top-10 -right-0 py-2 w-40 border-black border flex flex-col divide-y divide-black bg-white">
-              <!-- <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
+              <li class="list-none" v-for="locale in locales" :key="locale" @click="switchLocale(locale)">
                 {{locale}}
-              </li> -->
+              </li>
               <router-link :to="{name:'Profile'}">{{ $t(`navbar.settings`) }}</router-link> 
               <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
             </div>
           </transition>
-        </div>
+        </div> -->
+        <ButtonGroupVue :alignMenuY="'left'">
+          <ButtonAppVue>
+            <router-link :to="{name:'Profile'}">{{ $t(`navbar.settings`) }}</router-link> 
+          </ButtonAppVue>
+          <ButtonAppVue>
+            <span @click="logoutHandler">{{ $t(`navbar.logout`) }}</span>
+          </ButtonAppVue>
+        </ButtonGroupVue>
       </div>
 
       <div v-else class="flex gap-2">
@@ -60,11 +69,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBookOpen,faQuestionCircle,faBell,faUser,faAngleDown,faBars,faTimes } from '@fortawesome/free-solid-svg-icons'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import ButoomCustomVue from './ButoomCustom.vue'
+import ButtonGroupVue from './ButtonGroup.vue'
+import ButtonAppVue from './ButtonApp.vue'
+
 
 export default {
   name: 'Navbar',
   components: {
-    FontAwesomeIcon,ButoomCustomVue,
+    FontAwesomeIcon,ButoomCustomVue,ButtonGroupVue,ButtonAppVue
   },
 
   data () {

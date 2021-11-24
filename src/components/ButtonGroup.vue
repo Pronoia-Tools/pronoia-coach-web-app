@@ -8,8 +8,8 @@
       <FontAwesomeIcon :icon="myEllipsisV"></FontAwesomeIcon>
     </div>
     <!-- MODAL -->
-    <transition name="slide-fade">
-      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 -left-0 p-1 my-1  w-40 border border-black bg-white hover:bg-gray-50 z-10" >
+    <transition name="fade">
+      <div v-show="isOpen" class="rounded shadow-2xl absolute top-10 p-1 my-1  w-40 border border-black bg-white hover:bg-gray-50 z-10" :class="positionY">
         <div class="flex flex-col">
           <slot></slot>
         </div>
@@ -28,6 +28,10 @@ export default {
   props: {
     customText: {
       type: String,
+    },
+    alignMenuY: {
+      type: String,
+      default:"rigth"
     }
   },
   data(){
@@ -43,6 +47,11 @@ export default {
     closeMenu(){
       this.isOpen = false
     }
+  },
+  computed:{
+    positionY(){
+      return this.alignMenuY==='left'?"-left-32":"-left-0"
+    }
   }
 }
 </script>
@@ -50,18 +59,10 @@ export default {
 <style>
 /* Las animaciones de entrada y salida pueden usar */
 /* funciones de espera y duración diferentes.      */
-.slide-fade-enter-active {
-  transition: all .3s ease;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(10px);
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-.router-link-active{
-  color:deepskyblue;
 }
 </style>
