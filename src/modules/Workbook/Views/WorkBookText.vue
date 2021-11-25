@@ -24,7 +24,7 @@
           <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
-        </div>        
+        </div>
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -214,17 +214,17 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
+      <div id="sidebar-galery" class="h-screen transition-all duration-500 flex-shrink-0 relative flex flex-col"  :class="isSidebarGaleryOpen" v-if="!preview">
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-full">
-          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+        <div class="transition-all border border-black h-full w-full flex-grow">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer border border-black" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
-
-          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32 overflow-x-hidden" >
+          <div v-show="openImageLibrary" class="overflow-auto resize-y flex flex-col" >
+            <span class="px-3 font-bold italic border border-b-0 border-black">click to add</span>
+            <div class=" flex-grow flex flex-wrap justify-around border border-black border-t-0 gap-2 gap-y-1 overflow-auto overflow-x-hidden" >
               <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
               <img   
                 :src="image" alt="Galery image" 
@@ -237,8 +237,6 @@
 
           </div>  
         </div>
-
-        
         <DropZone @drop.prevent="onDropedImages" />
       </div>
     </div>
