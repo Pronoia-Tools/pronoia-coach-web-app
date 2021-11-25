@@ -200,7 +200,7 @@
             </floating-menu> -->
 
             <!-- EDITOR ITSELF -->
-            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
+            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="true" @keydown="editorChanged"/>
             
           </div>
 
