@@ -26,6 +26,11 @@ export default {
         }
       }
     },
+    {
+      path:"library",
+      name:"workbookLibrary",
+      component:()=>import(/* webpackChunkName: "NoEntryS" */ "../Views/WorkBooksLibrary.vue")
+    },
     // {
     //   path: ":idWorkBook/edit",
     //   name: "workbook-rich-text",
