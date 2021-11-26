@@ -346,9 +346,9 @@ export default {
       saveInterval:null,
     }
   },
-computed:{
+  computed:{
     ...mapGetters("image", ["getImages"]),
-    ...mapGetters("auth", ["getUserAuth"]),
+    ...mapGetters("auth", ["getUserAuth","getCustomToken"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
@@ -785,7 +785,7 @@ computed:{
     },
     loadData() {
       if (this.getImages.length === 0) {
-        this.loadImageLibrary(this.getUserAuth.user.email)
+        this.loadImageLibrary({email:this.getUserAuth.user.email,customToken:this.getCustomToken})
       }
     },
   },

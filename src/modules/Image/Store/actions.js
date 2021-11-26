@@ -1,15 +1,28 @@
 import PronoiaAPI from "../../../api/PronoiaAPI";
 // import router from '../../../router'
-import { storage } from "@/firebase/firebase";
+import { storage, auth, signInWithCustomToken } from "@/firebase/firebase";
 
-export const loadImageLibrary = async ({ commit },email) => {
+export const loadImageLibrary = async ({ commit },{email,customToken}) => {
   // let response = await PronoiaAPI.get('/image');
   // console.log(commit)
   // if (!response) return;
   // commit("setImages", response.data);
 
   // return response.data;
-
+  console.log({customToken})
+  signInWithCustomToken(auth, customToken)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    console.log({user})
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log({error,errorCode,errorMessage})
+    // ...
+  });
   var listRef = storage.ref(`Galery/${email}`);
 
   // Find all the prefixes and items.

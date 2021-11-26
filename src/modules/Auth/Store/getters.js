@@ -9,6 +9,11 @@ export const getUserAuth = (state) =>{
   return userData
 }
 
+export const getCustomToken = (state) =>{
+  // console.log(id)
+  return state.customToken
+}
+
 // export const getWorkBookByTitle = (state) => (search="",language="",status="") => {
 //   // console.log(state,search,language,status)
 //   if(search.length === 0 && language.length === 0 && status.length === 0) return state.workbooks
