@@ -19,6 +19,7 @@ jobs:
       - run: npm ci && npm run build
         env:
           VUE_APP_API_BASE: ${{ secrets.VUE_APP_API_BASE_PROD }}
+          VUE_APP_STRIPE: ${{ secrets.VUE_APP_STRIPE_PROD }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
