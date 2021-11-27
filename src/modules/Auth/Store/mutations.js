@@ -9,12 +9,12 @@ export const signUp = (state, {user,token}) => {
   }
 }
 
-export const login = (state, {user,token,customToken}) => {
+export const login = (state, {user,token,customTokenAuthFirebase}) => {
   // console.log({"[[Mutations {{login}}]]":user})
   state.user = user
   state.token = token
   state.isAuthenticated = true
-  state.customToken = customToken
+  state.customTokenAuthFirebase = customTokenAuthFirebase
 }
 
 export const logout = (state) => {

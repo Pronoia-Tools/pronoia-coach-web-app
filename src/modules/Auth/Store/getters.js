@@ -9,9 +9,9 @@ export const getUserAuth = (state) =>{
   return userData
 }
 
-export const getCustomToken = (state) =>{
+export const getCustomTokenAuthFirebase = (state) =>{
   // console.log(id)
-  return state.customToken
+  return state.customTokenAuthFirebase
 }
 
 // export const getWorkBookByTitle = (state) => (search="",language="",status="") => {
