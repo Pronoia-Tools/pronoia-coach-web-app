@@ -5,8 +5,13 @@
     <div id="container" class="flex">
 
       <!-- SIDEBAR -->
-      <div id="sidebar" class="h-full transition-all duration-500 flex-shrink-0"  :class="isSidebarOpen" v-if="openSideBar">
-
+      <div id="sidebar" 
+      class="absolute top-0 left-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white
+      lg:relative"  
+      :class="isSidebarOpen" 
+      v-if="openSideBar">
+        
+        <ButoomCustomVue class=" absolute right-0 top-0 visible lg:hidden" @click="toggleSideBar">X</ButoomCustomVue>
         <!-- GO BACk -->
         <div class="p-5 pl-3 cursor-pointer flex items-center gap-2" @click="$router.push({name:'workbook',params:{idWorkBook:idWorkBook}})">
           <FontAwesomeIcon :icon="myArrowLeft"></FontAwesomeIcon>
@@ -214,9 +219,12 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
+      <div id="sidebar-galery" class="absolute top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white overflow-hidden 
+      lg:relative lg:mt-0"  :class="isSidebarGaleryOpen">
+        <ButoomCustomVue class="absolute left-0 top-0 visible lg:hidden" @click="toggleGalerySideBar">X</ButoomCustomVue>
+        
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-full">
+        <div class="transition-all border border-black h-full w-full mt-10 lg:mt-0">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
