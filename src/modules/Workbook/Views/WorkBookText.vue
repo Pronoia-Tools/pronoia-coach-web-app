@@ -6,7 +6,7 @@
 
       <!-- SIDEBAR -->
       <div id="sidebar" 
-      class="absolute top-0 left-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white
+      class="absolute top-0 left-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-red-300
       lg:relative"  
       :class="isSidebarOpen" 
       v-if="openSideBar">
@@ -19,8 +19,7 @@
         </div>
 
         <!-- TABLE OF CONTENTS -->
-  
-        <div class="transition-all border border-black h-full w-64" :class="isSidebarOpen">
+        <div class="transition-all border border-black w-64" :class="isSidebarOpen">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleTableContent">
             <span>{{ $t('workbook.workbookText.contentTable') }}</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openTableContent"></FontAwesomeIcon>
@@ -29,7 +28,29 @@
           <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
-        </div>        
+        </div>   
+        <!-- IMAGE GALLERY -->
+        <div class="transition-all border border-black w-full ">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+            <span>Image Library</span>
+            <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
+            <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
+          </div>
+
+          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
+            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32 overflow-x-hidden" >
+              <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
+              <img   
+                :src="image" alt="Galery image" 
+                @click="clipboard(image)"
+              >
+              </ToolTipVue>
+            </div>
+            <input type="file" @change="onSelectedImage" multiple ref="imageSelector" v-show="false">
+            <ButoomCustomVue class="m-2" @click="$refs.imageSelector.click()">{{$t('workbook.workbookText.addImages')}}</ButoomCustomVue>
+
+          </div>  
+        </div>
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -214,13 +235,13 @@
 
         <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
       </div>
-      <button @click="toggleGalerySideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10">
+      <button @click="toggleGalerySideBar" class="p-0 pt-2 rounded hover:bg-opacity-70 h-10 hidden lg:block">
         <FontAwesomeIcon v-if="openSideBarGalery" :icon="myChevronLeft" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="absolute top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white overflow-hidden 
-      lg:relative lg:mt-0"  :class="isSidebarGaleryOpen">
+      <div id="sidebar-galery" class="hidden top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white overflow-hidden 
+      lg:block lg:mt-0"  :class="isSidebarGaleryOpen">
         <ButoomCustomVue class="absolute left-0 top-0 visible lg:hidden" @click="toggleGalerySideBar">X</ButoomCustomVue>
         
         <!-- IMAGE LIBRARY -->
