@@ -340,9 +340,9 @@ export default {
       saveInterval:null,
     }
   },
-computed:{
+  computed:{
     ...mapGetters("image", ["getImages"]),
-    ...mapGetters("auth", ["getUserAuth"]),
+    ...mapGetters("auth", ["getUserAuth","getCustomTokenAuthFirebase"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
@@ -777,9 +777,17 @@ computed:{
         this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
-    loadData() {
+    async loadData() {
       if (this.getImages.length === 0) {
-        this.loadImageLibrary(this.getUserAuth.user.email)
+        try {
+          await this.loadImageLibrary({email:this.getUserAuth.user.email,customTokenAuthFirebase:this.getCustomTokenAuthFirebase})
+        } catch (error) {
+          Swal.fire({
+            icon:"error",
+            title: `${this.$t("swallAlertGeneral.error")}`,
+            text:error
+          })
+        }
       }
     },
   },
