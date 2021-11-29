@@ -4,7 +4,7 @@
       <!-- image usign Coach_Portfolios -->
       <img src="@/assets/WorkbookFactoryLogo.png" alt="logo" />
     </div>
-    <div class="flex flex-row place-content-center">
+    <div class="flex lg:flex-row flex-col place-content-center items-center">
     <div class="flex w-10/12 md:w-6/12 lg:w-4/12 py-10 place-content-center">
       <!-- image usign Coach_Portfolios -->
       <img src="@/assets/Coach_Portfolios.png" alt="logo" />
