@@ -1,6 +1,6 @@
 <template>
 
-  <div class="">
+  <div class="overflow-hidden">
 
     <div id="container" class="flex">
 
@@ -55,13 +55,10 @@
       <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
       <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
       <router-view></router-view> -->
-    <!-- </div> -->
+      <!-- </div> -->
       <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col px-2">
-        
-        
-        <div id="editor" class="h-full flex flex-col">
-
+        <div id="editor" class="h-full flex flex-col pb-12">
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
               <div class="flex items-center gap-5">
@@ -164,9 +161,8 @@
               </div>
 
           </div>
-
           <!--Editor --> 
-          <div class="flex-grow overflow-auto z-0">
+          <div id="editor-text" class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
             <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -203,8 +199,6 @@
             <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
             
           </div>
-
-          
         </div>
 
         <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
@@ -972,4 +966,5 @@ button{
   }
 }
 }
+
 </style>
