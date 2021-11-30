@@ -6,7 +6,7 @@
 
       <!-- SIDEBAR -->
       <div id="sidebar" 
-      class="absolute top-0 left-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-red-300
+      class="absolute top-0 left-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white
       lg:relative"  
       :class="isSidebarOpen" 
       v-if="openSideBar">
