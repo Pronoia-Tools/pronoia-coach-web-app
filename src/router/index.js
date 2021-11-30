@@ -76,6 +76,16 @@ const routes = [
         idWorkBook: route.params.idWorkBook
       }
     }
+  },
+  {
+    path: "/workbook/:idWorkBook/view",
+    name: "workbook-rich-text-view",
+    component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkbookPreview.vue"),
+    props: (route) => {
+      return {
+        idWorkBook: route.params.idWorkBook
+      }
+    }
   }
 ];
 

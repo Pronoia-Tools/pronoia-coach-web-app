@@ -31,17 +31,24 @@ export default {
   data() {
     return {
       editor: null,
+      workbook: null
     }
   },
   computed:{
     ...mapGetters("workBook",["getWorkBookById","getLoading"]),
   },
   methods:{
-    ...mapActions("workBook", ["loadWorkbooks"]),
+    ...mapActions("workBook", ["loadWorkbooks","loadWorkBookUnits"]),
     async loadWorkbook(){
       // await this.loadWorkbooks();
-      this.workbook = this.getWorkBookById(this.idWorkBook)  
-      this.editor.commands.setContent(this.workbook.units[0].contents.content)
+      
+      this.workbook = this.getWorkBookById(this.idWorkBook)
+      console.log(this.workbook)
+     if (!this.workbook.units || this.workbook.units.length < 1) {
+       console.log('no units loaded')
+        this.workbook  = await this.loadWorkBookUnits(this.workbook)
+      }
+    this.editor.commands.setContent(this.workbook.units[0].contents.content)
     }
   },
   
