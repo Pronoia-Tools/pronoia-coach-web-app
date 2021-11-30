@@ -59,7 +59,7 @@
 		methods: {
 			gotopreview(id) {
 				let route = this.$router.resolve({
-					name: "workbook-rich-text-preview",
+					name: "workbook-rich-text-view",
 					params: { idWorkBook: id },
 				});
 				window.open(route.href);
