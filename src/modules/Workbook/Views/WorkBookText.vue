@@ -30,7 +30,7 @@
           </div>
         </div>   
         <!-- IMAGE GALLERY -->
-        <div class="transition-all border border-black w-full ">
+        <div class=" lg:hidden transition-all border border-black w-full ">
           <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
