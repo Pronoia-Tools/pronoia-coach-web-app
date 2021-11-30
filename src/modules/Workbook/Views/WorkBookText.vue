@@ -1,6 +1,6 @@
 <template>
 
-  <div class="">
+  <div class="overflow-hidden">
 
     <div id="container" class="flex">
 
@@ -24,7 +24,7 @@
           <div v-if="workBook && openTableContent" class="h-full text-black text-left" :class="isSidebarOpen">
             <a v-for="(content,index) in getContentTable" :key="index" :href="`#${content.id}`" @click="gotoSection(content)" class="block hover:bg-paleLogo" :class="content.classes">{{content.content}}</a>
           </div>
-        </div>        
+        </div>
 
         <!-- WORKBOOK STRUCTURE -->
         <!-- <div class="transition-all border border-black h-full w-64">
@@ -55,13 +55,10 @@
       <font-awesome-icon v-if="!sidebarOpen" :icon="myChevronRight" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple rounded-r z-50" @click="toogleSidebarOpen"/>
       <font-awesome-icon v-else :icon="myChevronLeft" class="absolute top-3 left-0 p-2 text-5xl bg-myPurple z-50" @click="toogleSidebarOpen"/>
       <router-view></router-view> -->
-    <!-- </div> -->
+      <!-- </div> -->
       <!-- MAIN -->
       <div id="content" class="h-screen flex flex-col px-2">
-        
-        
-        <div id="editor" class="h-full flex flex-col">
-
+        <div id="editor" class="h-full flex flex-col pb-12">
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
               <div class="flex items-center gap-5">
@@ -164,9 +161,8 @@
               </div>
 
           </div>
-
           <!--Editor --> 
-          <div class="flex-grow overflow-auto z-0">
+          <div id="editor-text" class="flex-grow overflow-auto z-0">
 
             <!-- FLOATING MENU --> 
             <!-- <floating-menu :editor="editor" v-if="editor" class=" bg-black bg-opacity-10 z-0">
@@ -200,11 +196,9 @@
             </floating-menu> -->
 
             <!-- EDITOR ITSELF -->
-            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="false" @keydown="editorChanged"/>
+            <editor-content :editor="editor" class="m-2 mt-3" spellcheck="true" @keydown="editorChanged"/>
             
           </div>
-
-          
         </div>
 
         <!-- <QuestionsListVue :unitSelected="unitSelected" :idWorkbook="idWorkBook"/> -->
@@ -214,17 +208,17 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="h-full transition-all duration-500 flex-shrink-0 relative overflow-hidden"  :class="isSidebarGaleryOpen">
+      <div id="sidebar-galery" class="h-screen transition-all duration-500 flex-shrink-0 relative flex flex-col"  :class="isSidebarGaleryOpen" v-if="!preview">
         <!-- IMAGE LIBRARY -->
-        <div class="transition-all border border-black h-full w-full">
-          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer" @click="toggleImageLibrary">
+        <div class="transition-all border border-black h-full w-full flex-grow">
+          <div class="w-full h-7 flex justify-between items-center px-3 cursor-pointer border border-black" @click="toggleImageLibrary">
             <span>Image Library</span>
             <FontAwesomeIcon :icon="myAngleDown" v-if="openImageLibrary"></FontAwesomeIcon>
             <FontAwesomeIcon :icon="myAngleUp" v-else></FontAwesomeIcon>
           </div>
-
-          <div v-show="openImageLibrary" class=" overflow-hidden transition-all" >
-            <div class="flex flex-wrap justify-around border border-black gap-2 overflow-auto h-32 overflow-x-hidden" >
+          <div v-show="openImageLibrary" class="overflow-auto resize-y flex flex-col" >
+            <span class="px-3 font-bold italic border border-b-0 border-black">click to add</span>
+            <div class=" flex-grow flex flex-wrap justify-around border border-black border-t-0 gap-2 gap-y-1 overflow-auto overflow-x-hidden" >
               <ToolTipVue v-for="(image, index) in imageLibrary" :key="index"  :text="$t('workbook.workbookText.addToEditor')" class=" w-16 h-16 border border-myLightBlue object-cover cursor-pointer">
               <img   
                 :src="image" alt="Galery image" 
@@ -237,8 +231,6 @@
 
           </div>  
         </div>
-
-        
         <DropZone @drop.prevent="onDropedImages" />
       </div>
     </div>
@@ -346,9 +338,9 @@ export default {
       saveInterval:null,
     }
   },
-computed:{
+  computed:{
     ...mapGetters("image", ["getImages"]),
-    ...mapGetters("auth", ["getUserAuth"]),
+    ...mapGetters("auth", ["getUserAuth","getCustomTokenAuthFirebase"]),
     ...mapGetters("workBook",["getWorkBookById", "getWorkBookByIdWithUnits"]),
     imageLibrary(){
       return this.getImages
@@ -783,9 +775,17 @@ computed:{
         this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
-    loadData() {
+    async loadData() {
       if (this.getImages.length === 0) {
-        this.loadImageLibrary(this.getUserAuth.user.email)
+        try {
+          await this.loadImageLibrary({email:this.getUserAuth.user.email,customTokenAuthFirebase:this.getCustomTokenAuthFirebase})
+        } catch (error) {
+          Swal.fire({
+            icon:"error",
+            title: `${this.$t("swallAlertGeneral.error")}`,
+            text:error
+          })
+        }
       }
     },
   },
@@ -972,4 +972,5 @@ button{
   }
 }
 }
+
 </style>

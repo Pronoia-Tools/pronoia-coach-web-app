@@ -73,6 +73,18 @@ export default {
   position: relative;
   overflow: auto;
   min-width: 100px;
+  &::-webkit-resizer {
+      // border: 2px solid black;
+      background-image: url("http://i.imgur.com/hQZDwHs.png");
+      // background-position: center;
+      // background-repeat: no-repeat; 
+      // background-size: cover; 
+
+      /*size does not work*/  
+      display:block;  
+      width: 300px !important;
+      height: 300px !important;
+  }
 }
 .image-content {
   object-fit: fill;
@@ -107,18 +119,18 @@ export default {
       }
     }
     .drag-handle {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    top: 5px;
-    left: 5px;
-    cursor: grab;
-    border: 5px dashed transparent;
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16"><path style="fill:white; " d="M4 14c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM2 6C.9 6 0 6.9 0 8s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      top: 5px;
+      left: 5px;
+      cursor: grab;
+      border: 5px dashed transparent;
+      background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16"><path style="fill:white; " d="M4 14c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM2 6C.9 6 0 6.9 0 8s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
   }
   &:hover{
     border: 2px solid rgb(160, 160, 160);
@@ -126,17 +138,6 @@ export default {
       opacity: 1
     }
   }
-}
-::-webkit-resizer {
-    // border: 2px solid black;
-    background-image: url("http://i.imgur.com/hQZDwHs.png");
-    // background-position: center;
-    // background-repeat: no-repeat; 
-    // background-size: cover; 
 
-    /*size does not work*/  
-    display:block;  
-    width: 300px !important;
-    height: 300px !important;
 }
 </style>

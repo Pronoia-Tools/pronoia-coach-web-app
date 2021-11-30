@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
-
+import "firebase/compat/auth";
+import {getAuth,signInWithCustomToken } from "firebase/auth"
 // const firebaseConfig = {
 //   apiKey: "AIzaSyBfOh7yoqgGMrMsTxoKoMhP6_9bkUDP0i0",
 //   authDomain: "fir-react-upload-5daa4.firebaseapp.com",
@@ -25,5 +26,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const storage = firebase.storage();
+const auth = getAuth()
 
-export { storage, firebase as default };
+
+export { storage,auth, firebase as default,signInWithCustomToken };
