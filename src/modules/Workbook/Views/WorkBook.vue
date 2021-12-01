@@ -51,6 +51,7 @@
           <input type="file" @change="onSelectedImage" ref="imageSelector" v-show="false" accept="image/*">
           
           <img v-if="workBook.image" :class="`h-full object-contain ${localImage?'hidden':'visible'}`" :src="workBook.image" alt="cover book">
+          <img v-if="workBook.image.length === 0 " :class="`h-full object-contain ${localImage?'hidden':'visible'}`" :src="require('./no-image.png')" alt="cover book">
           
           <img v-if="localImage" class="h-full object-contain" :src="localImage" alt="Local image">
           
