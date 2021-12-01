@@ -228,6 +228,7 @@
   },
   "navbar":{
     "yourLibrary":"Your Library",
+    "workBookLibrary":"Your Workbook Library",
     "workBookFactory":"Creation Station",
     "coachDashboard":"Coach's Dashboard",
     "marketplace":"Marketplace",

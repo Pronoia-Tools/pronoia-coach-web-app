@@ -25,12 +25,7 @@ export default {
           idWorkBook: route.params.idWorkBook
         }
       }
-    },
-    {
-      path:"library",
-      name:"workbookLibrary",
-      component:()=>import(/* webpackChunkName: "NoEntryS" */ "../Views/WorkBooksLibrary.vue")
-    },
+    }
     // {
     //   path: ":idWorkBook/edit",
     //   name: "workbook-rich-text",

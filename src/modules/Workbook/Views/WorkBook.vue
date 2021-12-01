@@ -267,7 +267,7 @@ export default {
           text: this.$t('swallAlertGeneral.saved'),
         })
         this.$router.push({name:'workbook-rich-text',params:{idWorkBook:newWorkbook.id}})
-        
+
       }else{
           await this.updateCurrentWorkbook()
           Toast.fire({
