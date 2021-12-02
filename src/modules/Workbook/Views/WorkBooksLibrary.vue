@@ -18,9 +18,11 @@
             v-for="workbook in allWBS"
             :key="workbook.id"
           >
-            <img :src="workbook.image" alt="" @click="gotopreview(workbook.id)" />
-						<div v-if="!workbook.image">
-							<img :src="require('./no-image.png')" alt=""  @click="gotopreview(workbook.id)" />
+						<div class="h-44 w-32"  v-if="workbook.image">
+							<img class="object-fill w-full h-full" :src="workbook.image" alt="" @click="gotopreview(workbook.id)" />
+						</div>
+						<div class="h-44 w-32" v-if="!workbook.image">
+							<img class="object-fill w-full h-full" :src="require('./no-image.png')" alt=""  @click="gotopreview(workbook.id)" />
 						</div>
             <h2>{{ workbook.title }}</h2>
           </div>
