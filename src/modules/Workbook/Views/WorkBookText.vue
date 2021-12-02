@@ -819,6 +819,9 @@ export default {
   },
   // Mounted loads workbook
   mounted() {
+    if (window.innerWidth<1024){
+      this.sidebarOpen=true
+    }
     this.editor = new Editor({
       extensions: [
         StarterKit,
