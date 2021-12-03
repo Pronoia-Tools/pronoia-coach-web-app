@@ -3,8 +3,10 @@
     <!-- SIDEBAR -->
     <div class="border-r border-b border-black flex-shrink-0" :class="isSidebarOpen">
       <!-- SALES -->
-      <div class="border-b border-black flex justify-between items-center p-2">
-        {{ $t('workbook.workbookLayout.sales') }} <font-awesome-icon :icon="sortDown" />
+      <div class="border-b border-black flex justify-between items-center p-2 cursor-pointer"
+      @click="$router.push({name:'sales'})"
+      > 
+        <router-link :to="{name:'sales'}">{{ $t('workbook.workbookLayout.sales') }}</router-link>
       </div>
       <div class="border-b border-black flex justify-between items-center p-2" @click="toogleDropdownWorkBooks">
         {{ $t('workbook.workbookLayout.eWorkbooks') }} 
@@ -13,7 +15,7 @@
       </div>
       <Spiner v-if="getLoading"/>
         <!-- WORKBOOK LIST -->
-      <div class="bg-red-300">
+      <div class=" overflow-hidden">
         <div v-for="workbook in workBooksList"
             :key="workbook.id" 
             class="flex justify-center items-center border border-transparent hover:border-gray-500 transition-all"
@@ -32,8 +34,10 @@
         </div>
       </div>
       <!-- CUSTOMERS -->
-      <div class="border-b border-black flex justify-between items-center p-2">
-        {{ $t('workbook.workbookLayout.customers') }} <font-awesome-icon :icon="sortUp" />
+      <div class="border-b border-t border-black flex justify-between items-center p-2 cursor-pointer"
+      @click="$router.push({name:'customer'})"
+      > 
+        <router-link :to="{name:'customer'}">{{ $t('workbook.workbookLayout.customers') }}</router-link>
       </div>
 
 
