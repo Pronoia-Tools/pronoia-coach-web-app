@@ -1,5 +1,5 @@
 export default {
   
   name: "sales",
-  component: () =>import(/* webpackChunkName: "WorkBookLayout" */ "../Views/Sales.vue"),
+  component: () =>import(/* webpackChunkName: "Sales" */ "../Views/Sales.vue"),
 }
