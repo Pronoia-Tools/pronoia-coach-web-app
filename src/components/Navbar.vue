@@ -14,6 +14,7 @@
                   md:flex-row md:m-1">
         <!-- <router-link to="/">{{ $t(`navbar.yourLibrary`) }}</router-link> -->
         <router-link v-if="this.user.authorized" to="/workbook">{{ $t(`navbar.workBookFactory`) }}</router-link>
+        <router-link v-if="this.user.authorized" to="/library">{{ $t(`navbar.workBookLibrary`) }}</router-link>
         <!-- <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
         <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link> -->
       </nav>

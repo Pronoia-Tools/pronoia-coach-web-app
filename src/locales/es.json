@@ -223,6 +223,7 @@
   },
   "navbar":{
     "yourLibrary":"Tu libreria",
+    "workBookLibrary":"Tu biblioteca de Workbooks",
     "workBookFactory":"Fábrica de Workbooks",
     "coachDashboard":"Tablero de Coach",
     "marketplace":"Marketplace",

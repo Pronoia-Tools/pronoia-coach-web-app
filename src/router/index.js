@@ -86,7 +86,13 @@ const routes = [
         idWorkBook: route.params.idWorkBook
       }
     }
-  }
+  },
+  {
+    path:"/library",
+    name:"workbookLibrary",
+    component:()=>import(/* webpackChunkName: "NoEntryS" */ "../modules/Workbook/Views/WorkBooksLibrary.vue")
+  },
+  
 ];
 
 const router = createRouter({

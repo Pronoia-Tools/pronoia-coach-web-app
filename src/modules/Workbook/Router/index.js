@@ -28,6 +28,18 @@ export default {
         }
       }
     },
+    // {
+    //   path: ":idWorkBook/edit",
+    //   name: "workbook-rich-text",
+    //   component: () => import(/* webpackChunkName: "WoorkBookText" */ "../Views/WorkBookText.vue"),
+    //   props: (route) => {
+    //     return {
+    //       idWorkBook: route.params.idWorkBook
+    //     }
+    //   }
+    // }
+    
+    //},
     {
       path:"library",
       name:"workbookLibrary",
