@@ -63,6 +63,15 @@
           <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
         </div>
 
+        <div class="field w-full">
+            <label class="block" for="businessname">{{$t("settings.profile.businessname")}}</label>
+            <Field
+              class="w-full px-2 py-1 border rounded border-gray-400"
+              type="text"
+              name="businessname"
+            />
+          </div>
+
         <!-- <router-link class=" text-myPurple underline cursor-pointer" :to="{name:'Security'}">Change password</router-link> -->
         
         <ButtonCustomVue class="p-2 bg-purple-900 text-white" >{{$t("input.save")}}</ButtonCustomVue>
@@ -105,7 +114,8 @@ export default {
         firstName:this.userData.user.firstName,
         lastName:this.userData.user.lastName,
         email:this.userData.user.email,
-        country:this.userData.user.country
+        country:this.userData.user.country,
+        businessname:this.userData.user.businessname
       };
       this.formValues = formValues
     },
@@ -121,6 +131,7 @@ export default {
         currentEmail:this.userData.user.email,
         newEmail: data.email,
         country: data.country,
+        businessname: data.businessname
         // currentPassword: data.currentPassword,
         // newPassword: data.passwordConfirm,
       };

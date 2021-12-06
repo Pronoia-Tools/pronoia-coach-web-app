@@ -82,6 +82,18 @@
           ></ErrorMessage>
         </div>
 
+
+        <div class="field w-full">
+          <label class="block" for="passwordConfirm">{{
+            $t("sign-up.business")
+          }}</label>
+          <Field
+            class="w-full px-2 py-1 border rounded border-gray-400"
+            type="businessname"
+            name="businessname"
+          />
+        </div>
+
         <div class="field w-full">
           <label class="block" for="country">{{ $t("sign-up.country") }}</label>
           <Field
@@ -238,6 +250,7 @@ export default {
         listing_badge: data.listing_badge,
         newsletter: data.newsletter,
         pre_launch: data.pre_launch,
+        businessname: data.businessname
       };
       if (!revisedData.notify) {
         revisedData.notify = false;
