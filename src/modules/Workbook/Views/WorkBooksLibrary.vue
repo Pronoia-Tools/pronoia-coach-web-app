@@ -24,7 +24,7 @@
 						<div class="h-44 w-32" v-if="!workbook.image">
 							<img class="object-fill w-full h-full" :src="require('./no-image.png')" alt=""  @click="gotopreview(workbook.id)" />
 						</div>
-            <h2>{{ workbook.title }}</h2>
+            <h2 class="h-4">{{ workbook.title }}</h2>
           </div>
         </div>
         <div v-if="inputWB !== null" class="flex flex-row items-center justify-center" >
@@ -37,7 +37,7 @@
 						<div v-if="!workbook.image">
 							<img :src="require('./no-image.png')" alt="" @click="gotopreview(workbook.id)" />
 						</div>
-            <h2>{{ workbook.title }}</h2>
+            <h2 class="h-4">{{ workbook.title }}</h2>
           </div>
 			</div>
 		</div>
