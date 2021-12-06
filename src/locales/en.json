@@ -24,7 +24,8 @@
       "last-name":"Last name",
       "email":"Email",
       "country":"Country",
-      "yourCountry":"Your current country is"
+      "yourCountry":"Your current country is",
+      "businessname":"Company name for billing"
 
     },
     "security":{
@@ -85,6 +86,7 @@
     "email":"Email",
     "password":"Password",
     "password-confirmation":"Password confirmation",
+    "business":"Company name for billing",
     "country":"Country",
     "checkBox":"Add me to the coaching dashboard waitlist",
     "submit":"Submit",

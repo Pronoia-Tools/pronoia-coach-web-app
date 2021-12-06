@@ -23,7 +23,8 @@
       "first-name":"Primer nombre",	
       "last-name":"Apellidos",	
       "email":"Email",	
-      "country":"Pais"
+      "country":"Pais",
+      "business":"Nombre de la empresa para la facturación",
 
     },
     "security":{
@@ -84,6 +85,7 @@
     "email":"Email",	
     "password":"Contraseña",	
     "password-confirmation":"Confirma contraseña",	
+    "business":"Nombre de la empresa para la facturación",
     "country":"Pais",	
     "checkBox":"Inscríbeme como entrenador y dame acceso al panel de control del entrenador",	
     "submit":"Enviar",	

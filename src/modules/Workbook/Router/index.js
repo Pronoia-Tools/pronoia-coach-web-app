@@ -1,4 +1,6 @@
 import store from "../../../store"
+import sales from "../../Sales/Router"
+import customer from "../../Customer/Router"
 export default {
   
   name: "WorkBookLayout",
@@ -25,7 +27,7 @@ export default {
           idWorkBook: route.params.idWorkBook
         }
       }
-    }
+    },
     // {
     //   path: ":idWorkBook/edit",
     //   name: "workbook-rich-text",
@@ -37,5 +39,19 @@ export default {
     //   }
     // }
     
+    //},
+    {
+      path:"library",
+      name:"workbookLibrary",
+      component:()=>import(/* webpackChunkName: "NoEntryS" */ "../Views/WorkBooksLibrary.vue")
+    },
+    {
+      path:"sales",
+      ...sales
+    },
+    {
+      path:"customer",
+      ...customer
+    },
   ]
 }

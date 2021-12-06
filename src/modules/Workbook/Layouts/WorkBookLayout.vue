@@ -1,10 +1,13 @@
 <template>
   <div class="flex">
     <!-- SIDEBAR -->
-    <div class="border-r border-b border-black transition-all duration-1000 flex-shrink-0" :class="isSidebarOpen">
-      <!-- <div class="border-b border-black flex justify-between items-center p-2">
-        {{ $t('workbook.workbookLayout.sales') }} <font-awesome-icon :icon="sortDown" />
-      </div> -->
+    <div class="border-r border-b border-black flex-shrink-0" :class="isSidebarOpen">
+      <!-- SALES -->
+      <div class="border-b border-black flex justify-between items-center p-2 cursor-pointer"
+      @click="$router.push({name:'sales'})"
+      > 
+        <router-link :to="{name:'sales'}">{{ $t('workbook.workbookLayout.sales') }}</router-link>
+      </div>
       <div class="border-b border-black flex justify-between items-center p-2" @click="toogleDropdownWorkBooks">
         {{ $t('workbook.workbookLayout.eWorkbooks') }} 
         <font-awesome-icon :icon="sortDown" v-if="!dropdownWorkbooks"/>
@@ -12,27 +15,30 @@
       </div>
       <Spiner v-if="getLoading"/>
         <!-- WORKBOOK LIST -->
-
-        <div v-for="workbook in workBooksList" 
-            v-show="dropdownWorkbooks" 
+      <div class=" overflow-hidden">
+        <div v-for="workbook in workBooksList"
             :key="workbook.id" 
-            class="flex justify-center items-center p-2 border border-transparent hover:border-gray-500 transition-all"
+            class="flex justify-center items-center border border-transparent hover:border-gray-500 transition-all"
+            :class="isdropdownWorkbooks"
             @click="$router.push({name:'workbook',params:{idWorkBook:workbook.id}})"
         >
           <router-link :to="{name:'workbook',params:{idWorkBook:workbook.id}}">{{workbook.title}}</router-link>
           <!-- {{workbook.title}} -->
         </div>
-        <div 
-          v-show="dropdownWorkbooks" 
-          class="flex justify-between items-center p-2 px-4 border border-transparent hover:border-gray-500 transition-all"
+        <div
+          class="flex justify-between items-center px-4 border border-transparent hover:border-gray-500 transition-all"
+          :class="isdropdownWorkbooks"
           @click="$router.push({name:'workbook',params:{idWorkBook:'new'}})"
         >
           {{$t("workbook.workbookLayout.createWorkbook")}} <font-awesome-icon :icon="plus" />
         </div>
-      
-      <!-- <div class="border-b border-black flex justify-between items-center p-2">
-        {{ $t('workbook.workbookLayout.customers') }} <font-awesome-icon :icon="sortUp" />
-      </div> -->
+      </div>
+      <!-- CUSTOMERS -->
+      <div class="border-b border-t border-black flex justify-between items-center p-2 cursor-pointer"
+      @click="$router.push({name:'customer'})"
+      > 
+        <router-link :to="{name:'customer'}">{{ $t('workbook.workbookLayout.customers') }}</router-link>
+      </div>
 
 
     </div>
@@ -89,6 +95,9 @@ export default {
     },
     isSidebarOpen(){
       return this.sidebarOpen?"text-white invisible w-1":" w-64 visible"
+    },
+    isdropdownWorkbooks(){
+      return this.dropdownWorkbooks?"h-10 p-2":"h-0 p-0 border-none overflow-hidden"
     }
   },
   created(){
