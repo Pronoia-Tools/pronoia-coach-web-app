@@ -88,6 +88,16 @@ const routes = [
     }
   },
   {
+    path: "/workbook/:idWorkBook/read",
+    name: "workbook-rich-text-read",
+    component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkbookPreview.vue"),
+    props: (route) => {
+      return {
+        idWorkBook: route.params.idWorkBook
+      }
+    }
+  },
+  {
     path:"/library",
     name:"workbookLibrary",
     component:()=>import(/* webpackChunkName: "NoEntryS" */ "../modules/Workbook/Views/WorkBooksLibrary.vue")
