@@ -235,6 +235,11 @@
     "settings":"Settings",
     "logout":"Log out",
     "login":"Log in",
-    "register":"Register"
+    "register":"Register",
+    "alert":{
+      "faq":"FAQ",
+      "creationStation":"Creation Station 101",
+      "knowladgeLibrary":"Knowledge Library"
+    }
   }
 }
