@@ -88,7 +88,7 @@ const routes = [
     }
   },
   {
-    path: "/workbook/:idWorkBook/read",
+    path: "/read/:idWorkBook/",
     name: "workbook-rich-text-read",
     component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkbookPreview.vue"),
     props: (route) => {
