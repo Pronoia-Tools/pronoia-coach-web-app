@@ -39,6 +39,18 @@
               </div>
           </div> -->
       </div>
+      <div class="flex gap-x-5 mt-3 group" v-if="question && !editor.view.editable">
+        <div class="relative flex-grow">
+          <input type="text" class="border p-2 w-full" v-model="answer">
+          <div class="cursor-pointer absolute right-2 top-3 w-5 h-5 text-gray-500 z-50" @click="deleteResponse" v-if="serverAnswer">
+            <ToolTipVue text="delete answer">
+              <FontAwesomeIcon  :icon="myTrash"/>
+            </ToolTipVue>
+          </div>
+        </div>
+        <ButoomCustomVue @click="sendResponse" v-if="!serverAnswer">Send response</ButoomCustomVue>
+        <ButoomCustomVue @click="updateResponse" v-else>Edit response</ButoomCustomVue>
+      </div>
       <!-- <div v-else>
         non editable
       </div> -->
@@ -48,17 +60,22 @@
 
 <script>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEdit, faEye, faTrash, faSave } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faEdit, faEye, faTrash, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import TextEditor from "../../TextEditor/Views/TextEditor.vue"
 import PronoiaAPI from "../../../api/PronoiaAPI";
+import ButoomCustomVue from '../../../components/ButoomCustom.vue'
+import Swall from "sweetalert2"
+import ToolTipVue from '../../../components/ToolTip.vue';
 
 export default {
   components: {
     NodeViewWrapper,
-    // FontAwesomeIcon,
-    TextEditor
+    FontAwesomeIcon,
+    TextEditor,
+    ButoomCustomVue,
+    ToolTipVue
   },
   data(){
     return{
@@ -66,9 +83,12 @@ export default {
       myEye: faEye, 
       myTrash: faTrash,
       mySave: faSave,
+      myTimes:faTimes,
 
       editable: false,
       question: null,
+      serverAnswer:null,
+      answer: null
     }
   },
 
@@ -96,6 +116,66 @@ export default {
       console.log(response)
       this.toggleEditable()
     },
+    async sendResponse(){
+      try {
+        console.log({response:this.answer})
+        let response = await PronoiaAPI.post(`/answer/${this.node.attrs.id}`,{
+          answer:this.answer
+        });
+        this.serverAnswer = response.data
+        console.log(response) 
+      } catch (error) {
+        console.log({error})
+        Swall.fire({
+          icon: "error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text: error.response.data.message,
+        });
+      }
+    },
+    async updateResponse(){
+      try {
+        console.log({response:this.answer})
+        let response = await PronoiaAPI.put(`/answer/${this.serverAnswer.id}`,{
+          answer:this.answer
+        });
+        console.log(response)
+      } catch (error) {
+        console.log({error})
+        Swall.fire({
+          icon: "error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text: error.response.data.message,
+        });
+      }
+    },
+    async deleteResponse(){
+      console.log({response:this.answer})
+      try {
+        let response = await PronoiaAPI.delete(`/answer/${this.serverAnswer.id}`,{
+          answer:this.answer
+        });
+        console.log({response})
+        this.answer = null
+        this.serverAnswer = null
+      } catch (error) {
+        console.log({error})
+        Swall.fire({
+          icon: "error",
+          title: `${this.$t("swallAlertGeneral.error")}`,
+          text: error.response.data.message,
+        });
+      }
+    },
+    async loadAnswer(){
+      let answer = await PronoiaAPI.get(`/answer/${this.node.attrs.id}`)
+      console.log({answer})
+      if (answer.data.answer) {
+        this.serverAnswer = answer.data
+        this.answer = answer.data.answer
+      }
+      console.log(answer)
+    }
   },
   async created() {
     let response = null
@@ -119,6 +199,8 @@ export default {
     }
     console.log(this.node.attrs.isOpen)
     // this.editable = this.node.attrs.isOpen
+
+    this.loadAnswer()
   }
 }
 </script>
