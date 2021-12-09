@@ -86,13 +86,17 @@
         <div id="editor" class="h-full flex flex-col pb-12">
           <!-- Menu Bar -->
           <div v-if="editor" class="flex gap-2 flex-wrap border-t border-b border-border bg-400 items-start px-2 py-1 z-40" :class="fixed">
-              <div class="flex items-center gap-5">
+            <div class="flex items-center gap-5">
               <ButtonGroupVue>
                 <ButtonAppVue @click="updateCurrentWorkbookHanlder">
                   {{ $t('workbook.workbookText.save') }}
                 </ButtonAppVue>
                 <ButtonAppVue @click="toogglePreview">
                   {{ $t('workbook.workbookText.preview') }}
+                </ButtonAppVue>
+                <ButtonAppVue @click="goToRead">
+                  <!-- {{ $t('workbook.workbookText.preview') }} -->
+                  read
                 </ButtonAppVue>
               </ButtonGroupVue>
 
@@ -233,7 +237,7 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="hidden top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white overflow-hidden 
+      <div id="sidebar-galery" class="hidden top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-40 bg-white overflow-hidden 
       lg:block lg:mt-0"  :class="isSidebarGaleryOpen">
         <ButoomCustomVue class="absolute left-0 top-0 visible lg:hidden" @click="toggleGalerySideBar">X</ButoomCustomVue>
         
@@ -463,6 +467,10 @@ export default {
       await this.updateCurrentWorkbook()
       let route = this.$router.resolve({ name:"workbook-rich-text-preview" });
       window.open(route.href);
+      // this.preview = !this.preview
+    },
+    async goToRead(){
+      this.$router.push({ name:"workbook-rich-text-read" });
       // this.preview = !this.preview
     },
     gotoSection(section){

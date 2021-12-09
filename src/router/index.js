@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import workBookRouter from "../modules/Workbook/Router/index";
 import settingsRouter from "../modules/Auth/Router/index";
-// import store from "@/store"
+import store from "@/store"
 // import Home from "../views/Home.vue";
 
 const routes = [
@@ -86,6 +86,24 @@ const routes = [
         idWorkBook: route.params.idWorkBook
       }
     }
+  },
+  {
+    path: "/workbook/:idWorkBook/read",
+    name: "workbook-rich-text-read",
+    component: () => import(/* webpackChunkName: "WoorkBookText" */ "../modules/Workbook/Views/WorkbookRead.vue"),
+    beforeEnter:(to,from,next)=>{
+      if(store.state.auth.isAuthenticated){
+        next()
+      }else{
+        next({name:"login"})
+      }
+    },
+    props: (route) => {
+      return {
+        idWorkBook: route.params.idWorkBook
+      }
+    }
+    
   },
   {
     path:"/library",
