@@ -42,9 +42,9 @@
       <div class="flex gap-x-5 mt-3 group" v-if="question && !editor.view.editable">
         <div class="relative flex-grow">
           <input type="text" class="border p-2 w-full" v-model="answer">
-          <div class="cursor-pointer absolute right-2 top-3 w-5 h-5 text-gray-500 z-50" @click="deleteResponse">
+          <div class="cursor-pointer absolute right-2 top-3 w-5 h-5 text-gray-500 z-50" @click="deleteResponse" v-if="serverAnswer">
             <ToolTipVue text="delete answer">
-              <FontAwesomeIcon  :icon="myTimes"/>
+              <FontAwesomeIcon  :icon="myTrash"/>
             </ToolTipVue>
           </div>
         </div>
