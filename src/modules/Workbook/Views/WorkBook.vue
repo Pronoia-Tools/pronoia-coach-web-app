@@ -220,11 +220,15 @@ export default {
   },
   computed:{
     ...mapGetters("workBook",["getWorkBookById", "getLastWorkBook"]),
+    ...mapGetters("image", ["getImages"]),
+    ...mapGetters("auth", ["getUserAuth","getCustomTokenAuthFirebase"]),
     ...mapState("workBook", ["lastWorkBook"]),
     ...mapState("auth", ["user"])
   },
   methods:{
     ...mapActions("workBook",["saveWorkbook","updateWorkbook","deleteWorkbook"]),
+    ...mapActions("image",[
+      "loadImageLibrary"]),
     handleUpload(){
       const dateSaved = new Date().getTime()
       const uploadTask = storage.ref(`Galery/${this.user.email}/${this.file.name}_${dateSaved}`).put(this.file);
@@ -421,9 +425,23 @@ export default {
 
       this.handleUpload()
     },
+    async loadGallery() {
+      if (this.getImages.length === 0) {
+        try {
+          await this.loadImageLibrary({email:this.getUserAuth.user.email,customTokenAuthFirebase:this.getCustomTokenAuthFirebase})
+        } catch (error) {
+          Swal.fire({
+            icon:"error",
+            title: `${this.$t("swallAlertGeneral.error")}`,
+            text:error
+          })
+        }
+      }
+    },
   },
   created(){
     this.loadWorkBook()
+    this.loadGallery()
   },
   watch:{
     idWorkBook(){
