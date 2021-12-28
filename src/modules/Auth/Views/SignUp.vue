@@ -137,7 +137,7 @@
             <!-- <option value="Mexico">{{$t("countries.mexico")}}</option>
             <option value="USA">{{$t("countries.usa")}}</option> -->
           </Field>
-          <ErrorMessage class="text-red-400" name="country"></ErrorMessage>
+          <ErrorMessage class="text-red-400" name="listing_badge"></ErrorMessage>
         </div>
 
         <div class="flex flex-col justify-start">
@@ -263,7 +263,13 @@ export default {
       }
       console.log(revisedData);
       try {
+        Swall.fire({
+          title: `${this.$t("swallAlertGeneral.wait")}`,
+          // text: error.response.data.message,
+        });
+        Swall.showLoading()
         const response = await this.signUp(revisedData);
+        console.log(response);
         if (this.isAuthenticated) {
           console.log("success");
           console.log(response);
@@ -306,15 +312,19 @@ export default {
           // this.showModalPayment =!this.showModalPayment;
           // this.$router.push({name:"WorkBookLayout"});
           console.log("dsasd");
-          if (response.data.stripe_session) {
+          if (response.data.stripe_session && response.data.stripe_session.id) {
             console.log("stripe session");
+            console.log(response.data.stripe_session);
             this.stripe.redirectToCheckout({
               sessionId: response.data.stripe_session.id,
             });
           } else {
-            this.logout();
+            Swall.close()
+            this.$router.push({path: '/success/'})
+            // this.logout();
           }
         } else {
+          console.log("error no auth");
           Swall.fire({
             title: this.$t("swallAlertGeneral.error"),
             text: this.$t("swallAlertGeneral.try-again"),

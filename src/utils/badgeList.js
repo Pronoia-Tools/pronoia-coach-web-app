@@ -1,7 +1,7 @@
 export default [
     {
       "id": 0,
-      "name": "Co-Creator Listing Badge",
+      "name": "$0 Not now",
       "price": 0,
     },
     {

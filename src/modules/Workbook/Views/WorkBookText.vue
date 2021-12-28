@@ -233,7 +233,7 @@
         <FontAwesomeIcon v-else :icon="myChevronRight" class="p-2 text-5xl bg-myPurple rounded-l z-50"></FontAwesomeIcon>
       </button>
 
-      <div id="sidebar-galery" class="hidden top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-50 bg-white overflow-hidden 
+      <div id="sidebar-galery" class="hidden top-0 right-0 h-full transition-all duration-500 flex-shrink-0 z-40 bg-white overflow-hidden 
       lg:block lg:mt-0"  :class="isSidebarGaleryOpen">
         <ButoomCustomVue class="absolute left-0 top-0 visible lg:hidden" @click="toggleGalerySideBar">X</ButoomCustomVue>
         
@@ -439,9 +439,7 @@ export default {
       //non used 
       "updateWorkbookSection",
       "updateWorkbookAddSection"]),
-    ...mapActions("image",[
-      "loadImageLibrary",
-      "uploadImages"]),
+    ...mapActions("image",["uploadImages"]),
     ...mapMutations("image",[
       "setImages"]),
     toggleSideBar() {
@@ -803,19 +801,6 @@ export default {
         this.editor.commands.setContent(this.workBook.units[this.unitSelectedIndex].contents)
       }
     },
-    async loadData() {
-      if (this.getImages.length === 0) {
-        try {
-          await this.loadImageLibrary({email:this.getUserAuth.user.email,customTokenAuthFirebase:this.getCustomTokenAuthFirebase})
-        } catch (error) {
-          Swal.fire({
-            icon:"error",
-            title: `${this.$t("swallAlertGeneral.error")}`,
-            text:error
-          })
-        }
-      }
-    },
   },
   // Mounted loads workbook
   mounted() {
@@ -842,10 +827,6 @@ export default {
   },
   beforeUnmount() {
     this.editor.destroy()
-  },
-  // Loads data - Image Library
-  created(){
-    this.loadData() 
   },
   watch:{
     idWorkBook(){
