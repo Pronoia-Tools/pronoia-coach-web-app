@@ -18,11 +18,13 @@
         <!-- <router-link to="/">{{ $t(`navbar.coachDashboard`) }}</router-link>
         <router-link to="/">{{ $t(`navbar.marketplace`) }}</router-link> -->
       </nav>
-      <!-- <div class="flex gap-5 flex-col
-                   md:flex-row">
+
+      <!-- <div class="flex gap-5 flex-col items-center justify-center
+                   md:flex-row relative px-5">
         <font-awesome-icon :icon="myQuestionCircle" />
         <font-awesome-icon :icon="myIcon" />
-        <font-awesome-icon :icon="myBell" />
+        <AlertVue>
+        </AlertVue>
       </div> -->
     </div>
     <!-- USER -->
@@ -72,12 +74,17 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 import ButoomCustomVue from './ButoomCustom.vue'
 import ButtonGroupVue from './ButtonGroup.vue'
 import ButtonAppVue from './ButtonApp.vue'
+// import AlertVue from './Alert.vue'
 
 
 export default {
   name: 'Navbar',
   components: {
-    FontAwesomeIcon,ButoomCustomVue,ButtonGroupVue,ButtonAppVue
+    FontAwesomeIcon,
+    ButoomCustomVue,
+    ButtonGroupVue,
+    ButtonAppVue,
+    // AlertVue
   },
 
   data () {

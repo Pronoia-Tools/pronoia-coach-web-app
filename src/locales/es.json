@@ -231,6 +231,11 @@
     "settings":"Ajustes",
     "logout":"Cerrar sesión",
     "login":"Iniciar sesión",
-    "register":"Registrate"
+    "register":"Registrate",
+    "alert":{
+      "faq":"FAQ",
+      "creationStation":"Estación de creación 101",
+      "knowladgeLibrary":"Biblioteca de conocimientos"
+    }
   }
 }
