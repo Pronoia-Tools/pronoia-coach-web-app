@@ -10,7 +10,7 @@
 import NavbarVue from "./components/Navbar.vue";
 import FeedbackButton from "./modules/FeedbackButton/Views/FeedbackButton.vue";
 import { mapActions } from 'vuex'
-
+import Swall from "sweetalert2"
 export default {
   name: "MyComponent",
   components: {
@@ -18,10 +18,19 @@ export default {
     FeedbackButton,
   },
   computed:{
-    ...mapActions("auth",["loadSession"])
+    ...mapActions("auth",["loadSession","cleanLocalStorage"])
   },
-  created() {
-    this.loadSession;
+  async created() {
+    try {
+        
+      await this.loadSession;
+    } catch (error) {
+      Swall.fire({
+        icon:"error",
+        text:error.response.data.message
+      })
+      this.cleanLocalStorage()
+    }
   }
 };
 </script>

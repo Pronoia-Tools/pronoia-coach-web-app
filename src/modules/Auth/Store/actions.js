@@ -10,9 +10,19 @@ export const loadSession = async ({ commit }) => {
       }
     }
     let response = await PronoiaAPI.post('/auth/refresh', {}, config);
+    if(response.data && response.data.token)
+      window.localStorage.setItem(process.env.VUE_APP_API_BASE, response.data.token)
     commit("login", response.data)
     return response.data
   }
+  return true
+}
+
+export const cleanLocalStorage = async () => {
+  console.log("FORCE CLEAN LOCALS STORAGE")
+  window.localStorage.removeItem(process.env.VUE_APP_API_BASE)
+  window.localStorage.removeItem("vuex")
+  location.reload()  
   return true
 }
 
